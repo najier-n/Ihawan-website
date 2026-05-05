@@ -323,7 +323,7 @@
                     <span class="food-emoji">${item.emoji}</span>
                     <h3 class="item-name">${item.name}</h3>
                     <p class="item-desc">${item.desc}</p>
-                    <span class="item-price">$${item.price.toFixed(2)}</span>
+                    <span class="item-price">₱${item.price.toFixed(2)}</span>
                     <div id="ctrl-${item.id}">
                         ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}
                     </div>
@@ -371,7 +371,7 @@
                 list.innerHTML += `
                     <div class="cart-item">
                         <span>${item.qty}x ${item.name}</span>
-                        <span>$${total.toFixed(2)}</span>
+                        <span>₱${total.toFixed(2)}</span>
                     </div>
                 `;
             });
@@ -441,7 +441,7 @@
                 <div style="text-align:center">
                     <div style="font-size:4rem; color: var(--fire)">✔</div>
                     <h2 class="h-font" style="font-size:2.5rem">Order Placed! 🎉</h2>
-                    <p class="label" style="font-size:1.2rem; margin: 20px 0">Order ID: ₱{id}</p>
+                    <p class="label" style="font-size:1.2rem; margin: 20px 0">Order ID: ${id}</p>
                     <div class="status-tracker">
                         <div class="step active" id="s-received"><div class="step-icon">1</div><div class="step-label">Received</div></div>
                         <div class="step" id="s-preparing"><div class="step-icon">🔥</div><div class="step-label">Preparing</div></div>
