@@ -155,14 +155,14 @@
             <div class="cart-title h-font">Your Order</div>
             <div id="cartItems" class="cart-items"></div>
             <div class="cart-totals">
-                <div class="total-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
-                <div class="total-row"><span>Tax (8%)</span><span id="tax">$0.00</span></div>
-                <div class="total-row grand-total"><span>Total</span><span id="grandTotal">$0.00</span></div>
+                <div class="total-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+                <div class="total-row"><span>Tax (8%)</span><span id="tax">₱0.00</span></div>
+                <div class="total-row grand-total"><span>Total</span><span id="grandTotal">₱0.00</span></div>
                 <button class="btn btn-fire label" style="width: 100%; margin-top: 20px;" onclick="openCheckout()">Place Order 🔥</button>
             </div>
             <div class="mobile-cart-bar" style="display: none;">
                 <span class="label" id="mobileCount">0 Items</span>
-                <span class="label" id="mobileTotal">$0.00</span>
+                <span class="label" id="mobileTotal">₱0.00</span>
                 <button class="btn btn-fire btn-sm label" onclick="toggleMobileCart()">View Order</button>
             </div>
         </aside>
@@ -198,12 +198,12 @@
             </div>
             <div>
                 <h3 class="label" style="color: var(--fire); margin-bottom: 20px;">Contact & Hours</h3>
-                <p style="margin-bottom: 10px;">📍 123 Grill Ave, Quezon City</p>
+                <p style="margin-bottom: 10px;">📍 Corner Runway, Brgy. San Miguel, Puerto Princesa City</p>
                 <p style="margin-bottom: 10px;">📞 (555) 123-IH-AWAN</p>
                 <div style="margin-top: 30px;">
-                    <p class="label">Mon–Thu: 11AM–9PM</p>
-                    <p class="label">Fri–Sat: 11AM–10:30PM</p>
-                    <p class="label">Sun: 12PM–8PM</p>
+                    <p class="label">Mon–Thu: 4:00PM–11:30PM</p>
+                    <p class="label">Fri–Sat: 3:00M–11:30PM</p>
+                    <p class="label">Sun: 3:30PM–12:00PM</p>
                 </div>
             </div>
         </div>
@@ -420,7 +420,7 @@
                     notes: document.getElementById('custNotes').value
                 },
                 items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price, subtotal: i.qty * i.price })),
-                total: parseFloat(document.getElementById('grandTotal').innerText.replace('$','')),
+                total: parseFloat(document.getElementById('grandTotal').innerText.replace('₱','')),
                 status: 'received'
             };
 
