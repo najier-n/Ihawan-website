@@ -378,13 +378,13 @@
 
             const tax = sub * 0.08;
             const grand = sub + tax;
-            document.getElementById('subtotal').innerText = `$${sub.toFixed(2)}`;
-            document.getElementById('tax').innerText = `$${tax.toFixed(2)}`;
-            document.getElementById('grandTotal').innerText = `$${grand.toFixed(2)}`;
+            document.getElementById('subtotal').innerText = `$₱{sub.toFixed(2)}`;
+            document.getElementById('tax').innerText = `$₱{tax.toFixed(2)}`;
+            document.getElementById('grandTotal').innerText = `$₱{grand.toFixed(2)}`;
             
             // Mobile bar
             document.getElementById('mobileCount').innerText = `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
-            document.getElementById('mobileTotal').innerText = `$${grand.toFixed(2)}`;
+            document.getElementById('mobileTotal').innerText = `₱${grand.toFixed(2)}`;
         }
 
         // CHECKOUT
@@ -441,7 +441,7 @@
                 <div style="text-align:center">
                     <div style="font-size:4rem; color: var(--fire)">✔</div>
                     <h2 class="h-font" style="font-size:2.5rem">Order Placed! 🎉</h2>
-                    <p class="label" style="font-size:1.2rem; margin: 20px 0">Order ID: ${id}</p>
+                    <p class="label" style="font-size:1.2rem; margin: 20px 0">Order ID: ₱{id}</p>
                     <div class="status-tracker">
                         <div class="step active" id="s-received"><div class="step-icon">1</div><div class="step-label">Received</div></div>
                         <div class="step" id="s-preparing"><div class="step-icon">🔥</div><div class="step-label">Preparing</div></div>
