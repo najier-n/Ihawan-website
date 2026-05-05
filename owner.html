@@ -175,7 +175,7 @@
             document.getElementById('statPrep').innerText = orders.filter(o => o.status === 'preparing').length;
             document.getElementById('statReady').innerText = orders.filter(o => o.status === 'ready').length;
             const rev = orders.reduce((sum, o) => sum + o.total, 0);
-            document.getElementById('statRevenue').innerText = '$' + rev.toFixed(2);
+            document.getElementById('statRevenue').innerText = '₱' + rev.toFixed(2);
 
             if(currentTab === 'reservations') return renderReservations();
 
@@ -199,9 +199,9 @@
                     </div>
                     ${order.customer.type === 'delivery' ? `<div style="font-size:0.8rem; margin-bottom:15px">📍 ${order.customer.address}</div>` : ''}
                     <div class="items-list">
-                        ${order.items.map(i => `<div class="item-row"><span>${i.qty}x ${i.name}</span><span>$${i.subtotal.toFixed(2)}</span></div>`).join('')}
+                        ${order.items.map(i => `<div class="item-row"><span>${i.qty}x ${i.name}</span><span>₱${i.subtotal.toFixed(2)}</span></div>`).join('')}
                     </div>
-                    <div style="text-align:right; margin-top:10px; font-weight:bold; color:var(--fire)">Total: $${order.total.toFixed(2)}</div>
+                    <div style="text-align:right; margin-top:10px; font-weight:bold; color:var(--fire)">Total: ₱${order.total.toFixed(2)}</div>
                     ${order.customer.notes ? `<div class="notes-box">" ${order.customer.notes} "</div>` : ''}
                     ${renderActions(order)}
                 `;
