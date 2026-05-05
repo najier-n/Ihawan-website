@@ -211,7 +211,8 @@
 
         function renderActions(order) {
             if(order.status === 'received') return `<button class="btn btn-fire label" onclick="updateStatus('${order.id}', 'preparing')">🔥 Start Preparing</button>`;
-            if(order.status === 'preparing') return `<button class="btn btn-ready label" onclick="updateStatus('${order.id}', 'ready')">✅ Mark as Ready</button>`;
+            if(order.status === 'preparing') return `<button class="btn btn-ready label" onclick="updateStatus('${order.id}', 'ready')">✅ Mark as Ready</button>`
+                                                     <button class="btn label" style="background:#ef4444; color:white;" onclick="cancelOrder('${order.id}')">❌ Cancel Order</button>;
             if(order.status === 'ready') return `<button class="btn btn-done label" onclick="updateStatus('${order.id}', 'completed')">✔ Mark Completed</button>`;
             return '';
         }
@@ -224,6 +225,19 @@
                 localStorage.setItem('ihawan_orders', JSON.stringify(orders));
                 renderOrders();
             }
+
+            function cancelOrder(id) {
+    if(!confirm("Are you sure you want to cancel this order?")) return;
+
+    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+    const idx = orders.findIndex(o => o.id === id);
+       if(idx !== -1) {
+    orders[idx].status = 'cancelled';
+}
+localStorage.setItem('ihawan_orders', JSON.stringify(orders));
+    renderOrders();
+            }
+            
         }
 
         function renderReservations() {
