@@ -378,9 +378,9 @@
 
             const tax = sub * 0.08;
             const grand = sub + tax;
-            document.getElementById('subtotal').innerText = `$₱{sub.toFixed(2)}`;
-            document.getElementById('tax').innerText = `$₱{tax.toFixed(2)}`;
-            document.getElementById('grandTotal').innerText = `$₱{grand.toFixed(2)}`;
+            document.getElementById('subtotal').innerText = `₱${sub.toFixed(2)}`;
+            document.getElementById('tax').innerText = `₱${tax.toFixed(2)}`;
+            document.getElementById('grandTotal').innerText = `₱${grand.toFixed(2)}`;
             
             // Mobile bar
             document.getElementById('mobileCount').innerText = `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
