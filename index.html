@@ -3,313 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>'Ihawan Filipino Grill | Fire-Grilled Authenticity</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <title>'Ihawan Filipino Grill | Fire-Grilled. Authentically Filipino.</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+
         :root {
-            --fire: #F5A800; --ember: #E05A00; --char: #1A1108; --smoke: #2E2416;
-            --cream: #FDF3E3; --muted: rgba(253,243,227,0.55); --gold: #C8860A;
-            --success: #22C55E; --danger: #EF4444; --transition: all 0.3s ease;
+            --fire: #F5A800;
+            --ember: #E05A00;
+            --char: #1A1108;
+            --smoke: #2E2416;
+            --cream: #FDF3E3;
+            --muted: rgba(253,243,227,0.55);
+            --black: #0D0803;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: var(--char); color: var(--cream); font-family: 'Lato', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
-        
-        /* Typography */
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        h1, h2, h3, .h-font { font-family: 'Playfair Display', serif; }
         .label, .btn, .nav-link { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.15em; }
 
         /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
-        nav.scrolled { background: rgba(26, 17, 8, 0.95); padding: 15px 5%; border-bottom: 1px solid var(--fire); backdrop-filter: blur(12px); }
-        .logo { color: var(--fire); text-decoration: none; font-size: 1.6rem; font-family: 'Playfair Display', serif; font-weight: 900; }
-        .nav-links { display: flex; gap: 2.5rem; }
-        .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); backdrop-filter: blur(10px); }
+        nav.scrolled { background: rgba(13, 8, 3, 0.95); padding: 12px 5%; border-bottom: 1px solid var(--fire); }
+        .logo { color: var(--fire); text-decoration: none; font-size: 2rem; font-weight: 900; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--cream); text-decoration: none; transition: 0.3s; }
         .nav-links a:hover { color: var(--fire); }
-        .btn-order-nav { background: var(--fire); color: var(--char); padding: 10px 24px; border-radius: 4px; text-decoration: none; }
 
-        /* Hero & Embers */
-        #hero { height: 100vh; background: radial-gradient(ellipse at 50% 35%, #3D2200 0%, #1A1108 65%, #0D0803 100%); display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-        .grid-texture { position: absolute; inset: 0; background-image: linear-gradient(rgba(245,168,0,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(245,168,0,0.025) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+        /* Hero Section */
+        #hero { height: 100vh; background: radial-gradient(circle, #3d2612 0%, #1a1108 100%); display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 20px; }
+        .hero-content { z-index: 5; max-width: 900px; }
+        .hero-kicker { color: var(--fire); display: block; margin-bottom: 1rem; }
+        #hero h1 { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 0.5rem; line-height: 1; }
+        .hero-sub { font-size: 1.5rem; font-style: italic; margin-bottom: 2rem; opacity: 0.8; }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         
-        .ember { position: absolute; background: var(--fire); border-radius: 50%; opacity: 0; animation: floatUp var(--d) infinite linear; filter: blur(1px); }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
+        /* Particles */
+        .ember { position: absolute; background: var(--fire); border-radius: 50%; pointer-events: none; opacity: 0.6; filter: blur(1px); animation: floatUp var(--d) linear infinite; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 50% { opacity: 0.7; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
 
-        .hero-content { z-index: 10; max-width: 900px; padding: 0 20px; }
-        .hero-kicker { display: block; letter-spacing: 0.5em; font-size: 0.8rem; color: var(--fire); margin-bottom: 16px; }
-        #hero h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 15px; }
-        .hero-sub { font-style: italic; font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--muted); margin-bottom: 36px; }
+        /* Order Section */
+        #menu { padding: 80px 5%; display: grid; grid-template-columns: 1fr 350px; gap: 40px; }
+        .menu-container { width: 100%; }
+        .category-tabs { position: sticky; top: 80px; z-index: 100; background: var(--char); display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; border-bottom: 1px solid var(--smoke); margin-bottom: 30px; }
+        .tab-btn { background: none; border: 1px solid var(--smoke); color: var(--muted); padding: 8px 18px; cursor: pointer; transition: 0.3s; white-space: nowrap; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; }
+        .tab-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); }
 
-        .btn { border: none; cursor: pointer; display: inline-block; transition: 0.2s; text-decoration: none; }
-        .btn-fire { background: var(--fire); color: var(--char); box-shadow: 0 4px 20px rgba(245,168,0,0.4); padding: 14px 40px; border-radius: 4px; }
-        .btn-fire:hover { transform: scale(1.02); filter: brightness(1.1); }
-        .btn-outline { background: transparent; border: 2px solid rgba(253,243,227,0.4); color: var(--cream); padding: 12px 38px; border-radius: 4px; }
-        .btn-outline:hover { border-color: var(--fire); color: var(--fire); }
-
-        /* Menu Section */
-        #menu { padding: 100px 5%; display: grid; grid-template-columns: 1fr 380px; gap: 50px; max-width: 1400px; margin: 0 auto; }
-        .category-nav { position: sticky; top: 80px; background: var(--char); z-index: 100; display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; border-bottom: 1px solid var(--smoke); scrollbar-width: none; }
-        .category-nav::-webkit-scrollbar { display: none; }
-        .tab { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; white-space: nowrap; }
-        .tab.active { color: var(--fire); border-bottom: 2px solid var(--fire); padding-bottom: 5px; }
-
-        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
-        .menu-card { background: var(--smoke); padding: 25px; border-radius: 12px; border: 1px solid rgba(245,168,0,0.15); display: flex; gap: 20px; transition: 0.3s; }
-        .menu-card:hover { transform: translateY(-5px); border-color: var(--fire); }
-        .food-icon { width: 60px; height: 60px; background: rgba(0,0,0,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; flex-shrink: 0; }
-        .card-content { flex-grow: 1; }
-        .price { color: var(--fire); font-size: 1.3rem; margin: 10px 0; display: block; }
-        .bestseller { font-size: 0.65rem; color: var(--fire); border: 1px solid var(--fire); padding: 2px 8px; border-radius: 20px; vertical-align: middle; margin-left: 8px; }
+        .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; }
+        .menu-card:hover { border-color: var(--fire); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .food-emoji { font-size: 3rem; margin-bottom: 15px; display: block; }
+        .item-name { font-size: 1.6rem; margin-bottom: 8px; }
+        .item-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 15px; min-height: 2.7em; }
+        .item-price { color: var(--fire); font-size: 1.4rem; display: block; margin-bottom: 15px; }
+        .bestseller-badge { position: absolute; top: 15px; right: 15px; background: var(--fire); color: var(--char); font-family: 'Bebas Neue'; font-size: 0.7rem; padding: 4px 8px; border-radius: 2px; }
 
         /* Cart */
-        .cart-panel { position: sticky; top: 100px; background: var(--smoke); padding: 30px; border-radius: 14px; border: 1px solid var(--fire); align-self: start; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; }
-        .qty-ctrl { display: flex; align-items: center; gap: 10px; background: var(--fire); border-radius: 4px; padding: 4px 8px; color: var(--char); }
-        .qty-ctrl button { background: none; border: none; cursor: pointer; font-weight: bold; }
+        .cart-sticky { position: sticky; top: 100px; background: var(--smoke); padding: 25px; border-radius: 8px; border: 1px solid var(--gold); align-self: start; }
+        .cart-title { font-size: 2rem; margin-bottom: 20px; border-bottom: 1px solid var(--muted); padding-bottom: 10px; }
+        .cart-items { max-height: 400px; overflow-y: auto; margin-bottom: 20px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; }
+        .cart-empty { text-align: center; padding: 40px 0; color: var(--muted); font-style: italic; }
+        .cart-totals { border-top: 1px solid var(--muted); padding-top: 15px; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .grand-total { font-size: 1.5rem; color: var(--fire); font-family: 'Bebas Neue'; margin-top: 10px; }
 
-        /* Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-card { background: var(--smoke); border: 1px solid var(--fire); width: 100%; max-width: 520px; border-radius: 14px; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
-        input, select, textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(245,168,0,0.2); padding: 12px; border-radius: 6px; color: white; margin-bottom: 15px; }
-        .error-msg { color: var(--danger); font-size: 0.8rem; margin-top: -10px; margin-bottom: 10px; display: none; }
+        /* Buttons */
+        .btn { padding: 12px 24px; border: none; cursor: pointer; transition: var(--transition); text-decoration: none; display: inline-block; text-align: center; }
+        .btn-fire { background: var(--fire); color: var(--char); }
+        .btn-fire:hover { background: var(--ember); transform: scale(1.03); }
+        .btn-outline { border: 2px solid var(--cream); color: var(--cream); background: transparent; }
+        .btn-outline:hover { background: var(--cream); color: var(--char); }
+        .qty-controls { display: flex; align-items: center; gap: 15px; background: var(--char); padding: 5px 15px; border-radius: 4px; border: 1px solid var(--fire); width: fit-content; }
+        .qty-btn { background: none; border: none; color: var(--fire); font-size: 1.2rem; cursor: pointer; font-weight: bold; }
 
-        /* Sections */
-        .section-story { padding: 100px 5%; display: flex; gap: 60px; align-items: center; }
-        .pill { border: 1px solid rgba(245,168,0,0.3); background: rgba(245,168,0,0.07); padding: 10px 20px; border-radius: 40px; display: inline-block; margin: 5px; font-size: 0.85rem; }
+        /* Modal & Status */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 40px 20px; overflow-y: auto; }
+        .modal-content { max-width: 600px; margin: 0 auto; background: var(--smoke); padding: 40px; border: 1px solid var(--fire); }
+        .status-tracker { display: flex; justify-content: space-between; margin: 40px 0; position: relative; }
+        .status-tracker::before { content: ""; position: absolute; top: 15px; left: 0; width: 100%; height: 2px; background: #444; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; }
+        .step-icon { width: 32px; height: 32px; background: #444; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 0.8rem; transition: 0.5s; }
+        .step.active .step-icon { background: var(--fire); color: var(--char); box-shadow: 0 0 15px var(--fire); }
+        .step.active .step-label { color: var(--fire); font-weight: bold; }
+        .step-label { font-size: 0.7rem; font-family: 'Bebas Neue'; color: var(--muted); }
 
+        /* Forms */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-family: 'Bebas Neue'; margin-bottom: 8px; color: var(--fire); }
+        input, select, textarea { width: 100%; padding: 12px; background: var(--char); border: 1px solid var(--smoke); color: var(--cream); font-family: 'Lato'; transition: 0.3s; }
+        input:focus { border-color: var(--fire); box-shadow: 0 0 10px rgba(245, 168, 0, 0.2); }
+        .order-type-toggle { display: flex; gap: 5px; margin-bottom: 20px; }
+        .toggle-btn { flex: 1; padding: 10px; background: var(--char); border: 1px solid var(--smoke); color: var(--muted); cursor: pointer; font-family: 'Bebas Neue'; }
+        .toggle-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); }
+
+        /* Mobile Adjustments */
         @media (max-width: 968px) {
             #menu { grid-template-columns: 1fr; }
-            .section-story { flex-direction: column; text-align: center; }
+            .cart-sticky { position: fixed; bottom: 0; left: 0; width: 100%; border-radius: 0; border-top: 1px solid var(--fire); padding: 15px; top: auto; z-index: 900; }
+            .cart-items, .cart-title { display: none; }
+            .cart-sticky.expanded .cart-items, .cart-sticky.expanded .cart-title { display: block; }
+            .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; }
             .nav-links { display: none; }
         }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <nav id="navbar">
-        <a href="#" class="logo">'Ihawan</a>
+    <nav id="nav">
+        <a href="#hero" class="logo">'Ihawan</a>
         <div class="nav-links">
             <a href="#hero">Home</a>
             <a href="#menu">Menu</a>
             <a href="#story">Our Story</a>
-            <a href="#contact">Contact</a>
+            <a href="#reservations">Reservations</a>
         </div>
-        <a href="#menu" class="btn btn-fire btn-order-nav label">ORDER NOW</a>
+        <a href="#menu" class="btn btn-fire label">Order Now</a>
     </nav>
 
     <section id="hero">
-        <div class="grid-texture"></div>
-        <div id="ember-container"></div>
         <div class="hero-content">
             <span class="hero-kicker label">✦ Authentic Filipino Grill · Est. Since Day One ✦</span>
             <h1>'Ihawan Filipino Grill</h1>
             <p class="hero-sub">Where fire meets flavor — straight from the grill.</p>
-            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-                <a href="#menu" class="btn btn-fire label">ORDER NOW</a>
-                <a href="#menu" class="btn btn-outline label">VIEW MENU</a>
+            <div class="hero-btns">
+                <a href="#menu" class="btn btn-fire label">Order Online</a>
+                <a href="#reservations" class="btn btn-outline label">Reserve a Table</a>
             </div>
-            <p class="label" style="margin-top:25px; color:var(--muted); font-size:0.85rem;">★★★★★ Rated 4.9 · 200+ Happy Customers</p>
+            <p class="label" style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted);">★★★★★ Rated 4.9 · 200+ Happy Customers</p>
         </div>
     </section>
 
     <section id="menu">
-        <div class="menu-content">
-            <h2 style="font-size: 3rem; margin-bottom: 30px;">Our Menu</h2>
-            <div class="category-nav" id="cat-nav">
-                <button class="tab active label" onclick="filterCat('Grill Specials', this)">Grill Specials</button>
-                <button class="tab label" onclick="filterCat('Rice Meals', this)">Rice Meals</button>
-                <button class="tab label" onclick="filterCat('Soups & Sides', this)">Soups & Sides</button>
-                <button class="tab label" onclick="filterCat('Drinks', this)">Drinks</button>
-                <button class="tab label" onclick="filterCat('Desserts', this)">Desserts</button>
+        <div class="menu-container">
+            <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Our Menu</h2>
+            <div class="category-tabs" id="categoryTabs">
+                <button class="tab-btn active" onclick="filterMenu('Grill Specials', this)">Grill Specials</button>
+                <button class="tab-btn" onclick="filterMenu('Rice Meals', this)">Rice Meals</button>
+                <button class="tab-btn" onclick="filterMenu('Soups & Sides', this)">Soups & Sides</button>
+                <button class="tab-btn" onclick="filterMenu('Drinks', this)">Drinks</button>
+                <button class="tab-btn" onclick="filterMenu('Desserts', this)">Desserts</button>
             </div>
-            <div class="item-grid" id="menu-items"></div>
+            <div class="item-grid" id="menuGrid"></div>
         </div>
 
-        <aside class="cart-panel">
-            <h3 class="h-font" style="font-size:1.6rem; margin-bottom:20px;">Your Order <span id="cart-count" style="font-size:0.9rem; background:var(--fire); color:var(--char); padding:2px 8px; border-radius:10px; margin-left:10px;">0</span></h3>
-            <div id="cart-list">
-                <p style="color:var(--muted); text-align:center; padding:20px;">Your cart is empty.<br>Add something delicious 🔥</p>
+        <aside class="cart-sticky" id="cart">
+            <div class="cart-title h-font">Your Order</div>
+            <div id="cartItems" class="cart-items"></div>
+            <div class="cart-totals">
+                <div class="total-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+                <div class="total-row"><span>Tax (8%)</span><span id="tax">₱0.00</span></div>
+                <div class="total-row grand-total"><span>Total</span><span id="grandTotal">₱0.00</span></div>
+                <button class="btn btn-fire label" style="width: 100%; margin-top: 20px;" onclick="openCheckout()">Place Order 🔥</button>
             </div>
-            <div id="cart-summary" style="display:none; border-top:1px solid var(--muted); margin-top:20px; padding-top:20px;">
-                <div class="cart-item"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
-                <div class="cart-item"><span>Tax (8%)</span><span id="tax">₱0.00</span></div>
-                <div class="cart-item label" style="font-size:1.2rem; color:var(--fire);"><span>Total</span><span id="total">₱0.00</span></div>
-                <button onclick="showCheckout()" class="btn btn-fire label" style="width:100%; margin-top:20px; padding:16px;">PLACE ORDER →</button>
+            <div class="mobile-cart-bar" style="display: none;">
+                <span class="label" id="mobileCount">0 Items</span>
+                <span class="label" id="mobileTotal">₱0.00</span>
+                <button class="btn btn-fire btn-sm label" onclick="toggleMobileCart()">View Order</button>
             </div>
         </aside>
     </section>
 
-    <div id="checkout-modal" class="modal">
-        <div class="modal-card">
-            <button onclick="closeModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
-            <h2 class="h-font" style="margin-bottom:25px;">Complete Your Order</h2>
-            <form id="order-form" onsubmit="handleOrder(event)">
-                <input type="text" id="cust-name" placeholder="Your full name" required>
-                <input type="tel" id="cust-phone" placeholder="Phone Number" required>
-                <input type="email" id="cust-email" placeholder="your@email.com" required>
-                
-                <div style="display:flex; gap:10px; margin-bottom:15px;">
-                    <button type="button" class="btn btn-outline btn-sm label active-type" onclick="setType('dine-in', this)" style="flex:1; padding:10px;">Dine In</button>
-                    <button type="button" class="btn btn-outline btn-sm label" onclick="setType('takeout', this)" style="flex:1; padding:10px;">Takeout</button>
-                    <button type="button" class="btn btn-outline btn-sm label" onclick="setType('delivery', this)" style="flex:1; padding:10px;">Delivery</button>
+    <section id="story" class="reveal" style="padding: 100px 5%; background: var(--black);">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Born from the Grill, Made with Love</h2>
+            <p style="font-size: 1.2rem; line-height: 1.8; color: var(--muted); margin-bottom: 40px;">
+                Ihawan — the Filipino word for 'to grill' — started as a family tradition: charcoal burning, skewers sizzling, neighbors gathering. We brought that backyard spirit into a real kitchen, keeping every marinade, every technique, and every recipe rooted in authentic Filipino tradition.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                <div class="label" style="color: var(--fire)">🔥 100% Charcoal Grilled</div>
+                <div class="label" style="color: var(--fire)">🇵🇭 Authentic Recipes</div>
+                <div class="label" style="color: var(--fire)">❤️ Family-Owned</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reservations" class="reveal" style="padding: 100px 5%;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px;">
+            <div>
+                <h2 class="h-font" style="font-size: 3rem; margin-bottom: 30px;">Reserve a Table</h2>
+                <form onsubmit="handleReservation(event)">
+                    <div class="form-group"><label>Name</label><input type="text" required></div>
+                    <div class="form-row" style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex:1;"><label>Date</label><input type="date" required></div>
+                        <div class="form-group" style="flex:1;"><label>Time</label><select required><option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option></select></div>
+                    </div>
+                    <button class="btn btn-fire label" style="width: 100%;">Book Now</button>
+                </form>
+                <div id="resConfirm" style="display:none; color: var(--fire); margin-top: 20px;" class="label">Reservation Received! 🎉</div>
+            </div>
+            <div>
+                <h3 class="label" style="color: var(--fire); margin-bottom: 20px;">Contact & Hours</h3>
+                <p style="margin-bottom: 10px;">📍 Corner Runway, Brgy. San Miguel, Puerto Princesa City</p>
+                <p style="margin-bottom: 10px;">📞 (555) 123-IH-AWAN</p>
+                <div style="margin-top: 30px;">
+                    <p class="label">Mon–Thu: 4:00PM–11:30PM</p>
+                    <p class="label">Fri–Sat: 3:00M–11:30PM</p>
+                    <p class="label">Sun: 3:30PM–12:00PM</p>
                 </div>
-                <input type="text" id="cust-address" placeholder="Delivery Address" style="display:none;">
-                <textarea id="cust-notes" placeholder="Special Instructions (Allergies, extra sauce...)" rows="3"></textarea>
-                
-                <button type="submit" class="btn btn-fire label" style="width:100%; padding:16px; margin-top:10px;">CONFIRM ORDER 🔥</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <h2 class="h-font" style="font-size: 2.5rem; margin-bottom: 20px;">Checkout</h2>
+            <div class="order-type-toggle">
+                <button class="toggle-btn active" onclick="setOrderType('dine-in', this)">Dine In</button>
+                <button class="toggle-btn" onclick="setOrderType('takeout', this)">Takeout</button>
+                <button class="toggle-btn" onclick="setOrderType('delivery', this)">Delivery</button>
+            </div>
+            <form id="checkoutForm" onsubmit="submitOrder(event)">
+                <div class="form-group"><label>Full Name</label><input type="text" id="custName" required></div>
+                <div class="form-group"><label>Phone</label><input type="tel" id="custPhone" required></div>
+                <div class="form-group"><label>Email</label><input type="email" id="custEmail" required></div>
+                <div id="deliveryField" style="display:none;" class="form-group">
+                    <label>Street Address</label><input type="text" id="custAddress">
+                </div>
+                <div class="form-group"><label>Special Instructions</label><textarea id="custNotes"></textarea></div>
+                <div id="checkoutSummary" style="margin-bottom: 20px; border-top: 1px solid var(--smoke); padding-top: 20px;"></div>
+                <button type="submit" class="btn btn-fire label" style="width:100%; font-size: 1.2rem;">Confirm Order 🔥</button>
+                <button type="button" class="btn btn-outline label" style="width:100%; margin-top: 10px;" onclick="closeModal()">Cancel</button>
             </form>
         </div>
     </div>
 
-    <section id="story" class="section-story">
-        <div style="flex:1">
-            <span class="label" style="color:var(--fire); font-size:0.8rem;">OUR STORY</span>
-            <h2 style="font-size:2.5rem; margin:15px 0;">Born from the Grill, Made with Love</h2>
-            <p style="color:var(--muted); line-height:1.7;">Ihawan — the Filipino word for 'to grill' — started as a family tradition. We brought that backyard spirit into a real kitchen, keeping every marinade and technique rooted in authentic Filipino tradition.</p>
-            <div style="margin-top:25px;">
-                <div class="pill">🔥 100% Charcoal Grilled</div>
-                <div class="pill">🇵🇭 Authentic Recipes</div>
-                <div class="pill">❤️ Family-Owned</div>
+    <!-- Status Section -->
+    <section id="statusTrack" style="padding: 60px 5%; border-top: 1px solid var(--smoke); background: #111;">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <p class="label" style="margin-bottom: 15px;">Already ordered?</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="trackIdInput" placeholder="Enter Order ID (e.g. IHW-123456)">
+                <button class="btn btn-fire label" onclick="trackManual()">Track</button>
             </div>
-        </div>
-        <div style="flex:1; text-align:center;">
-            <p style="font-family:'Playfair Display'; font-style:italic; font-size:2.5rem; color:var(--fire);">"Food is our love language."</p>
-            <div style="width:60px; height:2px; background:var(--fire); margin:20px auto;"></div>
         </div>
     </section>
 
-    <footer style="padding: 60px 5%; background: #0D0803; border-top: 1px solid var(--smoke); text-align: center;">
-        <div class="logo" style="margin-bottom:10px;">'Ihawan</div>
-        <p style="font-size:0.8rem; color:var(--muted);">© 2026 'Ihawan Filipino Grill · Made with 🔥 in Puerto Princesa</p>
+    <footer style="padding: 40px 5%; text-align: center; background: var(--black); border-top: 1px solid var(--fire);">
+        <div class="logo" style="margin-bottom: 20px;">'Ihawan</div>
+        <p style="color: var(--muted); margin-bottom: 20px;">Follow the smoke on Instagram · Facebook · TikTok</p>
+        <p style="font-size: 0.8rem; color: var(--muted);">© 2026 'Ihawan Filipino Grill · Made with 🔥</p>
     </footer>
 
     <script>
-        const menuData = {
-            'Grill Specials': [
-                { id: 1, name: 'Chicken BBQ Skewers', price: 12, icon: '🍢', desc: 'Overnight marinated in soy & calamansi.', best: true },
-                { id: 2, name: 'Inihaw na Manok', price: 59, icon: '🍗', desc: 'Butterflied whole chicken, lemongrass butter.' },
-                { id: 3, name: 'Isaw', price: 12, icon: '🍢', desc: 'Classic Filipino street skewer.' }
-            ],
-            'Rice Meals': [
-                { id: 7, name: 'BBQ Combo Rice Box', price: 20, icon: '🍱', desc: '2 Skewers, garlic rice, egg & achara.', best: true },
-                { id: 8, name: 'Tapsilog', price: 39, icon: '🍳', desc: 'Beef tapa, garlic rice, and fried egg.' }
-            ],
-            'Drinks': [
-                { id: 12, name: 'Calamansi Juice', price: 29, icon: '🥤', desc: 'Fresh-squeezed Filipino lime.' },
-                { id: 13, name: 'Sago\'t Gulaman', price: 19, icon: '🧋', desc: 'Brown sugar and tapioca pearls.' }
-            ]
-        };
+        // DATA
+        const menuData = [
+            { id: 1, cat: 'Grill Specials', name: 'Chicken BBQ Skewers', price: 19, desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.', emoji: '🍢', best: true },
+            { id: 2, cat: 'Grill Specials', name: 'Inihaw na Manok', price: 59, desc: 'Butterflied whole chicken basted with lemongrass butter. Perfectly charred.', emoji: '🍗' },
+            { id: 3, cat: 'Grill Specials', name: 'Beef sa Grill', price: 299, desc: 'Thick-cut beef belly, slow-grilled with garlic vinegar glaze.', emoji: '🥩' },
+            { id: 4, cat: 'Grill Specials', name: 'Isaw (Grilled Intestine)', price: 12, desc: 'Classic Filipino street skewer, seasoned and char-grilled.', emoji: '🍢' },
+            { id: 5, cat: 'Grill Specials', name: 'Grilled Fish', price: 89, desc: 'Stuffed milkfish with tomato, onion & ginger. Wrapped in foil.', emoji: '🐟' },
+            { id: 6, cat: 'Rice Meals', name: 'Sinangag', price: 79, desc: 'Wok-fried day-old rice tossed in roasted garlic and butter.', emoji: '🍚' },
+            { id: 7, cat: 'Rice Meals', name: 'BBQ Combo Rice Box', price: 129, desc: '2 chicken skewers, garlic rice, pickled papaya & egg.', emoji: '🍱', best: true },
+            { id: 8, cat: 'Rice Meals', name: 'Tapsilog', price: 69, desc: 'Beef tapa, sinangag, and sunny-side-up egg.', emoji: '🍳' },
+            { id: 9, cat: 'Soups & Sides', name: 'Sinigang na Manok', price: 89, desc: 'Sour tamarind pork soup with radish, kangkong & eggplant.', emoji: '🍲' },
+            { id: 10, cat: 'Soups & Sides', name: 'Kare-Kare', price: 89, desc: 'Oxtail stew in rich peanut sauce, served with bagoong.', emoji: '🥜' },
+            { id: 11, cat: 'Soups & Sides', name: 'Achara', price: 39, desc: 'Classic sweet-sour pickled papaya condiment.', emoji: '🥗' },
+            { id: 12, cat: 'Drinks', name: 'Calamansi Juice', price: 19, desc: 'Fresh-squeezed Filipino lime, lightly sweetened.', emoji: '🥤' },
+            { id: 13, cat: 'Drinks', name: 'Sago\'t Gulaman', price: 19, desc: 'Brown sugar drink with tapioca pearls and jelly.', emoji: '🍹' },
+            { id: 14, cat: 'Drinks', name: 'San Miguel Beer', price: 79, desc: 'Ice-cold Filipino lager.', emoji: '🍺', best: true },
+            { id: 15, cat: 'Desserts', name: 'Halo-Halo', price: 29, desc: 'Shaved ice, mixed sweets, ube ice cream & leche flan.', emoji: '🧊' },
+            { id: 16, cat: 'Desserts', name: 'Leche Flan', price: 109, desc: 'Silky caramel egg custard. Dense, rich, golden.', emoji: '🍮' },
+            { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }
+        ];
 
         let cart = [];
         let orderType = 'dine-in';
+        let activeOrder = null;
 
-        // Particles
-        const container = document.getElementById('ember-container');
-        for(let i=0; i<20; i++){
-            const e = document.createElement('div');
-            e.className = 'ember';
-            e.style.left = Math.random()*100 + '%';
-            e.style.width = e.style.height = (Math.random()*3 + 2) + 'px';
-            e.style.setProperty('--d', (Math.random()*4 + 3) + 's');
-            e.style.animationDelay = Math.random()*5 + 's';
-            container.appendChild(e);
-        }
-
-        // Nav Scroll
+        // INITIALIZE
         window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+            const nav = document.getElementById('nav');
+            window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
+            
+            document.querySelectorAll('.reveal').forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
         });
 
-        function filterCat(cat, btn) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        function init() {
+            filterMenu('Grill Specials', document.querySelector('.tab-btn'));
+            createParticles();
+            startPolling();
+        }
+
+        function createParticles() {
+            const hero = document.getElementById('hero');
+            for(let i=0; i<20; i++) {
+                const e = document.createElement('div');
+                e.className = 'ember';
+                const size = Math.random() * 5 + 2;
+                e.style.width = size + 'px';
+                e.style.height = size + 'px';
+                e.style.left = Math.random() * 100 + '%';
+                e.style.setProperty('--d', (Math.random() * 5 + 5) + 's');
+                e.style.animationDelay = Math.random() * 5 + 's';
+                hero.appendChild(e);
+            }
+        }
+
+        // MENU LOGIC
+        function filterMenu(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const grid = document.getElementById('menu-items');
+            const grid = document.getElementById('menuGrid');
             grid.innerHTML = '';
-            (menuData[cat] || []).forEach(item => {
-                grid.innerHTML += `
-                    <div class="menu-card">
-                        <div class="food-icon">${item.icon}</div>
-                        <div class="card-content">
-                            <h3>${item.name} ${item.best ? '<span class="bestseller">🔥 BESTSELLER</span>' : ''}</h3>
-                            <p style="font-size:0.8rem; color:var(--muted); margin:5px 0;">${item.desc}</p>
-                            <span class="price">₱${item.price}</span>
-                            <button class="btn btn-fire label btn-sm" onclick="addToCart(${item.id}, '${item.name}', ${item.price})">+ ADD</button>
-                        </div>
-                    </div>`;
+            
+            menuData.filter(i => i.cat === cat).forEach(item => {
+                const cartItem = cart.find(ci => ci.id === item.id);
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.innerHTML = `
+                    ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                    <span class="food-emoji">${item.emoji}</span>
+                    <h3 class="item-name">${item.name}</h3>
+                    <p class="item-desc">${item.desc}</p>
+                    <span class="item-price">₱${item.price.toFixed(2)}</span>
+                    <div id="ctrl-${item.id}">
+                        ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}
+                    </div>
+                `;
+                grid.appendChild(card);
             });
         }
 
-        function addToCart(id, name, price) {
-            const existing = cart.find(i => i.id === id);
-            if(existing) existing.qty++;
-            else cart.push({id, name, price, qty: 1});
+        function renderQty(id, qty) {
+            return `<div class="qty-controls">
+                <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
+                <span class="label">${qty}</span>
+                <button class="qty-btn" onclick="updateQty(${id}, 1)">+</button>
+            </div>`;
+        }
+
+        // CART LOGIC
+        function addToCart(id) {
+            const item = menuData.find(i => i.id === id);
+            cart.push({ ...item, qty: 1 });
+            updateCart();
+            document.getElementById(`ctrl-${id}`).innerHTML = renderQty(id, 1);
+        }
+
+        function updateQty(id, delta) {
+            const index = cart.findIndex(i => i.id === id);
+            cart[index].qty += delta;
+            if(cart[index].qty <= 0) {
+                cart.splice(index, 1);
+                document.getElementById(`ctrl-${id}`).innerHTML = `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${id})">+ Add to Order</button>`;
+            } else {
+                document.getElementById(`ctrl-${id}`).innerHTML = renderQty(id, cart[index].qty);
+            }
             updateCart();
         }
 
         function updateCart() {
-            const list = document.getElementById('cart-list');
-            const summary = document.getElementById('cart-summary');
-            if(cart.length === 0) {
-                list.innerHTML = `<p style="color:var(--muted); text-align:center; padding:20px;">Your cart is empty.</p>`;
-                summary.style.display = 'none';
-                return;
-            }
-            summary.style.display = 'block';
-            list.innerHTML = '';
+            const list = document.getElementById('cartItems');
+            list.innerHTML = cart.length ? '' : '<div class="cart-empty">Your cart is empty. Add something delicious 🔥</div>';
+            
             let sub = 0;
             cart.forEach(item => {
-                sub += item.price * item.qty;
-                list.innerHTML += `<div class="cart-item"><span>${item.name} (${item.qty})</span><span>₱${item.price * item.qty}</span></div>`;
+                const total = item.price * item.qty;
+                sub += total;
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.qty}x ${item.name}</span>
+                        <span>₱${total.toFixed(2)}</span>
+                    </div>
+                `;
             });
+
             const tax = sub * 0.08;
+            const grand = sub + tax;
             document.getElementById('subtotal').innerText = `₱${sub.toFixed(2)}`;
             document.getElementById('tax').innerText = `₱${tax.toFixed(2)}`;
-            document.getElementById('total').innerText = `₱${(sub + tax).toFixed(2)}`;
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
-        function setType(type, btn) {
-            orderType = type;
-            document.querySelectorAll('.btn-sm').forEach(b => b.style.background = 'transparent');
-            btn.style.background = 'var(--fire)';
-            document.getElementById('cust-address').style.display = type === 'delivery' ? 'block' : 'none';
-        }
-
-        function showCheckout() { document.getElementById('checkout-modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
-
-        function handleOrder(e) {
-            e.preventDefault();
-            const orderId = 'IHW-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            const sub = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            document.getElementById('grandTotal').innerText = `₱${grand.toFixed(2)}`;
             
-            const newOrder = {
-                id: orderId,
+            // Mobile bar
+            document.getElementById('mobileCount').innerText = `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
+            document.getElementById('mobileTotal').innerText = `₱${grand.toFixed(2)}`;
+        }
+
+        // CHECKOUT
+        function setOrderType(type, btn) {
+            orderType = type;
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('deliveryField').style.display = type === 'delivery' ? 'block' : 'none';
+        }
+
+        function openCheckout() {
+            if(!cart.length) return alert("Your cart is empty!");
+            document.getElementById('checkoutModal').style.display = 'block';
+            document.getElementById('checkoutSummary').innerHTML = `
+                <div class="label" style="margin-bottom:10px">Total to pay: ${document.getElementById('grandTotal').innerText}</div>
+            `;
+        }
+
+        function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const id = "IHW-" + Date.now().toString().slice(-6);
+            const order = {
+                id,
                 timestamp: Date.now(),
-                status: 'received',
                 customer: {
-                    name: document.getElementById('cust-name').value,
-                    phone: document.getElementById('cust-phone').value,
-                    email: document.getElementById('cust-email').value,
+                    name: document.getElementById('custName').value,
+                    phone: document.getElementById('custPhone').value,
+                    email: document.getElementById('custEmail').value,
                     type: orderType,
-                    address: document.getElementById('cust-address').value
+                    address: document.getElementById('custAddress').value,
+                    notes: document.getElementById('custNotes').value
                 },
-                items: cart,
-                total: sub + (sub * 0.08)
+                items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price, subtotal: i.qty * i.price })),
+                total: parseFloat(document.getElementById('grandTotal').innerText.replace('₱','')),
+                status: 'received'
             };
 
-            const existing = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-            existing.push(newOrder);
-            localStorage.setItem('ihawan_orders', JSON.stringify(existing));
+            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('ihawan_orders', JSON.stringify(orders));
             
-            window.location.href = `order-status.html?id=${orderId}`;
+            showConfirmation(id);
+            cart = [];
+            updateCart();
+            init(); // Refresh menu UI
         }
 
-        filterCat('Grill Specials', document.querySelector('.tab'));
+        function showConfirmation(id) {
+            activeOrder = id;
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div style="text-align:center">
+                    <div style="font-size:4rem; color: var(--fire)">✔</div>
+                    <h2 class="h-font" style="font-size:2.5rem">Order Placed! 🎉</h2>
+                    <p class="label" style="font-size:1.2rem; margin: 20px 0">Order ID: ${id}</p>
+                    <div class="status-tracker">
+                        <div class="step active" id="s-received"><div class="step-icon">1</div><div class="step-label">Received</div></div>
+                        <div class="step" id="s-preparing"><div class="step-icon">🔥</div><div class="step-label">Preparing</div></div>
+                        <div class="step" id="s-ready"><div class="step-icon">✅</div><div class="step-label">Ready</div></div>
+                    </div>
+                    <p id="statusMsg">We've received your order. Hang tight!</p>
+                    <button class="btn btn-outline label" style="margin-top:40px" onclick="location.reload()">Back to Home</button>
+                </div>
+            `;
+        }
+
+        // POLLING & TRACKING
+        function startPolling() {
+            setInterval(() => {
+                if(activeOrder) updateStatusUI(activeOrder);
+            }, 5000);
+        }
+
+        function updateStatusUI(id) {
+            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+            const order = orders.find(o => o.id === id);
+            if(!order) return;
+
+            if(order.status === 'preparing') {
+                document.getElementById('s-preparing')?.classList.add('active');
+                if(document.getElementById('statusMsg')) document.getElementById('statusMsg').innerText = "Chef is grilling your order! 🔥";
+            }
+            if(order.status === 'ready') {
+                document.getElementById('s-preparing')?.classList.add('active');
+                document.getElementById('s-ready')?.classList.add('active');
+                if(document.getElementById('statusMsg')) document.getElementById('statusMsg').innerHTML = "<span style='color:var(--fire); font-size:1.5rem'>YOUR ORDER IS READY! 🎉</span>";
+            }
+        }
+
+        function trackManual() {
+            const id = document.getElementById('trackIdInput').value;
+            if(!id) return;
+            document.getElementById('checkoutModal').style.display = 'block';
+            showConfirmation(id);
+            updateStatusUI(id);
+        }
+
+        function handleReservation(e) {
+            e.preventDefault();
+            const res = { name: e.target[0].value, date: e.target[1].value, time: e.target[2].value };
+            const current = JSON.parse(localStorage.getItem('ihawan_reservations') || '[]');
+            current.push(res);
+            localStorage.setItem('ihawan_reservations', JSON.stringify(current));
+            document.getElementById('resConfirm').style.display = 'block';
+            e.target.reset();
+        }
+
+        init();
     </script>
 </body>
-</html>
+              </html>
