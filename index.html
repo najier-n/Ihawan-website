@@ -112,12 +112,20 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
         .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; }
         .tab-icon { width: 38px; height: 38px; object-fit: contain; transition: 0.3s}
+        .hero-logo {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(245,168,0,0.35));
+}
     </style>
 </head>
 <body>
 
     <nav id="nav">
-        <a href="#hero" class="logo">'Ihawan</a>
+        <a href="#hero" class="logo">'Ihawan Filipino Grill</a>
         <div class="nav-links">
             <a href="#hero">Home</a>
             <a href="#menu">Menu</a>
@@ -129,7 +137,7 @@
     <section id="hero">
         <div class="hero-content">
             <span class="hero-kicker label">✦ Authentic Filipino Grill · Est. Since Day One ✦</span>
-            <h1>'Ihawan Filipino Grill</h1>
+            <img src="images/ihawan.png" alt="'Ihawan Filipino Grill" class="hero-logo">
             <p class="hero-sub">Where fire meets flavor — straight from the grill.</p>
             <div class="hero-btns">
                 <a href="#menu" class="btn btn-fire label">Menu</a>
