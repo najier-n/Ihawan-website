@@ -110,6 +110,8 @@
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .tab-btn { display: flex; align-items: center; gap: 8px;}
+        .tab-icon { width: 22px; height: 22px; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -141,11 +143,16 @@
         <div class="menu-container">
             <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Our Menu</h2>
             <div class="category-tabs" id="categoryTabs">
-                <button class="tab-btn active" onclick="filterMenu('Grill Specials', this)">Grill Specials</button>
-                <button class="tab-btn" onclick="filterMenu('Rice Meals', this)">Rice Meals</button>
-                <button class="tab-btn" onclick="filterMenu('Soups & Sides', this)">Soups & Sides</button>
-                <button class="tab-btn" onclick="filterMenu('Drinks', this)">Drinks</button>
-                <button class="tab-btn" onclick="filterMenu('Desserts', this)">Desserts</button>
+                <button class="tab-btn active" onclick="filterMenu('Grill Specials', this)">
+                    <img src="Grill-Special.png" class="tab icon"> Grill Specials</button>
+                <button class="tab-btn" onclick="filterMenu('Rice Meals', this)">
+                    <img src="Rice-Meal.png" class="tab icon"> Rice Meals</button>
+                <button class="tab-btn" onclick="filterMenu('Soups & Sides', this)">
+                    <img src="Soup.png" class="tab icon"> Soups & Sides</button>
+                <button class="tab-btn" onclick="filterMenu('Drinks', this)">
+                    <img src="Drinks.png" class="tab icon"> Drinks</button>
+                <button class="tab-btn" onclick="filterMenu('Desserts', this)">
+                    <img src="Halo-Halo.png" class="tab icon"> Desserts</button>
             </div>
             <div class="item-grid" id="menuGrid"></div>
         </div>
