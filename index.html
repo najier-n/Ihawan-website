@@ -103,7 +103,7 @@
 
         /* Mobile Adjustments */
         @media (max-width: 968px) {
-            #menu { grid-template-columns: 1fr; }
+            #menu { grid-template-columns: 1fr; } }
         /* MOBILE CART SMALL FLOATING BOX */
         @media (max-width: 768px) {
             .cart-sticky { position: fixed !important; bottom: 15px !important; top: auto !important; right: auto; left: 15px; width: 220px; max-width: calc(100vw - 30px); padding: 14px; border-radius: 18px; background: rgba(26,17,8,0.96); backdrop-filter: blur(12px); border: 1px solid var(--fire);z-index: 9999;box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
@@ -117,7 +117,7 @@
             .cart-sticky.expanded .cart-items, .cart-sticky.expanded .cart-title { display: block; }
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; }
             .nav-links { display: none; }
-        }
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }
@@ -539,7 +539,7 @@ if (
                 <span class="food-emoji">${item.emoji}</span>
                 <h3 class="item-name">${item.name}</h3>
                 <p class="item-desc">${item.desc}</p>
-                <span class="item-price">₱${item.price.toFixed(2)}</span>
+                <span class="item-price">₱${item.price ? `<span class="item-price">₱${item.price.toFixed(2)}</span>` : ''}
 
                 <div id="ctrl-${item.id}">
                     ${cartItem
@@ -721,32 +721,67 @@ function addSpecialSet(name, price, uniqueId) {
         function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }
 
         function submitOrder(e) {
-            e.preventDefault();
-            const id = "IHW-" + Date.now().toString().slice(-6);
-            const order = {
-                id,
-                timestamp: Date.now(),
-                customer: {
-                    name: document.getElementById('custName').value,
-                    phone: document.getElementById('custPhone').value,
-                    email: document.getElementById('custEmail').value,
-                    type: orderType,
-                    address: document.getElementById('custAddress').value,
-                    notes: document.getElementById('custNotes').value
-                },
-                items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price, subtotal: i.qty * i.price })),
-                total: parseFloat(document.getElementById('grandTotal').innerText.replace('₱','')),
-                status: 'received'
-            };
+    e.preventDefault();
 
-            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-            orders.push(order);
-            localStorage.setItem('ihawan_orders', JSON.stringify(orders));
-            
-            showConfirmation(id);
-            cart = [];
-            updateCart();
-            init(); // Refresh menu UI
+    const id = "IHW-" + Date.now().toString().slice(-6);
+
+    const order = {
+        id,
+        timestamp: Date.now(),
+        customer: {
+            name: document.getElementById('custName').value,
+            phone: document.getElementById('custPhone').value,
+            email: document.getElementById('custEmail').value,
+            type: orderType,
+            address: document.getElementById('custAddress').value,
+            notes: document.getElementById('custNotes').value
+        },
+        items: cart.map(i => ({
+            name: i.name,
+            qty: i.qty,
+            price: i.price,
+            subtotal: i.qty * i.price
+        })),
+        total: parseFloat(
+            document.getElementById('grandTotal')
+            .innerText.replace('₱','')
+        ),
+        status: 'received'
+    };
+
+    // SAVE ORDER
+    const orders = JSON.parse(
+        localStorage.getItem('ihawan_orders') || '[]'
+    );
+
+    orders.push(order);
+
+    localStorage.setItem(
+        'ihawan_orders',
+        JSON.stringify(orders)
+    );
+
+    // SHOW CONFIRMATION
+    showConfirmation(id);
+
+    // CLEAR CART
+    cart = [];
+
+    // UPDATE UI
+    updateCart();
+
+    // RESET BUTTONS / MENU
+    filterMenu(
+        document.querySelector('.tab-btn.active').innerText.trim(),
+        document.querySelector('.tab-btn.active')
+    );
+
+    // HIDE CART COMPLETELY
+    document.getElementById('cart')
+        .classList.add('hidden');
+
+    // RESET FORM
+    document.getElementById('checkoutForm').reset();
         }
 
         function showConfirmation(id) {
