@@ -159,7 +159,7 @@
 
     /* MENU GRID */
                                    .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-                                   .menu-card { width: 100%; padding: 16px; border-radius: 18px; min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+                                   .menu-card { touch-action: manipulation; width: 100%; padding: 16px; border-radius: 18px; min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
                                    .food-emoji { font-size: 2.2rem; margin-bottom: 10px; }
                                    .item-name { font-size: 1.1rem; line-height: 1.2; }
                                    .item-desc { font-size: 0.75rem; min-height: auto; margin-bottom: 10px; }
@@ -207,6 +207,7 @@
         .cart-sticky.hidden { display: none !important; }
         /* PREMIUM MOBILE POPUP */
 .set-options {
+    pointer-events: none;
 
     position: fixed;
 
@@ -247,6 +248,7 @@
 
 /* SHOW */
 .set-options.show {
+    pointer-events: auto;
 
     opacity: 1;
     visibility: visible;
@@ -543,7 +545,9 @@ if (
     card.innerHTML = `
         ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
 
-        <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
+        <div onclick="event.stopPropagation(); toggleSetOptions(${item.id})"
+     ontouchstart="event.stopPropagation(); toggleSetOptions(${item.id})"
+     style="cursor:pointer;">
             <span class="food-emoji">${item.emoji}</span>
             <h3 class="item-name">${item.name}</h3>
             <p class="item-desc">${item.desc}</p>
@@ -658,18 +662,24 @@ if (
     const overlay = document.getElementById('setOverlay');
     const box = document.getElementById(`set-options-${id}`);
 
-    // CLOSE ALL
+    // CLOSE ALL FIRST
     document.querySelectorAll('.set-options').forEach(el => {
         el.classList.remove('show');
     });
 
-    // TOGGLE CURRENT
-    const willOpen = !box.classList.contains('show');
+    // IF CURRENT IS NOT OPEN → OPEN IT
+    if (!box.classList.contains('show')) {
 
-    if (willOpen) {
-        box.classList.add('show');
-        overlay.classList.add('show');
+        // SMALL DELAY FIX FOR MOBILE TAP
+        requestAnimationFrame(() => {
+            box.classList.add('show');
+            overlay.classList.add('show');
+        });
+
     } else {
+
+        // CLOSE
+        box.classList.remove('show');
         overlay.classList.remove('show');
     }
         }
@@ -937,6 +947,8 @@ function addSpecialSet(name, price, uniqueId) {
         init();
         updateCart();
     </script>
-    <div class="set-overlay" id="setOverlay"></div>
+    <div class="set-overlay" id="setOverlay"
+     onclick="document.querySelectorAll('.set-options').forEach(el=>el.classList.remove('show')); this.classList.remove('show');">
+    </div>
 </body>
               </html>
