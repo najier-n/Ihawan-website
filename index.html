@@ -205,10 +205,31 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-        
-        /* FLOATING SPECIAL MENU */
-/* FLOATING POPUP */
-.set-options{
+
+        /* OVERLAY */
+.popup-overlay{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.25s ease;
+
+    z-index: 99998;
+}
+
+/* SHOW OVERLAY */
+.popup-overlay.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+/* POPUP */
+.special-popup{
     position: fixed;
 
     top: 50%;
@@ -222,57 +243,29 @@
     max-height: 85vh;
     overflow-y: auto;
 
-    background: rgba(26,17,8,0.98);
-    backdrop-filter: blur(14px);
+    background: #1a1108;
 
     border: 1px solid var(--fire);
-    border-radius: 22px;
+    border-radius: 20px;
 
     padding: 20px;
 
-    z-index: 999999;
+    z-index: 99999;
 
     opacity: 0;
     visibility: hidden;
 
     transition: 0.25s ease;
 
-    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
 }
 
 /* SHOW POPUP */
-.set-options.active{
+.special-popup.active{
     opacity: 1;
     visibility: visible;
+
     transform: translate(-50%, -50%) scale(1);
-}
-
-/* DARK BACKGROUND */
-.set-options::before{
-    content:'';
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: -1;
-}
-        .popup-overlay{
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(4px);
-
-    z-index: 999998;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.25s ease;
-}
-
-.popup-overlay.active{
-    opacity: 1;
-    visibility: visible;
 }
     </style>
 </head>
@@ -500,88 +493,21 @@ if (
     card.innerHTML = `
         ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
 
-        <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
-            <span class="food-emoji">${item.emoji}</span>
-            <h3 class="item-name">${item.name}</h3>
-            <p class="item-desc">${item.desc}</p>
-        </div>
+        <span class="food-emoji">${item.emoji}</span>
 
-        <div id="set-options-${item.id}" class="set-options">
+        <h3 class="item-name">${item.name}</h3>
 
-        ${
-            item.name === 'Chicken BBQ Skewers'
-            ?
+        <p class="item-desc">${item.desc}</p>
 
-            `
-            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
-                <h4 class="label" style="color:var(--fire);">🍗 Set 1</h4>
+        <button
+            class="btn btn-fire label"
+            style="width:100%;"
+            onclick="openSpecialPopup(${item.id})">
 
-                <p style="margin:10px 0;">Chicken BBQ + Garlic Rice + Drink</p>
-
-                <div style="color:var(--fire); font-size:1.4rem;">₱99</div>
-
-                <div id="special-ctrl-1001">
-                    <button class="btn btn-fire label"
-                        style="width:100%; margin-top:10px;"
-                        onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99, 1001)">
-                        Add to Order
-                    </button>
-                </div>
-            </div>
-
-            <div style="background:#1a1108; padding:15px; border-radius:10px;">
-                <h4 class="label" style="color:var(--fire);">🍗 Set 2</h4>
-
-                <p style="margin:10px 0;">Double Chicken BBQ + Java Rice + Iced Tea</p>
-
-                <div style="color:var(--fire); font-size:1.4rem;">₱149</div>
-
-                <div id="special-ctrl-1002">
-                    <button class="btn btn-fire label"
-                        style="width:100%; margin-top:10px;"
-                        onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149, 1002)">
-                        Add to Order
-                    </button>
-                </div>
-            </div>
-            `
-
-            :
-
-            `
-            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
-                <h4 class="label" style="color:var(--fire);">🔥 Isaw Solo</h4>
-
-                <p style="margin:10px 0;">5 sticks grilled Isaw + spicy vinegar</p>
-
-                <div style="color:var(--fire); font-size:1.4rem;">₱59</div>
-
-                <div id="special-ctrl-2001">
-                    <button class="btn btn-fire label"
-                        style="width:100%; margin-top:10px;"
-                        onclick="addSpecialSet('Isaw Solo', 59, 2001)">
-                        Add to Order
-                    </button>
-                </div>
-            </div>
-
-            <div style="background:#1a1108; padding:15px; border-radius:10px;">
-                <h4 class="label" style="color:var(--fire);">🔥 Isaw Barkada</h4>
-
-                <p style="margin:10px 0;">12 sticks Isaw + Garlic Rice + Drinks</p>
-
-                <div style="color:var(--fire); font-size:1.4rem;">₱129</div>
-
-                <div id="special-ctrl-2002">
-                    <button class="btn btn-fire label"
-                        style="width:100%; margin-top:10px;"
-                        onclick="addSpecialSet('Isaw Barkada', 129, 2002)">
-                        Add to Order
-                    </button>
-                </div>
-            </div>
-            `
-        }
+            View Sets 🔥
+        </button>
+    `;
+}
 
         <button class="btn btn-outline label"
             style="width:100%; margin-top:15px;"
@@ -885,6 +811,146 @@ function addSpecialSet(name, price, uniqueId) {
             document.getElementById('resConfirm').style.display = 'block';
             e.target.reset();
         }
+
+        /* OPEN POPUP */
+function openSpecialPopup(id){
+
+    const popup = document.getElementById('specialPopup');
+    const overlay = document.getElementById('popupOverlay');
+    const content = document.getElementById('specialPopupContent');
+
+    overlay.classList.add('active');
+    popup.classList.add('active');
+
+    /* CHICKEN BBQ */
+    if(id === 1){
+
+        content.innerHTML = `
+
+            <h2 class="label"
+                style="color:var(--fire); margin-bottom:20px;">
+                🍢 Chicken BBQ Sets
+            </h2>
+
+            <div style="background:#24180d; padding:15px; border-radius:14px; margin-bottom:15px;">
+
+                <h3 class="label" style="color:var(--fire);">
+                    Set 1
+                </h3>
+
+                <p style="margin:10px 0;">
+                    Chicken BBQ + Garlic Rice + Drink
+                </p>
+
+                <div style="font-size:1.5rem; color:var(--fire);">
+                    ₱99
+                </div>
+
+                <button
+                    class="btn btn-fire label"
+                    style="width:100%; margin-top:10px;"
+                    onclick="addSpecialSet('Chicken BBQ Skewers Set 1',99,1001)">
+                    Add to Order
+                </button>
+            </div>
+
+            <div style="background:#24180d; padding:15px; border-radius:14px;">
+
+                <h3 class="label" style="color:var(--fire);">
+                    Set 2
+                </h3>
+
+                <p style="margin:10px 0;">
+                    Double Chicken BBQ + Java Rice + Iced Tea
+                </p>
+
+                <div style="font-size:1.5rem; color:var(--fire);">
+                    ₱149
+                </div>
+
+                <button
+                    class="btn btn-fire label"
+                    style="width:100%; margin-top:10px;"
+                    onclick="addSpecialSet('Chicken BBQ Skewers Set 2',149,1002)">
+                    Add to Order
+                </button>
+            </div>
+        `;
+    }
+
+    /* ISAW */
+    if(id === 4){
+
+        content.innerHTML = `
+
+            <h2 class="label"
+                style="color:var(--fire); margin-bottom:20px;">
+                🔥 Isaw Specials
+            </h2>
+
+            <div style="background:#24180d; padding:15px; border-radius:14px; margin-bottom:15px;">
+
+                <h3 class="label" style="color:var(--fire);">
+                    Isaw Solo
+                </h3>
+
+                <p style="margin:10px 0;">
+                    5 sticks grilled Isaw + spicy vinegar
+                </p>
+
+                <div style="font-size:1.5rem; color:var(--fire);">
+                    ₱59
+                </div>
+
+                <button
+                    class="btn btn-fire label"
+                    style="width:100%; margin-top:10px;"
+                    onclick="addSpecialSet('Isaw Solo',59,2001)">
+                    Add to Order
+                </button>
+            </div>
+
+            <div style="background:#24180d; padding:15px; border-radius:14px;">
+
+                <h3 class="label" style="color:var(--fire);">
+                    Isaw Barkada
+                </h3>
+
+                <p style="margin:10px 0;">
+                    12 sticks Isaw + Garlic Rice + Drinks
+                </p>
+
+                <div style="font-size:1.5rem; color:var(--fire);">
+                    ₱129
+                </div>
+
+                <button
+                    class="btn btn-fire label"
+                    style="width:100%; margin-top:10px;"
+                    onclick="addSpecialSet('Isaw Barkada',129,2002)">
+                    Add to Order
+                </button>
+            </div>
+        `;
+    }
+}
+
+/* CLOSE POPUP */
+function closePopup(){
+
+    document
+        .getElementById('popupOverlay')
+        .classList.remove('active');
+
+    document
+        .getElementById('specialPopup')
+        .classList.remove('active');
+}
+
+/* CLICK OUTSIDE CLOSE */
+document
+.getElementById('popupOverlay')
+.addEventListener('click', closePopup);
         
         /* CLICK OUTSIDE TO CLOSE */
 document
@@ -904,7 +970,21 @@ document
         init();
         updateCart();
     </script>
-    
+    <!-- GLOBAL POPUP -->
+<div class="popup-overlay" id="popupOverlay"></div>
+
+<div class="special-popup" id="specialPopup">
+
+    <div id="specialPopupContent"></div>
+
+    <button
+        class="btn btn-outline label"
+        style="width:100%; margin-top:15px;"
+        onclick="closePopup()">
+        Close
+    </button>
+
+</div>
 </body>
-    <div class="popup-overlay" id="popupOverlay"></div>
+    
               </html>
