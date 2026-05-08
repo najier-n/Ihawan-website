@@ -299,16 +299,25 @@
         <div class="menu-container">
             <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Our Menu</h2>
             <div class="category-tabs" id="categoryTabs">
-                <button class="tab-btn active" onclick="filterMenu('Grill Specials', this)">
-                    <img src="images/Grill-Special.png" class="tab-icon"> Grill Specials</button>
-                <button class="tab-btn" onclick="filterMenu('Rice Meals', this)">
-                    <img src="images/Rice-Meal.png" class="tab-icon"> Rice Meals</button>
-                <button class="tab-btn" onclick="filterMenu('Soups & Sides', this)">
-                    <img src="images/Soup.png" class="tab-icon"> Soups & Sides</button>
-                <button class="tab-btn" onclick="filterMenu('Drinks', this)">
-                    <img src="images/Drinks.png" class="tab-icon"> Drinks</button>
-                <button class="tab-btn" onclick="filterMenu('Desserts', this)">
-                    <img src="images/Halo-Halo.png" class="tab-icon"> Desserts</button>
+                <button class="tab-btn active" data-cat="Grill Specials">
+    <img src="images/Grill-Special.png" class="tab-icon"> Grill Specials
+</button>
+
+<button class="tab-btn" data-cat="Rice Meals">
+    <img src="images/Rice-Meal.png" class="tab-icon"> Rice Meals
+</button>
+
+<button class="tab-btn" data-cat="Soups & Sides">
+    <img src="images/Soup.png" class="tab-icon"> Soups & Sides
+</button>
+
+<button class="tab-btn" data-cat="Drinks">
+    <img src="images/Drinks.png" class="tab-icon"> Drinks
+</button>
+
+<button class="tab-btn" data-cat="Desserts">
+    <img src="images/Halo-Halo.png" class="tab-icon"> Desserts
+</button>
             </div>
             <div class="item-grid" id="menuGrid"></div>
         </div>
@@ -449,7 +458,8 @@
         });
 
         function init() {
-            filterMenu('Grill Specials', document.querySelector('.tab-btn'));
+            const firstTab = document.querySelector('.tab-btn[data-cat="Grill Specials"]');
+filterMenu('Grill Specials', firstTab);
             createParticles();
             startPolling();
         }
@@ -471,9 +481,9 @@
 
         // MENU LOGIC
 function filterMenu(cat, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
+    if (btn) btn.classList.add('active');
+    
     const grid = document.getElementById('menuGrid');
     grid.innerHTML = '';
 
