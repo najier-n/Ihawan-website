@@ -52,7 +52,7 @@
         .tab-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); transform: scale(0.96); }
 
         .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: hidden; }
+        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: visible; }
         .menu-card:hover { border-color: var(--fire); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .menu-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient( 120deg, transparent, rgba(255,255,255,0.05), transparent ); transform: translateX(-100%); transition: 0.8s; }
         .menu-card:hover::before { transform: translateX(100%); }
@@ -207,31 +207,40 @@
         .cart-sticky.hidden { display: none !important; }
         
         /* FLOATING SPECIAL MENU */
+/* FLOATING POPUP */
 .set-options{
     position: fixed;
-    left: 50%;
+
     top: 50%;
+    left: 50%;
+
     transform: translate(-50%, -50%) scale(0.9);
-    width: 90%;
-    max-width: 380px;
+
+    width: 92%;
+    max-width: 420px;
+
+    max-height: 85vh;
+    overflow-y: auto;
 
     background: rgba(26,17,8,0.98);
     backdrop-filter: blur(14px);
 
     border: 1px solid var(--fire);
-    border-radius: 20px;
+    border-radius: 22px;
 
     padding: 20px;
-    z-index: 99999;
+
+    z-index: 999999;
 
     opacity: 0;
     visibility: hidden;
 
     transition: 0.25s ease;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
 }
 
-/* SHOW FLOAT */
+/* SHOW POPUP */
 .set-options.active{
     opacity: 1;
     visibility: visible;
@@ -245,6 +254,25 @@
     inset: 0;
     background: rgba(0,0,0,0.55);
     z-index: -1;
+}
+        .popup-overlay{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(4px);
+
+    z-index: 999998;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.25s ease;
+}
+
+.popup-overlay.active{
+    opacity: 1;
+    visibility: visible;
 }
     </style>
 </head>
@@ -584,12 +612,17 @@ if (
         
         function toggleSetOptions(id) {
 
-    // CLOSE OTHER FLOATS
+    // CLOSE ALL
     document.querySelectorAll('.set-options').forEach(el => {
         el.classList.remove('active');
     });
 
-    // OPEN SELECTED
+    // OPEN OVERLAY
+    document
+        .getElementById('popupOverlay')
+        .classList.add('active');
+
+    // OPEN POPUP
     document
         .getElementById(`set-options-${id}`)
         .classList.add('active');
@@ -599,6 +632,10 @@ function closeSetOptions(id) {
 
     document
         .getElementById(`set-options-${id}`)
+        .classList.remove('active');
+
+    document
+        .getElementById('popupOverlay')
         .classList.remove('active');
 }
 
@@ -852,5 +889,6 @@ function addSpecialSet(name, price, uniqueId) {
         init();
         updateCart();
     </script>
+    <div class="popup-overlay" id="popupOverlay"></div>
 </body>
               </html>
