@@ -118,7 +118,6 @@
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; }
             .nav-links { display: none; }
         }
-
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }
@@ -135,12 +134,10 @@
             to { opacity:1; transform:translateY(0); } }
 
         /* FIX MOBILE OVERFLOW */
-        html, body { width: 100%; overflow-x: hidden;
-}
+        html, body { width: 100%; overflow-x: hidden; }
 
         /* MOBILE RESPONSIVE */
-        @media (max-width: 768px) {
-            body { overflow-x: hidden; }
+        @media (max-width: 768px) { body { overflow-x: hidden; }
 
     /* HERO */
             #hero { padding: 100px 20px 40px; height: auto; min-height: 100vh; }
@@ -154,83 +151,48 @@
             .menu-container { width: 100%; }
 
     /* CATEGORY TABS */
-    .category-tabs {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        gap: 12px;
-        padding: 10px 5px 15px;
-        scroll-behavior: smooth;
-
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .category-tabs::-webkit-scrollbar { display: none; }
-
-    .tab-btn { min-width: 100px; flex-shrink: 0; border-radius: 14px; }
-
-    .tab-icon { width: 30px; height: 30px; }
+            .category-tabs { display: flex; overflow-x: auto; overflow-y: hidden; white-space: nowrap; gap: 12px; padding: 10px 5px 15px; scroll-behavior: smooth;
+                            -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .category-tabs::-webkit-scrollbar { display: none; }
+            .tab-btn { min-width: 100px; flex-shrink: 0; border-radius: 14px; }
+            .tab-icon { width: 30px; height: 30px; }
 
     /* MENU GRID */
-    .item-grid { grid-template-columns: 1fr; gap: 16px; }
-
-    .menu-card { width: 100%; padding: 20px; }
+            .item-grid { grid-template-columns: 1fr; gap: 16px; }
+            .menu-card { width: 100%; padding: 20px; }
 
     /* RESERVATION SECTION */
-    #reservations > div {
-        grid-template-columns: 1fr !important;
-        gap: 40px !important;
-    }
+            #reservations > div { grid-template-columns: 1fr !important; gap: 40px !important; }
 
     /* FORM ROW */
-    .form-row {
-        flex-direction: column;
-    }
+            .form-row { flex-direction: column; }
 
     /* MODAL */
-    .modal-content {
-        padding: 25px;
-        width: 100%;
-    }
+            .modal-content { padding: 25px; width: 100%; }
 
     /* CART */
-    .cart-sticky {
-        width: 100%;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 15px;
-        border-radius: 20px 20px 0 0;
-    }
+            .cart-sticky { width: 100%; left: 0; right: 0; bottom: 0; padding: 15px; border-radius: 20px 20px 0 0; }
 
     /* STATUS TRACKER */
-    .status-tracker {
-        gap: 10px;
-    }
-
-    .step-label {
-        font-size: 0.6rem;
-    }
+            .status-tracker { gap: 10px; }
+            .step-label { font-size: 0.6rem; }
 
     /* STORY SECTION */
-    #story {
-        padding: 70px 20px;
-    }
+            #story { padding: 70px 20px; }
 
     /* FOOTER */
-    footer {
-        padding-bottom: 120px;
-    }
+            footer { padding-bottom: 120px; }
 }
+        /* HIDDEN CART */
+        .cart-sticky.hidden { display: none !important; }
+        
     </style>
 </head>
 <body>
     
 
     <nav id="nav">
-        <a href="#hero" class="logo">'Ihawan Filipino Grill</a>
+        <a href="#hero" class="logo">ihawan Filipino Grill</a>
         <div class="nav-links">
             <a href="#hero">Home</a>
             <a href="#menu">Menu</a>
@@ -678,30 +640,48 @@ function addSpecialSet(name, price, uniqueId) {
 
         function updateCart() {
             const list = document.getElementById('cartItems');
-            list.innerHTML = cart.length ? '' : '<div class="cart-empty">Your cart is empty. Add something delicious 🔥</div>';
-            
-            let sub = 0;
-            cart.forEach(item => {
-                const total = item.price * item.qty;
-                sub += total;
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.qty}x ${item.name}</span>
-                        <span>₱${total.toFixed(2)}</span>
-                    </div>
-                `;
-            });
+            const cartBox = document.getElementById('cart');
+
+    // HIDE CART IF EMPTY
+            if(cart.length === 0) { cartBox.classList.add('hidden'); }
+            else { cartBox.classList.remove('hidden'); }
+
+    list.innerHTML = cart.length
+        ? ''
+        : '<div class="cart-empty">Your cart is empty.</div>';
+
+    let sub = 0;
+
+    cart.forEach(item => {
+        const total = item.price * item.qty;
+        sub += total;
+
+        list.innerHTML += `
+            <div class="cart-item">
+                <span>${item.qty}x ${item.name}</span>
+                <span>₱${total.toFixed(2)}</span> </div>
+        `;
+    });
 
             const tax = sub * 0.08;
             const grand = sub + tax;
-            document.getElementById('subtotal').innerText = `₱${sub.toFixed(2)}`;
-            document.getElementById('tax').innerText = `₱${tax.toFixed(2)}`;
-            document.getElementById('grandTotal').innerText = `₱${grand.toFixed(2)}`;
-            
-            // Mobile bar
-            document.getElementById('mobileCount').innerText = `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
-            document.getElementById('mobileTotal').innerText = `₱${grand.toFixed(2)}`;
-        }
+
+    document.getElementById('subtotal').innerText =
+        `₱${sub.toFixed(2)}`;
+
+    document.getElementById('tax').innerText =
+        `₱${tax.toFixed(2)}`;
+
+    document.getElementById('grandTotal').innerText =
+        `₱${grand.toFixed(2)}`;
+
+    // MOBILE INFO
+    document.getElementById('mobileCount').innerText =
+        `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
+
+    document.getElementById('mobileTotal').innerText =
+        `₱${grand.toFixed(2)}`;
+                    }
 
         // CHECKOUT
         function setOrderType(type, btn) {
@@ -811,6 +791,7 @@ function addSpecialSet(name, price, uniqueId) {
         }
 
         init();
+        updateCart();
     </script>
 </body>
               </html>
