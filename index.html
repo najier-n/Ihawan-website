@@ -158,23 +158,11 @@
             .tab-icon { width: 30px; height: 30px; }
 
     /* MENU GRID */
-            .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-            .menu-card { width: 100%; padding: 16px; border-radius: 18px; min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-                .food-emoji {
-        font-size: 2.2rem;
-        margin-bottom: 10px;
-    }
-
-    .item-name {
-        font-size: 1.1rem;
-        line-height: 1.2;
-    }
-
-    .item-desc {
-        font-size: 0.75rem;
-        min-height: auto;
-        margin-bottom: 10px;
-    }
+                                   .item-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+                                   .menu-card { width: 100%; padding: 16px; border-radius: 18px; min-height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+                                   .food-emoji { font-size: 2.2rem; margin-bottom: 10px; }
+                                   .item-name { font-size: 1.1rem; line-height: 1.2; }
+                                   .item-desc { font-size: 0.75rem; min-height: auto; margin-bottom: 10px; }
 
     .item-price {
         font-size: 1.1rem;
@@ -217,7 +205,93 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-        
+        /* PREMIUM FLOATING SET POPUP */
+.set-options {
+    position: fixed;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform: translateX(-50%) translateY(30px);
+
+    width: calc(100% - 30px);
+    max-width: 420px;
+
+    background: rgba(26,17,8,0.98);
+
+    border: 1px solid var(--fire);
+
+    border-radius: 24px;
+
+    padding: 20px;
+
+    z-index: 99999;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.35s ease;
+
+    backdrop-filter: blur(18px);
+
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* SHOW POPUP */
+.set-options.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(-50%) translateY(0);
+}
+
+/* DARK BACKDROP */
+.set-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.55);
+
+    backdrop-filter: blur(5px);
+
+    z-index: 99998;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s;
+}
+
+.set-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* PREMIUM SET CARDS */
+.set-options > div {
+    background: #1a1108;
+
+    border-radius: 18px;
+
+    padding: 16px;
+
+    margin-bottom: 14px;
+
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .set-options {
+        bottom: 10px;
+        border-radius: 22px 22px 18px 18px;
+    }
+
+    }
     </style>
 </head>
 <body>
@@ -562,18 +636,35 @@ if (
                 `; } grid.appendChild(card); }); }
         
         function toggleSetOptions(id) {
-            const box = document.getElementById(`set-options-${id}`);
-            
-            if(box.style.display === 'block') {
-                box.style.display = 'none';
-                } else {
-                box.style.display = 'block';
-                }
-            }
+
+    // CLOSE ALL FIRST
+    document.querySelectorAll('.set-options')
+        .forEach(box => box.classList.remove('show'));
+
+    const overlay = document.getElementById('setOverlay');
+
+    const box = document.getElementById(`set-options-${id}`);
+
+    box.classList.add('show');
+
+    overlay.classList.add('show');
+
+    // CLOSE WHEN CLICK BACKDROP
+    overlay.onclick = () => {
+        closeSetOptions(id);
+    };
+        }
 
         function closeSetOptions(id) {
-            document.getElementById(`set-options-${id}`).style.display = 'none';
-            }
+
+    const box = document.getElementById(`set-options-${id}`);
+
+    const overlay = document.getElementById('setOverlay');
+
+    box.classList.remove('show');
+
+    overlay.classList.remove('show');
+        }
 
 function addSpecialSet(name, price, uniqueId) {
 
@@ -825,5 +916,6 @@ function addSpecialSet(name, price, uniqueId) {
         init();
         updateCart();
     </script>
+    <div class="set-overlay" id="setOverlay"></div>
 </body>
               </html>
