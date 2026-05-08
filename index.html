@@ -335,7 +335,7 @@
         }
 
         // MENU LOGIC
-function filterMenu(cat, btn) {
+        function filterMenu(cat, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
@@ -386,11 +386,13 @@ function filterMenu(cat, btn) {
                             Chicken BBQ + Garlic Rice + Drink
                         </p>
 
-                        <button class="btn btn-fire label"
-                            style="width:100%; margin-bottom:10px;"
-                            onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99)">
-                            Add to Order
-                        </button>
+                        <div id="special-ctrl-1001">
+    <button class="btn btn-fire label"
+        style="width:100%; margin-bottom:10px;"
+        onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99, 1001)">
+        Add to Order
+    </button>
+</div>
 
                         <button class="btn btn-outline label"
                             style="width:100%;"
@@ -412,11 +414,13 @@ function filterMenu(cat, btn) {
                             Double Chicken BBQ + Java Rice + Iced Tea
                         </p>
 
-                        <button class="btn btn-fire label"
-                            style="width:100%; margin-bottom:10px;"
-                            onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149)">
-                            Add to Order
-                        </button>
+                        <div id="special-ctrl-1002">
+    <button class="btn btn-fire label"
+        style="width:100%; margin-bottom:10px;"
+        onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149, 1002)">
+        Add to Order
+    </button>
+</div>
 
                         <button class="btn btn-outline label"
                             style="width:100%;"
@@ -464,22 +468,76 @@ function filterMenu(cat, btn) {
             document.getElementById(`set-options-${id}`).style.display = 'none';
             }
 
-        function addSpecialSet(name, price) {
-            const existing = cart.find(i => i.name === name);
+function addSpecialSet(name, price, uniqueId) {
 
-            if(existing) {
-                existing.qty += 1;
-                } else {
-                cart.push({
-                    id: Date.now(),
-                    name,
-                    price,
-                    qty: 1
-                    });
-                }
+    const existing = cart.find(i => i.id === uniqueId);
 
-            updateCart();
-        }
+    if(existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({
+            id: uniqueId,
+            name: name,
+            price: price,
+            qty: 1,
+            special: true
+        });
+    }
+
+    updateCart();
+
+    // UPDATE BUTTON TO QTY CONTROLS
+    document.getElementById(`special-ctrl-${uniqueId}`).innerHTML =
+        renderSpecialQty(uniqueId);
+}
+        function renderSpecialQty(id) {
+
+    const item = cart.find(i => i.id === id);
+
+    if(!item) {
+        return `
+            <button class="btn btn-fire label"
+                style="width:100%; margin-bottom:10px;"
+                onclick="addSpecialSet(
+                    '${id === 1001 ? 'Chicken BBQ Skewers Set 1' : 'Chicken BBQ Skewers Set 2'}',
+                    ${id === 1001 ? 99 : 149},
+                    ${id}
+                )">
+                Add to Order
+            </button>
+        `;
+    }
+
+    return `
+        <div class="qty-controls">
+            <button class="qty-btn" onclick="updateSpecialQty(${id}, -1)">−</button>
+            <span class="label">${item.qty}</span>
+            <button class="qty-btn" onclick="updateSpecialQty(${id}, 1)">+</button>
+        </div>
+    `;
+}
+        function updateSpecialQty(id, delta) {
+
+    const item = cart.find(i => i.id === id);
+
+    if(!item) return;
+
+    item.qty += delta;
+
+    if(item.qty <= 0) {
+
+        cart = cart.filter(i => i.id !== id);
+
+        document.getElementById(`special-ctrl-${id}`).innerHTML =
+            renderSpecialQty(id);
+    } else {
+
+        document.getElementById(`special-ctrl-${id}`).innerHTML =
+            renderSpecialQty(id);
+    }
+
+    updateCart();
+}
 
         function renderQty(id, qty) {
             return `<div class="qty-controls">
