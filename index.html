@@ -103,7 +103,7 @@
 
         /* Mobile Adjustments */
         @media (max-width: 968px) {
-            #menu { grid-template-columns: 1fr; }
+            #menu { grid-template-columns: 1fr; } }
         /* MOBILE CART SMALL FLOATING BOX */
         @media (max-width: 768px) {
             .cart-sticky { position: fixed !important; bottom: 15px !important; top: auto !important; right: auto; left: 15px; width: 220px; max-width: calc(100vw - 30px); padding: 14px; border-radius: 18px; background: rgba(26,17,8,0.96); backdrop-filter: blur(12px); border: 1px solid var(--fire);z-index: 9999;box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
@@ -117,7 +117,7 @@
             .cart-sticky.expanded .cart-items, .cart-sticky.expanded .cart-title { display: block; }
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; }
             .nav-links { display: none; }
-        }
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }
@@ -658,21 +658,20 @@ if (
     const overlay = document.getElementById('setOverlay');
     const box = document.getElementById(`set-options-${id}`);
 
-    const isOpen = box.classList.contains('show');
+    // CLOSE ALL
+    document.querySelectorAll('.set-options').forEach(el => {
+        el.classList.remove('show');
+    });
 
-    // CLOSE ALL FIRST
-    document.querySelectorAll('.set-options')
-        .forEach(el => el.classList.remove('show'));
+    // TOGGLE CURRENT
+    const willOpen = !box.classList.contains('show');
 
-    overlay.classList.remove('show');
-
-    // OPEN CURRENT
-    if(!isOpen) {
+    if (willOpen) {
         box.classList.add('show');
         overlay.classList.add('show');
+    } else {
+        overlay.classList.remove('show');
     }
-
-    overlay.onclick = () => closeSetOptions(id);
         }
 
         function closeSetOptions(id) {
