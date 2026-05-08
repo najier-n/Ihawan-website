@@ -205,93 +205,6 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-        /* PREMIUM FLOATING SET POPUP */
-.set-options {
-    position: fixed;
-
-    left: 50%;
-    bottom: 20px;
-
-    transform: translateX(-50%) translateY(30px);
-
-    width: calc(100% - 30px);
-    max-width: 420px;
-
-    background: rgba(26,17,8,0.98);
-
-    border: 1px solid var(--fire);
-
-    border-radius: 24px;
-
-    padding: 20px;
-
-    z-index: 99999;
-
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: all 0.35s ease;
-
-    backdrop-filter: blur(18px);
-
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-/* SHOW POPUP */
-.set-options.show {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateX(-50%) translateY(0);
-}
-
-/* DARK BACKDROP */
-.set-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,0.55);
-
-    backdrop-filter: blur(5px);
-
-    z-index: 99998;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.3s;
-}
-
-.set-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* PREMIUM SET CARDS */
-.set-options > div {
-    background: #1a1108;
-
-    border-radius: 18px;
-
-    padding: 16px;
-
-    margin-bottom: 14px;
-
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-    .set-options {
-        bottom: 10px;
-        border-radius: 22px 22px 18px 18px;
-    }
-
-    }
     </style>
 </head>
 <body>
@@ -635,35 +548,18 @@ if (
                         
                 `; } grid.appendChild(card); }); }
         
-        function toggleSetOptions(id) {
+        function toggleSetOptions(id) {  
+        const box = document.getElementById(`set-options-${id}`);  
+          
+        if(box.style.display === 'block') {  
+            box.style.display = 'none';  
+            } else {  
+            box.style.display = 'block';  
+            }  
+        }  
 
-    // CLOSE ALL FIRST
-    document.querySelectorAll('.set-options')
-        .forEach(box => box.classList.remove('show'));
-
-    const overlay = document.getElementById('setOverlay');
-
-    const box = document.getElementById(`set-options-${id}`);
-
-    box.classList.add('show');
-
-    overlay.classList.add('show');
-
-    // CLOSE WHEN CLICK BACKDROP
-    overlay.onclick = () => {
-        closeSetOptions(id);
-    };
-        }
-
-        function closeSetOptions(id) {
-
-    const box = document.getElementById(`set-options-${id}`);
-
-    const overlay = document.getElementById('setOverlay');
-
-    box.classList.remove('show');
-
-    overlay.classList.remove('show');
+        function closeSetOptions(id) {  
+        document.getElementById(`set-options-${id}`).style.display = 'none';  
         }
 
 function addSpecialSet(name, price, uniqueId) {
@@ -917,5 +813,4 @@ function addSpecialSet(name, price, uniqueId) {
         updateCart();
     </script>
 </body>
-        <div class="set-overlay" id="setOverlay"></div>
               </html>
