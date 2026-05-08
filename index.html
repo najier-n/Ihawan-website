@@ -951,16 +951,6 @@ function closePopup(){
 document
 .getElementById('popupOverlay')
 .addEventListener('click', closePopup);
-        
-        /* CLICK OUTSIDE TO CLOSE */
-document
-.getElementById('popupOverlay')
-.addEventListener('click', () => {
-
-    // CLOSE ALL POPUPS
-    document.querySelectorAll('.set-options').forEach(el => {
-        el.classList.remove('active');
-    });
 
     // HIDE OVERLAY
     document
