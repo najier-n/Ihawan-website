@@ -470,58 +470,38 @@
         }
 
         // MENU LOGIC
-        function filterMenu(cat, btn) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const grid = document.getElementById('menuGrid');
-            grid.innerHTML = '';
-            
-            menuData.filter(i => i.cat === cat).forEach(item => {
+function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 
-                const cartItem = cart.find(ci => ci.id === item.id);
+    const grid = document.getElementById('menuGrid');
+    grid.innerHTML = '';
 
-                const card = document.createElement('div');
-                card.className = 'menu-card';
+    menuData.filter(i => i.cat === cat).forEach(item => {
 
-        // SPECIAL FUNCTION
-if (
-    item.name === 'Chicken BBQ Skewers' ||
-    item.name === 'Isaw (Grilled Intestine)'
-) {
+        const cartItem = cart.find(ci => ci.id === item.id);
 
-    card.innerHTML = `
-        ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+        const card = document.createElement('div');
+        card.className = 'menu-card';
 
-        <span class="food-emoji">${item.emoji}</span>
+        let special = (
+            item.name === 'Chicken BBQ Skewers' ||
+            item.name === 'Isaw (Grilled Intestine)'
+        );
 
-        <h3 class="item-name">${item.name}</h3>
+        if (special) {
+            card.innerHTML = `
+                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                <span class="food-emoji">${item.emoji}</span>
+                <h3 class="item-name">${item.name}</h3>
+                <p class="item-desc">${item.desc}</p>
 
-        <p class="item-desc">${item.desc}</p>
-
-        <button
-            class="btn btn-fire label"
-            style="width:100%;"
-            onclick="openSpecialPopup(${item.id})">
-
-            View Sets 🔥
-        </button>
-    `;
-}
-
-        <button class="btn btn-outline label"
-            style="width:100%; margin-top:15px;"
-            onclick="closeSetOptions(${item.id})">
-            Done
-        </button>
-
-        </div>
-    `;
-}
-                    
-                else {
-
-            // NORMAL ITEMS
+                <button class="btn btn-fire label" style="width:100%;"
+                    onclick="openSpecialPopup(${item.id})">
+                    View Sets 🔥
+                </button>
+            `;
+        } else {
             card.innerHTML = `
                 ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
                 <span class="food-emoji">${item.emoji}</span>
@@ -532,9 +512,16 @@ if (
                 <div id="ctrl-${item.id}">
                     ${cartItem
                         ? renderQty(item.id, cartItem.qty)
-                        : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>` } </div>
-                        
-                `; } grid.appendChild(card); }); }
+                        : `<button class="btn btn-fire label" style="width:100%"
+                            onclick="addToCart(${item.id})">+ Add to Order</button>`
+                    }
+                </div>
+            `;
+        }
+
+        grid.appendChild(card);
+    });
+}
         
         function toggleSetOptions(id) {
 
@@ -938,14 +925,6 @@ function openSpecialPopup(id){
 /* CLOSE POPUP */
 function closePopup(){
 
-    document
-        .getElementById('popupOverlay')
-        .classList.remove('active');
-
-    document
-        .getElementById('specialPopup')
-        .classList.remove('active');
-}
 
 /* CLICK OUTSIDE CLOSE */
 document
@@ -953,10 +932,8 @@ document
 .addEventListener('click', closePopup);
 
     // HIDE OVERLAY
-    document
-        .getElementById('popupOverlay')
-        .classList.remove('active');
-});
+document.getElementById('popupOverlay').addEventListener('click', closePopup) };
+    
         init();
         updateCart();
     </script>
