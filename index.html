@@ -272,7 +272,7 @@
 
     <script>
         // DATA
-        const menuData = 
+        const menuData = [
             { id: 1, cat: 'Grill Specials', name: 'Chicken BBQ Skewers', desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.', emoji: '🍢', best: true },
             { id: 2, cat: 'Grill Specials', name: 'Inihaw na Manok', price: 59, desc: 'Butterflied whole chicken basted with lemongrass butter. Perfectly charred.', emoji: '🍗' },
             { id: 3, cat: 'Grill Specials', name: 'Beef sa Grill', price: 299, desc: 'Thick-cut beef belly, slow-grilled with garlic vinegar glaze.', emoji: '🥩' },
@@ -289,7 +289,7 @@
             { id: 14, cat: 'Drinks', name: 'San Miguel Beer', price: 79, desc: 'Ice-cold Filipino lager.', emoji: '🍺', best: true },
             { id: 15, cat: 'Desserts', name: 'Halo-Halo', price: 29, desc: 'Shaved ice, mixed sweets, ube ice cream & leche flan.', emoji: '🧊' },
             { id: 16, cat: 'Desserts', name: 'Leche Flan', price: 109, desc: 'Silky caramel egg custard. Dense, rich, golden.', emoji: '🍮' },
-            { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }
+            { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }, 
         ];
 
         let cart = [];
@@ -342,149 +342,114 @@
                 const card = document.createElement('div');
                 card.className = 'menu-card';
 
-        // SPECIAL FUNCTION FOR CHICKEN BBQ SKEWERS
-                if(
-                    item.name === 'Chicken BBQ Skewers' ||
-                    item.name === 'Isaw (Grilled Intestine)'
-                    ) {
+        // SPECIAL FUNCTION
+if (
+    item.name === 'Chicken BBQ Skewers' ||
+    item.name === 'Isaw (Grilled Intestine)'
+) {
 
-                    card.innerHTML = `
-                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
-                
-                <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
-                
-                    <span class="food-emoji">${item.emoji}</span>
-                    <h3 class="item-name">${item.name}</h3>
-                    <p class="item-desc">${item.desc}</p>
-                    <span class="item-price">₱${item.price.toFixed(2)}</span> </div>
+    card.innerHTML = `
+        ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
 
-                <div id="set-options-${item.id}" class="set-options" style="
-                    display:none;
-                    margin-top:15px;
-                    background:#24180d;
-                    border:1px solid var(--fire);
-                    border-radius:12px;
-                    padding:15px;
-                    animation:fadeIn 0.3s ease; ">
+        <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
+            <span class="food-emoji">${item.emoji}</span>
+            <h3 class="item-name">${item.name}</h3>
+            <p class="item-desc">${item.desc}</p>
+        </div>
 
-                        ${ item.name === 'Chicken BBQ Skewers' ? `
+        <div id="set-options-${item.id}" class="set-options" style="
+            display:none;
+            margin-top:15px;
+            background:#24180d;
+            border:1px solid var(--fire);
+            border-radius:12px;
+            padding:15px;
+        ">
 
-                    <div style="
-                        background:#1a1108;
-                        padding:15px;
-                        border-radius:10px;
-                        margin-bottom:12px; ">
-                        
-                        <h4 class="label" style="color:var(--fire); margin-bottom:8px;"> 🍗 Set 1 </h4>
+        ${
+            item.name === 'Chicken BBQ Skewers'
+            ?
 
-                        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;"> Chicken BBQ + Garlic Rice + Drink </p>
-                        <div style=" color:var(--fire); font-size:1.4rem; font-family:'Bebas Neue', sans-serif; margin-bottom:12px; "> ₱99 </div>
-                        
-                        <div id="special-ctrl-1001">
-                        <button class="btn btn-fire label"
-                        style="width:100%; margin-bottom:10px;"
+            `
+            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
+                <h4 class="label" style="color:var(--fire);">🍗 Set 1</h4>
+
+                <p style="margin:10px 0;">Chicken BBQ + Garlic Rice + Drink</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱99</div>
+
+                <div id="special-ctrl-1001">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
                         onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99, 1001)">
-                        Add to Order </button> </div>
+                        Add to Order
+                    </button>
+                </div>
+            </div>
 
-                        <button class="btn btn-outline label"
-                            style="width:100%;"
-                            onclick="closeSetOptions(${item.id})">
-                            Done </button> </div>
+            <div style="background:#1a1108; padding:15px; border-radius:10px;">
+                <h4 class="label" style="color:var(--fire);">🍗 Set 2</h4>
 
-                    <div style="
-                        background:#1a1108;
-                        padding:15px;
-                        border-radius:10px; ">
+                <p style="margin:10px 0;">Double Chicken BBQ + Java Rice + Iced Tea</p>
 
-                        <h4 class="label" style="color:var(--fire); margin-bottom:8px;"> 🍗 Set 2 </h4>
+                <div style="color:var(--fire); font-size:1.4rem;">₱149</div>
 
-                        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;"> Double Chicken BBQ + Java Rice + Iced Tea </p>
-                        <div style=" color:var(--fire); font-size:1.4rem; font-family:'Bebas Neue', sans-serif; margin-bottom:12px; "> ₱149 </div>
-
-                        <div id="special-ctrl-1002">
-                        <button class="btn btn-fire label"
-                        style="width:100%; margin-bottom:10px;"
+                <div id="special-ctrl-1002">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
                         onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149, 1002)">
-                        Add to Order </button> </div>
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+            `
 
-                        <button class="btn btn-outline label"
-                            style="width:100%;"
-                            onclick="closeSetOptions(${item.id})">
-                            Done </button>
-                            
-                    </div> </div> ` ; ` 
+            :
 
-                    <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
-            <h4 class="label" style="color:var(--fire); margin-bottom:8px;">
-                🔥 Isaw Solo
-            </h4>
+            `
+            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
+                <h4 class="label" style="color:var(--fire);">🔥 Isaw Solo</h4>
 
-            <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">
-                5 sticks grilled Isaw + spicy vinegar
-            </p>
+                <p style="margin:10px 0;">5 sticks grilled Isaw + spicy vinegar</p>
 
-            <div style="
-                color:var(--fire);
-                font-size:1.4rem;
-                font-family:'Bebas Neue';
-                margin-bottom:12px;
-            ">
-                ₱59
+                <div style="color:var(--fire); font-size:1.4rem;">₱59</div>
+
+                <div id="special-ctrl-2001">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Isaw Solo', 59, 2001)">
+                        Add to Order
+                    </button>
+                </div>
             </div>
 
-            <div id="special-ctrl-2001">
-                <button class="btn btn-fire label"
-                    style="width:100%; margin-bottom:10px;"
-                    onclick="addSpecialSet('Isaw Solo', 59, 2001)">
-                    Add to Order
-                </button>
-            </div>
+            <div style="background:#1a1108; padding:15px; border-radius:10px;">
+                <h4 class="label" style="color:var(--fire);">🔥 Isaw Barkada</h4>
 
-            <button class="btn btn-outline label"
-                style="width:100%;"
-                onclick="closeSetOptions(${item.id})">
-                Done
-            </button>
+                <p style="margin:10px 0;">12 sticks Isaw + Garlic Rice + Drinks</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱129</div>
+
+                <div id="special-ctrl-2002">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Isaw Barkada', 129, 2002)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+            `
+        }
+
+        <button class="btn btn-outline label"
+            style="width:100%; margin-top:15px;"
+            onclick="closeSetOptions(${item.id})">
+            Done
+        </button>
+
         </div>
-
-        <div style="background:#1a1108; padding:15px; border-radius:10px;">
-            <h4 class="label" style="color:var(--fire); margin-bottom:8px;">
-                🔥 Isaw Barkada
-            </h4>
-
-            <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">
-                12 sticks Isaw + Garlic Rice + Drinks
-            </p>
-
-            <div style="
-                color:var(--fire);
-                font-size:1.4rem;
-                font-family:'Bebas Neue';
-                margin-bottom:12px;
-            ">
-                ₱129
-            </div>
-
-            <div id="special-ctrl-2002">
-                <button class="btn btn-fire label"
-                    style="width:100%; margin-bottom:10px;"
-                    onclick="addSpecialSet('Isaw Barkada', 129, 2002)">
-                    Add to Order
-                </button>
-            </div>
-
-            <button class="btn btn-outline label"
-                style="width:100%;"
-                onclick="closeSetOptions(${item.id})">
-                Done
-            </button>
-        </div>
-        `
-    }
-
-</div>
-                    
-                    }
+    `;
+}
                     
                 else {
 
