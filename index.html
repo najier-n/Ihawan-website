@@ -52,7 +52,7 @@
         .tab-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); transform: scale(0.96); }
 
         .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: visible; }
+        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: hidden; }
         .menu-card:hover { border-color: var(--fire); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .menu-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient( 120deg, transparent, rgba(255,255,255,0.05), transparent ); transform: translateX(-100%); transition: 0.8s; }
         .menu-card:hover::before { transform: translateX(100%); }
@@ -129,9 +129,6 @@
             0% { transform: translateY(0px); }
             50% { transform: translateY(-6px); }
             100% { transform: translateY(0px); } }
-        @keyframes fadeIn {
-            from { opacity:0; transform:translateY(10px); }
-            to { opacity:1; transform:translateY(0); } }
 
         /* FIX MOBILE OVERFLOW */
         html, body { width: 100%; overflow-x: hidden; }
@@ -205,68 +202,6 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-
-        /* OVERLAY */
-.popup-overlay{
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.25s ease;
-
-    z-index: 99998;
-}
-
-/* SHOW OVERLAY */
-.popup-overlay.active{
-    opacity: 1;
-    visibility: visible;
-}
-
-/* POPUP */
-.special-popup{
-    position: fixed;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%) scale(0.9);
-
-    width: 92%;
-    max-width: 420px;
-
-    max-height: 85vh;
-    overflow-y: auto;
-
-    background: #1a1108;
-
-    border: 1px solid var(--fire);
-    border-radius: 20px;
-
-    padding: 20px;
-
-    z-index: 99999;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.25s ease;
-
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-}
-
-/* SHOW POPUP */
-.special-popup.active{
-    opacity: 1;
-    visibility: visible;
-
-    transform: translate(-50%, -50%) scale(1);
-}
     </style>
 </head>
 <body>
@@ -299,25 +234,16 @@
         <div class="menu-container">
             <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Our Menu</h2>
             <div class="category-tabs" id="categoryTabs">
-                <button class="tab-btn active" data-cat="Grill Specials">
-    <img src="images/Grill-Special.png" class="tab-icon"> Grill Specials
-</button>
-
-<button class="tab-btn" data-cat="Rice Meals">
-    <img src="images/Rice-Meal.png" class="tab-icon"> Rice Meals
-</button>
-
-<button class="tab-btn" data-cat="Soups & Sides">
-    <img src="images/Soup.png" class="tab-icon"> Soups & Sides
-</button>
-
-<button class="tab-btn" data-cat="Drinks">
-    <img src="images/Drinks.png" class="tab-icon"> Drinks
-</button>
-
-<button class="tab-btn" data-cat="Desserts">
-    <img src="images/Halo-Halo.png" class="tab-icon"> Desserts
-</button>
+                <button class="tab-btn active" onclick="filterMenu('Grill Specials', this)">
+                    <img src="images/Grill-Special.png" class="tab-icon"> Grill Specials</button>
+                <button class="tab-btn" onclick="filterMenu('Rice Meals', this)">
+                    <img src="images/Rice-Meal.png" class="tab-icon"> Rice Meals</button>
+                <button class="tab-btn" onclick="filterMenu('Soups & Sides', this)">
+                    <img src="images/Soup.png" class="tab-icon"> Soups & Sides</button>
+                <button class="tab-btn" onclick="filterMenu('Drinks', this)">
+                    <img src="images/Drinks.png" class="tab-icon"> Drinks</button>
+                <button class="tab-btn" onclick="filterMenu('Desserts', this)">
+                    <img src="images/Halo-Halo.png" class="tab-icon"> Desserts</button>
             </div>
             <div class="item-grid" id="menuGrid"></div>
         </div>
@@ -458,8 +384,7 @@
         });
 
         function init() {
-            const firstTab = document.querySelector('.tab-btn[data-cat="Grill Specials"]');
-filterMenu('Grill Specials', firstTab);
+            filterMenu('Grill Specials', document.querySelector('.tab-btn'));
             createParticles();
             startPolling();
         }
@@ -480,155 +405,30 @@ filterMenu('Grill Specials', firstTab);
         }
 
         // MENU LOGIC
-function filterMenu(cat, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
-    if (btn) btn.classList.add('active');
-    
-    const grid = document.getElementById('menuGrid');
-    grid.innerHTML = '';
-
-    menuData.filter(i => i.cat === cat).forEach(item => {
-
-        const cartItem = cart.find(ci => ci.id === item.id);
-
-        const card = document.createElement('div');
-        card.className = 'menu-card';
-
-        let special = (
-            item.name === 'Chicken BBQ Skewers' ||
-            item.name === 'Isaw (Grilled Intestine)'
-        );
-
-        if (special) {
-            card.innerHTML = `
-                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
-                <span class="food-emoji">${item.emoji}</span>
-                <h3 class="item-name">${item.name}</h3>
-                <p class="item-desc">${item.desc}</p>
-
-                <button class="btn btn-fire label" style="width:100%;"
-                    onclick="openSpecialPopup(${item.id})">
-                    View Sets 🔥
-                </button>
-            `;
-        } else {
-            card.innerHTML = `
-                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
-                <span class="food-emoji">${item.emoji}</span>
-                <h3 class="item-name">${item.name}</h3>
-                <p class="item-desc">${item.desc}</p>
-                <span class="item-price">₱${item.price.toFixed(2)}</span>
-
-                <div id="ctrl-${item.id}">
-                    ${cartItem
-                        ? renderQty(item.id, cartItem.qty)
-                        : `<button class="btn btn-fire label" style="width:100%"
-                            onclick="addToCart(${item.id})">+ Add to Order</button>`
-                    }
-                </div>
-            `;
-        }
-
-        grid.appendChild(card);
-    });
-}
         
-        function toggleSetOptions(id) {
-
-    // CLOSE ALL
-    document.querySelectorAll('.set-options').forEach(el => {
-        el.classList.remove('active');
-    });
-
-    // OPEN OVERLAY
-    document
-        .getElementById('popupOverlay')
-        .classList.add('active');
-
-    // OPEN POPUP
-    document
-        .getElementById(`set-options-${id}`)
-        .classList.add('active');
-}
-
-function closeSetOptions(id) {
-
-    document
-        .getElementById(`set-options-${id}`)
-        .classList.remove('active');
-
-    document
-        .getElementById('popupOverlay')
-        .classList.remove('active');
-}
-
-function addSpecialSet(name, price, uniqueId) {
-
-    const existing = cart.find(i => i.id === uniqueId);
-
-    if(existing) {
-        existing.qty += 1;
-    } else {
-        cart.push({
-            id: uniqueId,
-            name: name,
-            price: price,
-            qty: 1,
-            special: true
-        });
-    }
-
-    updateCart();
-
-    // UPDATE BUTTON TO QTY CONTROLS
-    document.getElementById(`special-ctrl-${uniqueId}`).innerHTML =
-        renderSpecialQty(uniqueId);
-}
-        function renderSpecialQty(id) {
-
-    const item = cart.find(i => i.id === id);
-
-    if(!item) {
-        return `
-            <button class="btn btn-fire label"
-                style="width:100%; margin-bottom:10px;"
-                onclick="addSpecialSet(
-                    '${id === 1001 ? 'Chicken BBQ Skewers Set 1' : 'Chicken BBQ Skewers Set 2'}',
-                    ${id === 1001 ? 99 : 149},
-                    ${id}
-                )">
-                Add to Order
-            </button>
-        `;
-    }
-
-    return `
-        <div class="qty-controls">
-            <button class="qty-btn" onclick="updateSpecialQty(${id}, -1)">−</button>
-            <span class="label">${item.qty}</span>
-            <button class="qty-btn" onclick="updateSpecialQty(${id}, 1)">+</button>
-        </div> `;
-}
-        function updateSpecialQty(id, delta) {
-
-    const item = cart.find(i => i.id === id);
-
-    if(!item) return; item.qty += delta;
-
-    if(item.qty <= 0) {
-        cart = cart.filter(i => i.id !== id);
-
-        document.getElementById(`special-ctrl-${id}`).innerHTML =
-            renderSpecialQty(id);
-    } else {
-
-        document.getElementById(`special-ctrl-${id}`).innerHTML =
-            renderSpecialQty(id);
-    }
-
-    updateCart();
-}
-
+        function filterMenu(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = '';
+            
+            menuData.filter(i => i.cat === cat).forEach(item => {
+                const cartItem = cart.find(ci => ci.id === item.id);
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.innerHTML = `
+                    ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                    <span class="food-emoji">${item.emoji}</span>
+                    <h3 class="item-name">${item.name}</h3>
+                    <p class="item-desc">${item.desc}</p>
+                    <span class="item-price">₱${item.price.toFixed(2)}</span>
+                    <div id="ctrl-${item.id}">
+                        ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
         function renderQty(id, qty) {
             return `<div class="qty-controls">
                 <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
@@ -809,153 +609,8 @@ function addSpecialSet(name, price, uniqueId) {
             e.target.reset();
         }
 
-        /* OPEN POPUP */
-function openSpecialPopup(id){
-
-    const popup = document.getElementById('specialPopup');
-    const overlay = document.getElementById('popupOverlay');
-    const content = document.getElementById('specialPopupContent');
-
-    overlay.classList.add('active');
-    popup.classList.add('active');
-
-    /* CHICKEN BBQ */
-    if(id === 1){
-
-        content.innerHTML = `
-
-            <h2 class="label"
-                style="color:var(--fire); margin-bottom:20px;">
-                🍢 Chicken BBQ Sets
-            </h2>
-
-            <div style="background:#24180d; padding:15px; border-radius:14px; margin-bottom:15px;">
-
-                <h3 class="label" style="color:var(--fire);">
-                    Set 1
-                </h3>
-
-                <p style="margin:10px 0;">
-                    Chicken BBQ + Garlic Rice + Drink
-                </p>
-
-                <div style="font-size:1.5rem; color:var(--fire);">
-                    ₱99
-                </div>
-
-                <button
-                    class="btn btn-fire label"
-                    style="width:100%; margin-top:10px;"
-                    onclick="addSpecialSet('Chicken BBQ Skewers Set 1',99,1001)">
-                    Add to Order
-                </button>
-            </div>
-
-            <div style="background:#24180d; padding:15px; border-radius:14px;">
-
-                <h3 class="label" style="color:var(--fire);">
-                    Set 2
-                </h3>
-
-                <p style="margin:10px 0;">
-                    Double Chicken BBQ + Java Rice + Iced Tea
-                </p>
-
-                <div style="font-size:1.5rem; color:var(--fire);">
-                    ₱149
-                </div>
-
-                <button
-                    class="btn btn-fire label"
-                    style="width:100%; margin-top:10px;"
-                    onclick="addSpecialSet('Chicken BBQ Skewers Set 2',149,1002)">
-                    Add to Order
-                </button>
-            </div>
-        `;
-    }
-
-    /* ISAW */
-    if(id === 4){
-
-        content.innerHTML = `
-
-            <h2 class="label"
-                style="color:var(--fire); margin-bottom:20px;">
-                🔥 Isaw Specials
-            </h2>
-
-            <div style="background:#24180d; padding:15px; border-radius:14px; margin-bottom:15px;">
-
-                <h3 class="label" style="color:var(--fire);">
-                    Isaw Solo
-                </h3>
-
-                <p style="margin:10px 0;">
-                    5 sticks grilled Isaw + spicy vinegar
-                </p>
-
-                <div style="font-size:1.5rem; color:var(--fire);">
-                    ₱59
-                </div>
-
-                <button
-                    class="btn btn-fire label"
-                    style="width:100%; margin-top:10px;"
-                    onclick="addSpecialSet('Isaw Solo',59,2001)">
-                    Add to Order
-                </button>
-            </div>
-
-            <div style="background:#24180d; padding:15px; border-radius:14px;">
-
-                <h3 class="label" style="color:var(--fire);">
-                    Isaw Barkada
-                </h3>
-
-                <p style="margin:10px 0;">
-                    12 sticks Isaw + Garlic Rice + Drinks
-                </p>
-
-                <div style="font-size:1.5rem; color:var(--fire);">
-                    ₱129
-                </div>
-
-                <button
-                    class="btn btn-fire label"
-                    style="width:100%; margin-top:10px;"
-                    onclick="addSpecialSet('Isaw Barkada',129,2002)">
-                    Add to Order
-                </button>
-            </div>
-        `;
-    }
-}
-
-/* CLOSE POPUP */
-function closePopup() {
-    document.getElementById('popupOverlay').classList.remove('active');
-    document.getElementById('specialPopup').classList.remove('active');
-}
-    document.getElementById('popupOverlay').addEventListener('click', closePopup);
         init();
         updateCart();
     </script>
-    <!-- GLOBAL POPUP -->
-<div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
-
-<div class="special-popup" id="specialPopup">
-
-    <div id="specialPopupContent"></div>
-
-    <button
-        class="btn btn-outline label"
-        style="width:100%; margin-top:15px;"
-        onclick="closePopup()">
-        Close
-    </button>
-
-</div>
 </body>
-    
               </html>
