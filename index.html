@@ -52,7 +52,7 @@
         .tab-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); transform: scale(0.96); }
 
         .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: hidden; }
+        .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; overflow: visible; }
         .menu-card:hover { border-color: var(--fire); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .menu-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient( 120deg, transparent, rgba(255,255,255,0.05), transparent ); transform: translateX(-100%); transition: 0.8s; }
         .menu-card:hover::before { transform: translateX(100%); }
@@ -655,29 +655,24 @@ if (
         
         function toggleSetOptions(id) {
 
-    // CLOSE ALL
-    document.querySelectorAll('.set-options')
-        .forEach(box => box.classList.remove('show'));
-
     const overlay = document.getElementById('setOverlay');
-
     const box = document.getElementById(`set-options-${id}`);
 
-    if(box.classList.contains('show')) {
+    const isOpen = box.classList.contains('show');
 
-        box.classList.remove('show');
-        overlay.classList.remove('show');
+    // CLOSE ALL FIRST
+    document.querySelectorAll('.set-options')
+        .forEach(el => el.classList.remove('show'));
 
-    } else {
+    overlay.classList.remove('show');
 
+    // OPEN CURRENT
+    if(!isOpen) {
         box.classList.add('show');
         overlay.classList.add('show');
     }
 
-    // CLOSE WHEN CLICK BACKDROP
-    overlay.onclick = () => {
-        closeSetOptions(id);
-    };
+    overlay.onclick = () => closeSetOptions(id);
         }
 
         function closeSetOptions(id) {
