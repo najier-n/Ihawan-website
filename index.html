@@ -122,6 +122,16 @@
             0% { transform: translateY(0px); }
             50% { transform: translateY(-6px); }
             100% { transform: translateY(0px); } }
+        @keyframes fadeIn {
+    from {
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+}
     </style>
 </head>
 <body>
@@ -325,28 +335,150 @@
         }
 
         // MENU LOGIC
-        function filterMenu(cat, btn) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const grid = document.getElementById('menuGrid');
-            grid.innerHTML = '';
-            
-            menuData.filter(i => i.cat === cat).forEach(item => {
-                const cartItem = cart.find(ci => ci.id === item.id);
-                const card = document.createElement('div');
-                card.className = 'menu-card';
-                card.innerHTML = `
-                    ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const grid = document.getElementById('menuGrid');
+    grid.innerHTML = '';
+
+    menuData.filter(i => i.cat === cat).forEach(item => {
+
+        const cartItem = cart.find(ci => ci.id === item.id);
+
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+
+        // SPECIAL FUNCTION FOR CHICKEN BBQ SKEWERS
+        if(item.name === 'Chicken BBQ Skewers') {
+
+            card.innerHTML = `
+                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                
+                <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
                     <span class="food-emoji">${item.emoji}</span>
                     <h3 class="item-name">${item.name}</h3>
                     <p class="item-desc">${item.desc}</p>
                     <span class="item-price">₱${item.price.toFixed(2)}</span>
-                    <div id="ctrl-${item.id}">
-                        ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}
+                </div>
+
+                <div id="set-options-${item.id}" class="set-options" style="
+                    display:none;
+                    margin-top:15px;
+                    background:#24180d;
+                    border:1px solid var(--fire);
+                    border-radius:12px;
+                    padding:15px;
+                    animation:fadeIn 0.3s ease;
+                ">
+
+                    <div style="
+                        background:#1a1108;
+                        padding:15px;
+                        border-radius:10px;
+                        margin-bottom:12px;
+                    ">
+                        <h4 class="label" style="color:var(--fire); margin-bottom:8px;">
+                            🍗 Set 1
+                        </h4>
+
+                        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">
+                            Chicken BBQ + Garlic Rice + Drink
+                        </p>
+
+                        <button class="btn btn-fire label"
+                            style="width:100%; margin-bottom:10px;"
+                            onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99)">
+                            Add to Order
+                        </button>
+
+                        <button class="btn btn-outline label"
+                            style="width:100%;"
+                            onclick="closeSetOptions(${item.id})">
+                            Done
+                        </button>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+
+                    <div style="
+                        background:#1a1108;
+                        padding:15px;
+                        border-radius:10px;
+                    ">
+                        <h4 class="label" style="color:var(--fire); margin-bottom:8px;">
+                            🍗 Set 2
+                        </h4>
+
+                        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">
+                            Double Chicken BBQ + Java Rice + Iced Tea
+                        </p>
+
+                        <button class="btn btn-fire label"
+                            style="width:100%; margin-bottom:10px;"
+                            onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149)">
+                            Add to Order
+                        </button>
+
+                        <button class="btn btn-outline label"
+                            style="width:100%;"
+                            onclick="closeSetOptions(${item.id})">
+                            Done
+                        </button>
+                    </div>
+
+                </div>
+            `;
+
+        } else {
+
+            // NORMAL ITEMS
+            card.innerHTML = `
+                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                <span class="food-emoji">${item.emoji}</span>
+                <h3 class="item-name">${item.name}</h3>
+                <p class="item-desc">${item.desc}</p>
+                <span class="item-price">₱${item.price.toFixed(2)}</span>
+
+                <div id="ctrl-${item.id}">
+                    ${cartItem
+                        ? renderQty(item.id, cartItem.qty)
+                        : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`
+                    }
+                </div>
+            `;
+        }
+
+        grid.appendChild(card);
+    });
+}
+        function toggleSetOptions(id) {
+            const box = document.getElementById(`set-options-${id}`);
+            
+            if(box.style.display === 'block') {
+                box.style.display = 'none';
+                } else {
+                box.style.display = 'block';
+                }
+            }
+
+        function closeSetOptions(id) {
+            document.getElementById(`set-options-${id}`).style.display = 'none';
+            }
+
+        function addSpecialSet(name, price) {
+            const existing = cart.find(i => i.name === name);
+
+            if(existing) {
+                existing.qty += 1;
+                } else {
+                cart.push({
+                    id: Date.now(),
+                    name,
+                    price,
+                    qty: 1
+                    });
+                }
+
+            updateCart();
         }
 
         function renderQty(id, qty) {
