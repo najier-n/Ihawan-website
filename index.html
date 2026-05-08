@@ -103,7 +103,7 @@
 
         /* Mobile Adjustments */
         @media (max-width: 968px) {
-            #menu { grid-template-columns: 1fr; } }
+            #menu { grid-template-columns: 1fr; }
         /* MOBILE CART SMALL FLOATING BOX */
         @media (max-width: 768px) {
             .cart-sticky { position: fixed !important; bottom: 15px !important; top: auto !important; right: auto; left: 15px; width: 220px; max-width: calc(100vw - 30px); padding: 14px; border-radius: 18px; background: rgba(26,17,8,0.96); backdrop-filter: blur(12px); border: 1px solid var(--fire);z-index: 9999;box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
@@ -117,7 +117,7 @@
             .cart-sticky.expanded .cart-items, .cart-sticky.expanded .cart-title { display: block; }
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; }
             .nav-links { display: none; }
-        
+        }
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }
@@ -129,6 +129,9 @@
             0% { transform: translateY(0px); }
             50% { transform: translateY(-6px); }
             100% { transform: translateY(0px); } }
+        @keyframes fadeIn {
+            from { opacity:0; transform:translateY(10px); }
+            to { opacity:1; transform:translateY(0); } }
 
         /* FIX MOBILE OVERFLOW */
         html, body { width: 100%; overflow-x: hidden; }
@@ -202,8 +205,6 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-            .cart-sticky { display: none; }
-            .cart-sticky.show { display: block; }
     </style>
 </head>
 <body>
@@ -407,30 +408,227 @@
         }
 
         // MENU LOGIC
-        
         function filterMenu(cat, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
             const grid = document.getElementById('menuGrid');
             grid.innerHTML = '';
             
             menuData.filter(i => i.cat === cat).forEach(item => {
+
                 const cartItem = cart.find(ci => ci.id === item.id);
+
                 const card = document.createElement('div');
                 card.className = 'menu-card';
-                card.innerHTML = `
-                    ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
-                    <span class="food-emoji">${item.emoji}</span>
-                    <h3 class="item-name">${item.name}</h3>
-                    <p class="item-desc">${item.desc}</p>
-                    <span class="item-price">₱${item.price.toFixed(2)}</span>
-                    <div id="ctrl-${item.id}">
-                        ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+
+        // SPECIAL FUNCTION
+if (
+    item.name === 'Chicken BBQ Skewers' ||
+    item.name === 'Isaw (Grilled Intestine)'
+) {
+
+    card.innerHTML = `
+        ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+
+        <div onclick="toggleSetOptions(${item.id})" style="cursor:pointer;">
+            <span class="food-emoji">${item.emoji}</span>
+            <h3 class="item-name">${item.name}</h3>
+            <p class="item-desc">${item.desc}</p>
+        </div>
+
+        <div id="set-options-${item.id}" class="set-options" style="
+            display:none;
+            margin-top:15px;
+            background:#24180d;
+            border:1px solid var(--fire);
+            border-radius:12px;
+            padding:15px;
+        ">
+
+        ${
+            item.name === 'Chicken BBQ Skewers'
+            ?
+
+            `
+            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
+                <h4 class="label" style="color:var(--fire);">🍗 Set 1</h4>
+
+                <p style="margin:10px 0;">Chicken BBQ + Garlic Rice + Drink</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱99</div>
+
+                <div id="special-ctrl-1001">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Chicken BBQ Skewers Set 1', 99, 1001)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+
+            <div style="background:#1a1108; padding:15px; border-radius:10px;">
+                <h4 class="label" style="color:var(--fire);">🍗 Set 2</h4>
+
+                <p style="margin:10px 0;">Double Chicken BBQ + Java Rice + Iced Tea</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱149</div>
+
+                <div id="special-ctrl-1002">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Chicken BBQ Skewers Set 2', 149, 1002)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+            `
+
+            :
+
+            `
+            <div style="background:#1a1108; padding:15px; border-radius:10px; margin-bottom:12px;">
+                <h4 class="label" style="color:var(--fire);">🔥 Isaw Solo</h4>
+
+                <p style="margin:10px 0;">5 sticks grilled Isaw + spicy vinegar</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱59</div>
+
+                <div id="special-ctrl-2001">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Isaw Solo', 59, 2001)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+
+            <div style="background:#1a1108; padding:15px; border-radius:10px;">
+                <h4 class="label" style="color:var(--fire);">🔥 Isaw Barkada</h4>
+
+                <p style="margin:10px 0;">12 sticks Isaw + Garlic Rice + Drinks</p>
+
+                <div style="color:var(--fire); font-size:1.4rem;">₱129</div>
+
+                <div id="special-ctrl-2002">
+                    <button class="btn btn-fire label"
+                        style="width:100%; margin-top:10px;"
+                        onclick="addSpecialSet('Isaw Barkada', 129, 2002)">
+                        Add to Order
+                    </button>
+                </div>
+            </div>
+            `
         }
+
+        <button class="btn btn-outline label"
+            style="width:100%; margin-top:15px;"
+            onclick="closeSetOptions(${item.id})">
+            Done
+        </button>
+
+        </div>
+    `;
+}
+                    
+                else {
+
+            // NORMAL ITEMS
+            card.innerHTML = `
+                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+                <span class="food-emoji">${item.emoji}</span>
+                <h3 class="item-name">${item.name}</h3>
+                <p class="item-desc">${item.desc}</p>
+                <span class="item-price">₱${item.price.toFixed(2)}</span>
+
+                <div id="ctrl-${item.id}">
+                    ${cartItem
+                        ? renderQty(item.id, cartItem.qty)
+                        : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>` } </div>
+                        
+                `; } grid.appendChild(card); }); }
+        
+        function toggleSetOptions(id) {  
+        const box = document.getElementById(`set-options-${id}`);  
+          
+        if(box.style.display === 'block') {  
+            box.style.display = 'none';  
+            } else {  
+            box.style.display = 'block';  
+            }  
+        }  
+
+        function closeSetOptions(id) {  
+        document.getElementById(`set-options-${id}`).style.display = 'none';  
+        }
+
+function addSpecialSet(name, price, uniqueId) {
+
+    const existing = cart.find(i => i.id === uniqueId);
+
+    if(existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({
+            id: uniqueId,
+            name: name,
+            price: price,
+            qty: 1,
+            special: true
+        });
+    }
+
+    updateCart();
+
+    // UPDATE BUTTON TO QTY CONTROLS
+    document.getElementById(`special-ctrl-${uniqueId}`).innerHTML =
+        renderSpecialQty(uniqueId);
+}
+        function renderSpecialQty(id) {
+
+    const item = cart.find(i => i.id === id);
+
+    if(!item) {
+        return `
+            <button class="btn btn-fire label"
+                style="width:100%; margin-bottom:10px;"
+                onclick="addSpecialSet(
+                    '${id === 1001 ? 'Chicken BBQ Skewers Set 1' : 'Chicken BBQ Skewers Set 2'}',
+                    ${id === 1001 ? 99 : 149},
+                    ${id}
+                )">
+                Add to Order
+            </button>
+        `;
+    }
+
+    return `
+        <div class="qty-controls">
+            <button class="qty-btn" onclick="updateSpecialQty(${id}, -1)">−</button>
+            <span class="label">${item.qty}</span>
+            <button class="qty-btn" onclick="updateSpecialQty(${id}, 1)">+</button>
+        </div> `;
+}
+        function updateSpecialQty(id, delta) {
+
+    const item = cart.find(i => i.id === id);
+
+    if(!item) return; item.qty += delta;
+
+    if(item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+
+        document.getElementById(`special-ctrl-${id}`).innerHTML =
+            renderSpecialQty(id);
+    } else {
+
+        document.getElementById(`special-ctrl-${id}`).innerHTML =
+            renderSpecialQty(id);
+    }
+
+    updateCart();
+}
+
         function renderQty(id, qty) {
             return `<div class="qty-controls">
                 <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
@@ -450,20 +648,26 @@
         function updateQty(id, delta) {
             const index = cart.findIndex(i => i.id === id);
             cart[index].qty += delta;
-            if (index === -1) return;
+            if(cart[index].qty <= 0) {
+                cart.splice(index, 1);
+                document.getElementById(`ctrl-${id}`).innerHTML = `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${id})">+ Add to Order</button>`;
+            } else {
+                document.getElementById(`ctrl-${id}`).innerHTML = renderQty(id, cart[index].qty);
+            }
+            updateCart();
         }
 
         function updateCart() {
-    const list = document.getElementById('cartItems');
-    const cartBox = document.getElementById('cart');
+            const list = document.getElementById('cartItems');
+            const cartBox = document.getElementById('cart');
 
-    if (cart.length === 0) {
-    cartBox.classList.remove('show');
-} else {
-    cartBox.classList.add('show');
-    }
+    // HIDE CART IF EMPTY
+            if(cart.length === 0) { cartBox.classList.add('hidden'); }
+            else { cartBox.classList.remove('hidden'); }
 
-    list.innerHTML = '';
+    list.innerHTML = cart.length
+        ? ''
+        : '<div class="cart-empty">Your cart is empty.</div>';
 
     let sub = 0;
 
@@ -605,10 +809,8 @@
             e.target.reset();
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-    init();
-    updateCart();
-});
+        init();
+        updateCart();
     </script>
 </body>
               </html>
