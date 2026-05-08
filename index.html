@@ -885,6 +885,25 @@ function addSpecialSet(name, price, uniqueId) {
             document.getElementById('resConfirm').style.display = 'block';
             e.target.reset();
         }
+        
+        /* CLICK OUTSIDE TO CLOSE */
+document
+.getElementById('popupOverlay')
+.addEventListener('click', () => {
+
+    // CLOSE ALL POPUPS
+    document.querySelectorAll('.set-options').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // HIDE OVERLAY
+    document
+        .getElementById('popupOverlay')
+        .classList.remove('active');
+});
+
+init();
+updateCart();
 
         init();
         updateCart();
