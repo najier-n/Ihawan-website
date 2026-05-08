@@ -125,6 +125,136 @@
         @keyframes fadeIn {
             from { opacity:0; transform:translateY(10px); }
             to { opacity:1; transform:translateY(0); } }
+
+        /* FIX MOBILE OVERFLOW */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* HERO */
+    #hero {
+        padding: 100px 20px 40px;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .hero-btns {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-btns .btn {
+        width: 100%;
+    }
+
+    .hero-logo {
+        max-width: 90%;
+    }
+
+    /* MENU LAYOUT */
+    #menu {
+        display: block;
+        padding: 40px 15px 140px;
+    }
+
+    .menu-container {
+        width: 100%;
+    }
+
+    /* CATEGORY TABS */
+    .category-tabs {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        gap: 12px;
+        padding: 10px 5px 15px;
+        scroll-behavior: smooth;
+
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        min-width: 100px;
+        flex-shrink: 0;
+        border-radius: 14px;
+    }
+
+    .tab-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* MENU GRID */
+    .item-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .menu-card {
+        width: 100%;
+        padding: 20px;
+    }
+
+    /* RESERVATION SECTION */
+    #reservations > div {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    /* FORM ROW */
+    .form-row {
+        flex-direction: column;
+    }
+
+    /* MODAL */
+    .modal-content {
+        padding: 25px;
+        width: 100%;
+    }
+
+    /* CART */
+    .cart-sticky {
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 15px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    /* STATUS TRACKER */
+    .status-tracker {
+        gap: 10px;
+    }
+
+    .step-label {
+        font-size: 0.6rem;
+    }
+
+    /* STORY SECTION */
+    #story {
+        padding: 70px 20px;
+    }
+
+    /* FOOTER */
+    footer {
+        padding-bottom: 120px;
+    }
+}
     </style>
 </head>
 <body>
