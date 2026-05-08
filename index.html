@@ -205,6 +205,47 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
+        
+        /* FLOATING SPECIAL MENU */
+.set-options{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 380px;
+
+    background: rgba(26,17,8,0.98);
+    backdrop-filter: blur(14px);
+
+    border: 1px solid var(--fire);
+    border-radius: 20px;
+
+    padding: 20px;
+    z-index: 99999;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.25s ease;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* SHOW FLOAT */
+.set-options.active{
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* DARK BACKGROUND */
+.set-options::before{
+    content:'';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: -1;
+}
     </style>
 </head>
 <body>
@@ -437,14 +478,7 @@ if (
             <p class="item-desc">${item.desc}</p>
         </div>
 
-        <div id="set-options-${item.id}" class="set-options" style="
-            display:none;
-            margin-top:15px;
-            background:#24180d;
-            border:1px solid var(--fire);
-            border-radius:12px;
-            padding:15px;
-        ">
+        <div id="set-options-${item.id}" class="set-options">
 
         ${
             item.name === 'Chicken BBQ Skewers'
@@ -548,19 +582,25 @@ if (
                         
                 `; } grid.appendChild(card); }); }
         
-        function toggleSetOptions(id) {  
-        const box = document.getElementById(`set-options-${id}`);  
-          
-        if(box.style.display === 'block') {  
-            box.style.display = 'none';  
-            } else {  
-            box.style.display = 'block';  
-            }  
-        }  
+        function toggleSetOptions(id) {
 
-        function closeSetOptions(id) {  
-        document.getElementById(`set-options-${id}`).style.display = 'none';  
-        }
+    // CLOSE OTHER FLOATS
+    document.querySelectorAll('.set-options').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // OPEN SELECTED
+    document
+        .getElementById(`set-options-${id}`)
+        .classList.add('active');
+}
+
+function closeSetOptions(id) {
+
+    document
+        .getElementById(`set-options-${id}`)
+        .classList.remove('active');
+}
 
 function addSpecialSet(name, price, uniqueId) {
 
