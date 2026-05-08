@@ -711,14 +711,36 @@ function addSpecialSet(name, price, uniqueId) {
         }
 
         function openCheckout() {
-            if(!cart.length) return alert("Your cart is empty!");
-            document.getElementById('checkoutModal').style.display = 'block';
-            document.getElementById('checkoutSummary').innerHTML = `
-                <div class="label" style="margin-bottom:10px">Total to pay: ${document.getElementById('grandTotal').innerText}</div>
-            `;
+
+    if(!cart.length) {
+        return alert("Your cart is empty!");
+    }
+
+    // OPEN CHECKOUT MODAL
+    document.getElementById('checkoutModal').style.display = 'block';
+
+    // HIDE CART
+    document.getElementById('cart')
+        .classList.add('hidden');
+
+    document.getElementById('checkoutSummary').innerHTML = `
+        <div class="label" style="margin-bottom:10px">
+            Total to pay:
+            ${document.getElementById('grandTotal').innerText}
+        </div>
+    `;
         }
 
-        function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }
+        function closeModal() {
+
+    document.getElementById('checkoutModal').style.display = 'none';
+
+    // SHOW CART AGAIN ONLY IF THERE ARE ITEMS
+    if(cart.length > 0) {
+        document.getElementById('cart')
+            .classList.remove('hidden');
+    }
+        }
 
         function submitOrder(e) {
     e.preventDefault();
