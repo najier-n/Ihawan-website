@@ -923,17 +923,11 @@ function openSpecialPopup(id){
 }
 
 /* CLOSE POPUP */
-function closePopup(){
-
-
-/* CLICK OUTSIDE CLOSE */
-document
-.getElementById('popupOverlay')
-.addEventListener('click', closePopup);
-
-    // HIDE OVERLAY
-document.getElementById('popupOverlay').addEventListener('click', closePopup) };
-    
+function closePopup() {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.getElementById('specialPopup').classList.remove('active');
+}
+    document.getElementById('popupOverlay').addEventListener('click', closePopup);
         init();
         updateCart();
     </script>
