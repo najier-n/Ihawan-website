@@ -205,57 +205,64 @@
 }
         /* HIDDEN CART */
         .cart-sticky.hidden { display: none !important; }
-        /* PREMIUM FLOATING SET POPUP */
+        /* PREMIUM MOBILE POPUP */
 .set-options {
+
     position: fixed;
 
     left: 50%;
-    bottom: 20px;
+    bottom: 0;
 
-    transform: translateX(-50%) translateY(30px);
+    transform: translateX(-50%) translateY(100%);
 
-    width: calc(100% - 30px);
-    max-width: 420px;
+    width: calc(100% - 20px);
+    max-width: 430px;
 
     background: rgba(26,17,8,0.98);
 
-    border: 1px solid var(--fire);
+    border: 1px solid rgba(245,168,0,0.25);
 
-    border-radius: 24px;
+    border-radius: 26px 26px 0 0;
 
-    padding: 20px;
+    padding: 22px;
 
     z-index: 99999;
 
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    box-shadow:
+        0 -10px 40px rgba(0,0,0,0.55),
+        0 0 30px rgba(245,168,0,0.08);
 
     opacity: 0;
     visibility: hidden;
 
-    transition: all 0.35s ease;
+    transition:
+        transform 0.35s cubic-bezier(.22,1,.36,1),
+        opacity 0.25s ease;
 
     backdrop-filter: blur(18px);
 
-    max-height: 80vh;
+    max-height: 82vh;
     overflow-y: auto;
 }
 
-/* SHOW POPUP */
+/* SHOW */
 .set-options.show {
+
     opacity: 1;
     visibility: visible;
 
     transform: translateX(-50%) translateY(0);
 }
 
-/* DARK BACKDROP */
+/* OVERLAY */
 .set-overlay {
+
     position: fixed;
     inset: 0;
 
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.6);
 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
 
     z-index: 99998;
 
@@ -266,32 +273,50 @@
 }
 
 .set-overlay.show {
+
     opacity: 1;
     visibility: visible;
 }
 
-/* PREMIUM SET CARDS */
+/* PREMIUM INNER CARDS */
 .set-options > div {
-    background: #1a1108;
+
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.015)
+    );
 
     border-radius: 18px;
 
-    padding: 16px;
+    padding: 18px;
 
     margin-bottom: 14px;
 
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.06);
+
+    transition: 0.25s;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
+.set-options > div:hover {
 
-    .set-options {
-        bottom: 10px;
-        border-radius: 22px 22px 18px 18px;
-    }
+    transform: translateY(-2px);
 
+    border-color: rgba(245,168,0,0.35);
+}
+
+/* MOBILE FIX */
+@media (max-width:768px){
+
+    .set-options{
+
+        width: calc(100% - 12px);
+
+        padding: 18px;
+
+        border-radius: 24px 24px 0 0;
     }
+}
     </style>
 </head>
 <body>
@@ -524,14 +549,7 @@ if (
             <p class="item-desc">${item.desc}</p>
         </div>
 
-        <div id="set-options-${item.id}" class="set-options" style="
-            display:none;
-            margin-top:15px;
-            background:#24180d;
-            border:1px solid var(--fire);
-            border-radius:12px;
-            padding:15px;
-        ">
+        <div id="set-options-${item.id}" class="set-options">
 
         ${
             item.name === 'Chicken BBQ Skewers'
@@ -637,7 +655,7 @@ if (
         
         function toggleSetOptions(id) {
 
-    // CLOSE ALL FIRST
+    // CLOSE ALL
     document.querySelectorAll('.set-options')
         .forEach(box => box.classList.remove('show'));
 
@@ -645,9 +663,16 @@ if (
 
     const box = document.getElementById(`set-options-${id}`);
 
-    box.classList.add('show');
+    if(box.classList.contains('show')) {
 
-    overlay.classList.add('show');
+        box.classList.remove('show');
+        overlay.classList.remove('show');
+
+    } else {
+
+        box.classList.add('show');
+        overlay.classList.add('show');
+    }
 
     // CLOSE WHEN CLICK BACKDROP
     overlay.onclick = () => {
@@ -661,7 +686,9 @@ if (
 
     const overlay = document.getElementById('setOverlay');
 
-    box.classList.remove('show');
+    if(box) {
+        box.classList.remove('show');
+    }
 
     overlay.classList.remove('show');
         }
