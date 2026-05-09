@@ -863,6 +863,79 @@ nav {
         e.target.reset();  
     }  
 
+    function toggleMobileCart() {
+
+    const modal = document.getElementById('mobileOrderModal');
+
+    const itemsBox = document.getElementById('mobileOrderItems');
+
+    itemsBox.innerHTML = '';
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+
+        const total = item.price * item.qty;
+
+        subtotal += total;
+
+        itemsBox.innerHTML += `
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                margin-bottom:15px;
+                border-bottom:1px solid rgba(255,255,255,0.08);
+                padding-bottom:10px;
+            ">
+
+                <div>
+
+                    <div class="label"
+                        style="font-size:0.9rem;">
+                        ${item.name}
+                    </div>
+
+                    <div style="
+                        color:var(--muted);
+                        font-size:0.8rem;
+                    ">
+                        Qty: ${item.qty}
+                    </div>
+
+                </div>
+
+                <div class="label">
+                    ₱${total.toFixed(2)}
+                </div>
+
+            </div>
+
+        `;
+    });
+
+    const tax = subtotal * 0.08;
+
+    const grand = subtotal + tax;
+
+    document.getElementById('reviewSubtotal').innerText =
+        `₱${subtotal.toFixed(2)}`;
+
+    document.getElementById('reviewTax').innerText =
+        `₱${tax.toFixed(2)}`;
+
+    document.getElementById('reviewTotal').innerText =
+        `₱${grand.toFixed(2)}`;
+
+    modal.style.display = 'block';
+}
+
+function closeMobileOrder() {
+
+    document.getElementById('mobileOrderModal').style.display =
+        'none';
+}
+
 function openBBQPopup() {
     document.getElementById('bbqPopup').style.display = 'flex';
 }
@@ -980,6 +1053,53 @@ function closeIsawPopup() {
         </button>
 
     </div>
+</div>
+    <!-- Mobile Order Review -->
+<div class="modal" id="mobileOrderModal">
+
+    <div class="modal-content">
+
+        <h2 class="h-font"
+            style="font-size:2rem; margin-bottom:20px;">
+            Your Order 🔥
+        </h2>
+
+        <div id="mobileOrderItems"></div>
+
+        <div style="
+            border-top:1px solid var(--smoke);
+            margin-top:20px;
+            padding-top:20px;
+        ">
+
+            <div class="total-row">
+                <span>Subtotal</span>
+                <span id="reviewSubtotal">₱0.00</span>
+            </div>
+
+            <div class="total-row">
+                <span>Tax</span>
+                <span id="reviewTax">₱0.00</span>
+            </div>
+
+            <div class="total-row grand-total">
+                <span>Total</span>
+                <span id="reviewTotal">₱0.00</span>
+            </div>
+
+        </div>
+
+        <button
+            class="btn btn-outline label"
+            style="width:100%; margin-top:25px;"
+            onclick="closeMobileOrder()">
+
+            Done
+
+        </button>
+
+    </div>
+
 </div>
 </body>  
               </html>
