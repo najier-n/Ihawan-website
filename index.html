@@ -92,10 +92,47 @@
     .form-group label { display: block; font-family: 'Bebas Neue'; margin-bottom: 8px; color: var(--fire); }  
     input, select, textarea { width: 100%; padding: 12px; background: var(--char); border: 1px solid var(--smoke); color: var(--cream); font-family: 'Lato'; transition: 0.3s; }  
     input:focus { border-color: var(--fire); box-shadow: 0 0 10px rgba(245, 168, 0, 0.2); }  
-    .order-type-toggle { display: flex; gap: 5px; margin-bottom: 20px; }  
-    .toggle-btn { flex: 1; padding: 10px; background: var(--char); border: 1px solid var(--smoke); color: var(--muted); cursor: pointer; font-family: 'Bebas Neue'; }  
-    .toggle-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); }  
+    .order-type-toggle {
+    display: flex;
+    gap: 10px;
+}
 
+.toggle-btn {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 15px 10px;
+
+    border-radius: 12px;
+
+    transition: 0.3s;
+}
+
+.order-icon {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+
+    transition: 0.3s;
+}
+
+.toggle-btn.active .order-icon {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 8px rgba(245,168,0,0.6));
+}
+
+.toggle-btn span {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+}
+        
     /* Mobile Adjustments */  
     @media (max-width: 768px) {
 
@@ -461,11 +498,39 @@ nav {
 <div id="checkoutModal" class="modal">  
     <div class="modal-content" id="modalContent">  
         <h2 class="h-font" style="font-size: 2.5rem; margin-bottom: 20px;">Checkout</h2>  
-        <div class="order-type-toggle">  
-            <button class="toggle-btn active" onclick="setOrderType('dine-in', this)">Dine In</button>  
-            <button class="toggle-btn" onclick="setOrderType('takeout', this)">Takeout</button>  
-            <button class="toggle-btn" onclick="setOrderType('delivery', this)">Delivery</button>  
-        </div>  
+        <div class="order-type-toggle">
+
+    <button class="toggle-btn active"
+        onclick="setOrderType('dine-in', this)">
+
+        <img src="images/dinein.png"
+             class="order-icon">
+
+        <span>Dine In</span>
+
+    </button>
+
+    <button class="toggle-btn"
+        onclick="setOrderType('takeout', this)">
+
+        <img src="images/takeout.png"
+             class="order-icon">
+
+        <span>Takeout</span>
+
+    </button>
+
+    <button class="toggle-btn"
+        onclick="setOrderType('delivery', this)">
+
+        <img src="images/delivery.png"
+             class="order-icon">
+
+        <span>Delivery</span>
+
+    </button>
+
+        </div>
         <form id="checkoutForm" onsubmit="submitOrder(event)">  
             <div class="form-group"><label>Full Name</label><input type="text" id="custName" required></div>  
             <div class="form-group"><label>Phone</label><input type="tel" id="custPhone" required></div>  
