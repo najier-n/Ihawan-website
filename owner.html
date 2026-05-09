@@ -196,12 +196,27 @@
                     <div style="margin-bottom:15px">
 
     <strong>
-        ${order.customer.name}
-    </strong>
+    ${order.customer.name}
+</strong>
 
-    (${order.customer.type})
+(${order.customer.type})
 
-    <br>
+${order.customer.type === 'dine-in'
+    && order.customer.tableNumber
+    ? `<br>
+       <span style="
+            color:var(--fire);
+            font-size:0.85rem;
+       ">
+            🍽 Table:
+            <strong>
+                ${order.customer.tableNumber}
+            </strong>
+       </span>`
+    : ''
+}
+
+<br>
 
     <span style="
         font-size:0.8rem;
