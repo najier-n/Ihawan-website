@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Order | 'Ihawan Filipino Grill</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+
+        :root {
+            --fire: #F5A800; --ember: #E05A00; --char: #1A1108; --smoke: #2E2416;
+            --cream: #FDF3E3; --muted: rgba(253,243,227,0.55); --border: rgba(245,168,0,0.18);
+            --success: #22C55E;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--char); color: var(--cream); font-family: 'Lato', sans-serif; overflow-x: hidden; }
+        .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.15em; }
+        .playfair { font-family: 'Playfair Display', serif; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 15px 5vw; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(26,17,8,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+        }
+        .back-link { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
+        .back-link:hover { color: var(--fire); }
+
+        header {
+            height: 65vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: radial-gradient(circle at center, #3D2200 0%, #1A1108 100%);
+            position: relative; overflow: hidden; padding: 20px;
+        }
+        .guide-icon {
+            width: 60px; height: 60px; border: 2px solid var(--fire); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 2rem;
+            margin: 0 auto 20px; color: var(--fire); animation: gentlePulse 2s infinite;
+        }
+        .pill-time {
+            display: inline-block; padding: 6px 18px; border-radius: 20px; border: 1px solid var(--border);
+            background: rgba(245,168,0,0.08); font-size: 0.75rem; color: var(--fire); margin-top: 20px;
+        }
+
+        .step-section { padding: 90px 6vw; border-top: 1px solid var(--border); }
+        .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .step-content { position: relative; }
+        .bg-num {
+            position: absolute; top: -40px; left: -20px; font-size: 8rem; 
+            font-family: 'Bebas Neue'; color: rgba(245,168,0,0.05); z-index: 0;
+        }
+        .mockup {
+            background: var(--smoke); border: 1px solid var(--border); border-radius: 12px;
+            padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* --- MINI MOCKUP ELEMENTS --- */
+        .mini-card {
+            background: var(--char); border: 1px solid var(--border); border-radius: 8px;
+            padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between;
+        }
+        .mini-btn {
+            background: var(--fire); color: var(--char); border: none; padding: 5px 15px;
+            border-radius: 4px; font-size: 0.7rem; font-family: 'Bebas Neue';
+        }
+        .mini-qty {
+            display: none; border: 1px solid var(--fire); border-radius: 4px; font-size: 0.7rem;
+        }
+
+        /* --- FAQ --- */
+        .faq-item { border-bottom: 1px solid var(--border); cursor: pointer; }
+        .faq-q { padding: 22px 0; display: flex; justify-content: space-between; font-weight: 700; }
+        .faq-a { max-height: 0; overflow: hidden; transition: 0.3s; color: var(--muted); padding-bottom: 0; }
+        .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+        @keyframes gentlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+        
+        @media (max-width: 768px) {
+            .step-grid { grid-template-columns: 1fr; }
+            .step-grid div:nth-child(1) { order: 2; }
+            .step-grid div:nth-child(2) { order: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div>
+            <a href="index.html" class="back-link">← Back to Restaurant</a>
+            <span class="playfair" style="margin-left:20px; font-weight:900; color:var(--fire);">'Ihawan</span>
+        </div>
+        <button class="mini-btn bebas" style="padding:10px 20px;" onclick="location.href='index.html#menu'">Order Now →</button>
+    </nav>
+
+    <header>
+        <div style="position:relative; z-index:10;">
+            <div class="guide-icon playfair">?</div>
+            <p class="bebas" style="color:var(--fire); letter-spacing:0.5em; font-size:0.78rem;">STEP-BY-STEP GUIDE</p>
+            <h1 class="playfair" style="font-size:clamp(2.2rem,6vw,4rem); margin:10px 0;">How to Order at Ihawan</h1>
+            <p class="playfair" style="font-style:italic; color:var(--muted); max-width:600px; margin:0 auto;">Placing your first order takes less than 2 minutes. Here's everything you need to know.</p>
+            <div class="pill-time bebas">⏱ 2-minute read</div>
+        </div>
+    </header>
+
+    <section class="step-section" id="step1">
+        <div class="step-grid">
+            <div class="step-content">
+                <span class="bg-num">01</span>
+                <p class="bebas" style="color:var(--fire); margin-bottom:10px;">STEP 1</p>
+                <h2 class="playfair" style="font-size:2rem; margin-bottom:20px;">Browse Our Menu</h2>
+                <p style="color:var(--muted); margin-bottom:20px;">Start by scrolling through our menu. We've organized everything into categories to help you find your favorites quickly.</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <span style="border:1px solid var(--fire); padding:5px 12px; border-radius:20px; font-size:0.8rem;">🍢 Grill Specials</span>
+                    <span style="border:1px solid var(--fire); padding:5px 12px; border-radius:20px; font-size:0.8rem;">🍚 Rice Meals</span>
+                </div>
+            </div>
+            <div class="mockup">
+                <p class="bebas" style="font-size:0.65rem; color:var(--fire); margin-bottom:10px;">LIVE PREVIEW</p>
+                <div class="mini-card">
+                    <span>🍢 Pork BBQ</span>
+                    <button class="mini-btn">+ ADD</button>
+                </div>
+                <div class="mini-card" style="border-color:var(--fire)">
+                    <span>🍱 Combo Box <small style="color:var(--fire)">🔥</small></span>
+                    <button class="mini-btn">+ ADD</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="step-section" style="background:var(--smoke);">
+        <div class="step-grid">
+            <div class="mockup" id="animate-card">
+                <div class="mini-card">
+                    <span>🍢 Pork BBQ</span>
+                    <div id="morph-btn">
+                        <button class="mini-btn" id="target-btn">+ ADD</button>
+                    </div>
+                </div>
+                <p style="text-align:center; font-size:0.7rem; color:var(--muted); margin-top:10px;">Watch the button transform</p>
+            </div>
+            <div class="step-content">
+                <span class="bg-num">02</span>
+                <p class="bebas" style="color:var(--fire); margin-bottom:10px;">STEP 2</p>
+                <h2 class="playfair" style="font-size:2rem; margin-bottom:20px;">Add Items to Cart</h2>
+                <p style="color:var(--muted);">Click the "+ ADD" button on any dish. The button will transform into a quantity controller where you can add more or remove items.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="step-section">
+        <div class="step-grid">
+            <div class="step-content">
+                <span class="bg-num">03</span>
+                <h2 class="playfair" style="font-size:2rem; margin-bottom:20px;">Track Order Status</h2>
+                <p style="color:var(--muted);">Once confirmed, watch your status update from Received to Preparing, and finally Ready for pickup or delivery!</p>
+            </div>
+            <div class="mockup">
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                    <div style="text-align:center;">
+                        <div style="width:25px; height:25px; background:var(--fire); border-radius:50%; margin:0 auto 5px;"></div>
+                        <span style="font-size:0.6rem;">Received</span>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="width:25px; height:25px; background:var(--fire); border-radius:50%; margin:0 auto 5px; box-shadow:0 0 10px var(--fire);"></div>
+                        <span style="font-size:0.6rem; color:var(--fire);">Cooking</span>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="width:25px; height:25px; background:var(--char); border-radius:50%; margin:0 auto 5px;"></div>
+                        <span style="font-size:0.6rem;">Ready</span>
+                    </div>
+                </div>
+                <p style="text-align:center; font-style:italic; font-size:0.8rem; color:var(--fire);">Your food is being grilled! 🔥</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="step-section" style="background:var(--smoke);">
+        <h2 class="playfair" style="text-align:center; margin-bottom:40px;">Frequently Asked Questions</h2>
+        <div style="max-width:800px; margin:0 auto;">
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">Can I order for delivery? <span class="bebas">+</span></div>
+                <div class="faq-a">Yes! Simply select 'Delivery' during checkout and provide your address.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('open')">
+                <div class="faq-q">Is there a minimum order? <span class="bebas">+</span></div>
+                <div class="faq-a">No, you can order as little or as much as you like!</div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding:100px 5vw; text-align:center; background:radial-gradient(circle, #3D2200 0%, #0D0803 100%);">
+        <h2 class="playfair" style="font-size:3rem;">Ready to Eat?</h2>
+        <button class="mini-btn bebas" style="padding:20px 60px; font-size:1.2rem; margin-top:30px;" onclick="location.href='index.html#menu'">Order Now 🔥</button>
+    </footer>
+
+    <script>
+        // Simple animation loop for the mockup button
+        const btnContainer = document.getElementById('morph-btn');
+        const stages = [
+            '<button class="mini-btn">+ ADD</button>',
+            '<div style="display:flex; border:1px solid var(--fire); border-radius:4px;"><button class="mini-btn" style="background:none; color:var(--fire)">-</button><span style="padding:5px 10px; font-size:0.7rem;">1</span><button class="mini-btn" style="background:none; color:var(--fire)">+</button></div>',
+            '<div style="display:flex; border:1px solid var(--fire); border-radius:4px;"><button class="mini-btn" style="background:none; color:var(--fire)">-</button><span style="padding:5px 10px; font-size:0.7rem;">2</span><button class="mini-btn" style="background:none; color:var(--fire)">+</button></div>'
+        ];
+        let currentStage = 0;
+        setInterval(() => {
+            currentStage = (currentStage + 1) % stages.length;
+            btnContainer.innerHTML = stages[currentStage];
+        }, 2000);
+    </script>
+</body>
+</html>
