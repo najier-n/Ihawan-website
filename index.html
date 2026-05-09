@@ -154,19 +154,21 @@
 
     /* CATEGORY TABS */
     .category-tabs {
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        gap: 10px;
-        padding-bottom: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: 10px;
+    padding-bottom: 10px;
 
-        scrollbar-width: none;
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
     }
 
     .category-tabs::-webkit-scrollbar {
         display: none;
-    }
 
     /* TAB BUTTON */
     .tab-btn {
@@ -325,7 +327,12 @@
 </style>
 
 </head>  
-<body>  <nav id="nav">  
+<body> 
+    html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+    <nav id="nav">  
     <a href="#hero" class="logo">'Ihawan Filipino Grill</a>  
     <div class="nav-links">  
         <a href="#hero">Home</a>  
