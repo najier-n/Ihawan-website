@@ -339,7 +339,11 @@
         { id: 14, cat: 'Drinks', name: 'San Miguel Beer', price: 79, desc: 'Ice-cold Filipino lager.', emoji: '🍺', best: true },  
         { id: 15, cat: 'Desserts', name: 'Halo-Halo', price: 29, desc: 'Shaved ice, mixed sweets, ube ice cream & leche flan.', emoji: '🧊' },  
         { id: 16, cat: 'Desserts', name: 'Leche Flan', price: 109, desc: 'Silky caramel egg custard. Dense, rich, golden.', emoji: '🍮' },  
-        { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }  
+        { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }, 
+        { id: 101, cat: 'Hidden', name: 'Chicken BBQ Skewers Set 1', price: 89, desc: '2 Skewers + Garlic Rice', emoji: '🍢' },
+        { id: 102, cat: 'Hidden', name: 'Chicken BBQ Skewers Set 2', price: 149, desc: '4 Skewers + Garlic Rice + Drink', emoji: '🍢' },
+        { id: 201, cat: 'Hidden', name: 'Isaw Set 1', price: 49, desc: '3 Sticks + Vinegar Dip', emoji: '🔥' },
+        { id: 202, cat: 'Hidden', name: 'Isaw Set 2', price: 99, desc: '6 Sticks + Garlic Rice + Drink', emoji: '🔥' }
     ];  
 
     let cart = [];  
@@ -397,15 +401,25 @@
 
         if(item.name === 'Chicken BBQ Skewers') {
 
-            controls = `
-                <button class="btn btn-fire label"
-                    style="width:100%"
-                    onclick="openBBQPopup()">
-                    Choose Order 🔥
-                </button>
-            `;
+    controls = `
+        <button class="btn btn-fire label"
+            style="width:100%"
+            onclick="openBBQPopup()">
+            Choose Order 🔥
+        </button>
+    `;
 
-        } else {
+} else if(item.name === 'Isaw (Grilled Intestine)') {
+
+    controls = `
+        <button class="btn btn-fire label"
+            style="width:100%"
+            onclick="openIsawPopup()">
+            Choose Order 🔥
+        </button>
+    `;
+
+} else {
 
             controls = `
                 <div id="ctrl-${item.id}">
@@ -444,68 +458,68 @@
     }  
 
     // CART LOGIC  
-    function addToCart(id) {  
-        const item = menuData.find(i => i.id === id);  
-        cart.push({ ...item, qty: 1 });  
-        updateCart();  
-        document.getElementById(`ctrl-${id}`).innerHTML = renderQty(id, 1);  
-    }  
+    function addToCart(id) {
 
-    function updateQty(id, delta) {  
-        const index = cart.findIndex(i => i.id === id);  
-        cart[index].qty += delta;  
-        if(cart[index].qty <= 0) {  
-            cart.splice(index, 1);  
-            document.getElementById(`ctrl-${id}`).innerHTML = `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${id})">+ Add to Order</button>`;  
-        } else {  
-            document.getElementById(`ctrl-${id}`).innerHTML = renderQty(id, cart[index].qty);  
-        }  
-        updateCart();  
-    }  
-    // OPEN POPUP
-function openBBQPopup() {
-    document.getElementById('bbqPopup').style.display = 'flex';
-}
-
-// CLOSE POPUP
-function closeBBQPopup() {
-    document.getElementById('bbqPopup').style.display = 'none';
-}
-
-// ADD BBQ SETS
-function addBBQSet(type) {
-
-    let item;
-
-    if(type === 101) {
-
-        item = {
-            id: 101,
-            name: 'Chicken BBQ Skewers Set 1',
-            price: 89,
-            qty: 1
-        };
-
-    } else {
-
-        item = {
-            id: 102,
-            name: 'Chicken BBQ Skewers Set 2',
-            price: 149,
-            qty: 1
-        };
-    }
-
-    const existing = cart.find(i => i.id === item.id);
+    const existing = cart.find(i => i.id === id);
 
     if(existing) {
+
         existing.qty += 1;
+
     } else {
-        cart.push(item);
+
+        const item = menuData.find(i => i.id === id);
+
+        cart.push({
+            ...item,
+            qty: 1
+        });
     }
 
     updateCart();
-}
+
+    const cartItem = cart.find(i => i.id === id);
+
+    const ctrl = document.getElementById(`ctrl-${id}`);
+
+    if(ctrl) {
+        ctrl.innerHTML = renderQty(id, cartItem.qty);
+    }
+    }
+
+    function updateQty(id, delta) {
+
+    const index = cart.findIndex(i => i.id === id);
+
+    if(index === -1) return;
+
+    cart[index].qty += delta;
+
+    const ctrl = document.getElementById(`ctrl-${id}`);
+
+    if(cart[index].qty <= 0) {
+
+        cart.splice(index, 1);
+
+        if(ctrl) {
+            ctrl.innerHTML = `
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="addToCart(${id})">
+                    + Add to Order
+                </button>
+            `;
+        }
+
+    } else {
+
+        if(ctrl) {
+            ctrl.innerHTML = renderQty(id, cart[index].qty);
+        }
+    }
+
+    updateCart();
+    }
 
     function updateCart() {  
         const list = document.getElementById('cartItems');  
@@ -650,34 +664,96 @@ function addBBQSet(type) {
         <h2>Choose Your BBQ Set 🔥</h2>
 
         <div class="bbq-option">
+
             <h3>Chicken BBQ Skewers Set 1</h3>
+
             <p>2 Skewers + Garlic Rice</p>
 
-            <div class="popup-btns">
-                <button class="btn btn-fire label" onclick="addBBQSet(101)">
+            <span class="item-price">₱89.00</span>
+
+            <div id="ctrl-101">
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="addToCart(101)">
                     + Add to Order
                 </button>
-
-                <button class="btn btn-outline label" onclick="closeBBQPopup()">
-                    Done
-                </button>
             </div>
+
         </div>
 
         <div class="bbq-option">
+
             <h3>Chicken BBQ Skewers Set 2</h3>
+
             <p>4 Skewers + Garlic Rice + Drink</p>
 
-            <div class="popup-btns">
-                <button class="btn btn-fire label" onclick="addBBQSet(102)">
+            <span class="item-price">₱149.00</span>
+
+            <div id="ctrl-102">
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="addToCart(102)">
                     + Add to Order
                 </button>
+            </div>
 
-                <button class="btn btn-outline label" onclick="closeBBQPopup()">
-                    Done
+        </div>
+
+        <button class="btn btn-outline label"
+            style="width:100%; margin-top:20px;"
+            onclick="closeBBQPopup()">
+            Done
+        </button>
+
+    </div>
+</div>
+    <!-- ISAW Popup -->
+<div class="bbq-popup" id="isawPopup">
+    <div class="bbq-popup-box">
+
+        <h2>Choose Your Isaw Set 🔥</h2>
+
+        <div class="bbq-option">
+
+            <h3>Isaw Set 1</h3>
+
+            <p>3 Sticks + Vinegar Dip</p>
+
+            <span class="item-price">₱49.00</span>
+
+            <div id="ctrl-201">
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="addToCart(201)">
+                    + Add to Order
                 </button>
             </div>
+
         </div>
+
+        <div class="bbq-option">
+
+            <h3>Isaw Set 2</h3>
+
+            <p>6 Sticks + Garlic Rice + Drink</p>
+
+            <span class="item-price">₱99.00</span>
+
+            <div id="ctrl-202">
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="addToCart(202)">
+                    + Add to Order
+                </button>
+            </div>
+
+        </div>
+
+        <button class="btn btn-outline label"
+            style="width:100%; margin-top:20px;"
+            onclick="closeIsawPopup()">
+            Done
+        </button>
 
     </div>
 </div>
