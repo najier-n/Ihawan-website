@@ -194,9 +194,52 @@
                     <span class="order-id">${order.id}</span>
                     <div class="badge badge-${order.status}">${order.status.toUpperCase()}</div>
                     <div style="margin-bottom:15px">
-                        <strong>${order.customer.name}</strong> (${order.customer.type})<br>
-                        <span style="font-size:0.8rem; opacity:0.7">${order.customer.phone} | Placed ${elapsed}m ago</span>
-                    </div>
+
+    <strong>
+        ${order.customer.name}
+    </strong>
+
+    (${order.customer.type})
+
+    <br>
+
+    <span style="
+        font-size:0.8rem;
+        opacity:0.7;
+    ">
+
+        ${order.customer.phone}
+        |
+        Placed ${elapsed}m ago
+
+    </span>
+
+    <div style="
+        margin-top:10px;
+        padding:10px;
+        background:rgba(245,168,0,0.08);
+        border-left:3px solid var(--fire);
+        font-size:0.85rem;
+    ">
+
+        💳 Payment:
+        <strong>
+            ${order.payment?.method?.toUpperCase() || 'CASH'}
+        </strong>
+
+        ${
+            order.payment?.method === 'gcash'
+            ? `<br><br>
+               📌 Reference:
+               <strong>
+                   ${order.payment.reference}
+               </strong>`
+            : ''
+        }
+
+    </div>
+
+</div>
                     ${order.customer.type === 'delivery' ? `<div style="font-size:0.8rem; margin-bottom:15px">📍 ${order.customer.address}</div>` : ''}
                     <div class="items-list">
                         ${order.items.map(i => `<div class="item-row"><span>${i.qty}x ${i.name}</span><span>₱${i.subtotal.toFixed(2)}</span></div>`).join('')}
