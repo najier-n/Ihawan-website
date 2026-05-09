@@ -94,15 +94,15 @@
     input:focus { border-color: var(--fire); box-shadow: 0 0 10px rgba(245, 168, 0, 0.2); }  
     .order-type-toggle {
     display: flex;
-    gap: 10px;
+    gap: 5px;
 }
 
 .toggle-btn {
     flex: 1;
-
+    background: var(--char);
     display: flex;
     flex-direction: column;
-
+color: var(--muted);
     align-items: center;
     justify-content: center;
 
@@ -122,6 +122,7 @@
 
     transition: 0.3s;
 }
+        toggle-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); }  
 
 .toggle-btn.active .order-icon {
     transform: scale(1.12);
