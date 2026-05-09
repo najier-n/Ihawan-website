@@ -553,7 +553,72 @@ nav {
                 <label>Street Address</label><input type="text" id="custAddress">  
             </div>  
             <div class="form-group"><label>Special Instructions</label><textarea id="custNotes"></textarea></div>  
-            <div id="checkoutSummary" style="margin-bottom: 20px; border-top: 1px solid var(--smoke); padding-top: 20px;"></div>  
+            <!-- PAYMENT METHOD -->
+<div class="form-group">
+    <label>Payment Method</label>
+
+    <select id="paymentMethod" onchange="handlePaymentMethod()" required>
+        <option value="">Select Payment</option>
+        <option value="cash">CASH</option>
+        <option value="gcash">GCash</option>
+    </select>
+</div>
+
+<!-- GCASH AREA -->
+<div id="gcashBox" style="
+    display:none;
+    background: var(--char);
+    border:1px solid var(--fire);
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+">
+
+    <h3 style="color:var(--fire); margin-bottom:15px;">
+        Scan QR to Pay
+    </h3>
+
+    <!-- YOUR QR IMAGE -->
+    <img src="images/gcash-qr.jpg"
+         style="
+            width:100%;
+            max-width:280px;
+            display:block;
+            margin:0 auto 20px;
+            border-radius:10px;
+         ">
+
+    <div class="label"
+         style="
+            text-align:center;
+            font-size:1.2rem;
+            margin-bottom:20px;
+         ">
+         Total:
+         <span id="gcashTotal">₱0.00</span>
+    </div>
+
+    <button type="button"
+        class="btn btn-fire label"
+        style="width:100%;"
+        onclick="showReferenceInput()">
+
+        Done
+
+    </button>
+
+    <!-- REFERENCE INPUT -->
+    <div id="referenceBox" style="display:none; margin-top:20px;">
+
+        <label>Reference Number</label>
+
+        <input type="text"
+               id="referenceNumber"
+               placeholder="Enter GCash Reference Number">
+
+    </div>
+
+</div>  
             <button type="submit" class="btn btn-fire label" style="width:100%; font-size: 1.2rem;">Confirm Order 🔥</button>  
             <button type="button" class="btn btn-outline label" style="width:100%; margin-top: 10px;" onclick="closeModal()">Cancel</button>  
         </form>  
@@ -853,34 +918,120 @@ nav {
 
     function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }  
 
-    function submitOrder(e) {  
-        e.preventDefault();  
-        const id = "IHW-" + Date.now().toString().slice(-6);  
-        const order = {  
-            id,  
-            timestamp: Date.now(),  
-            customer: {  
-                name: document.getElementById('custName').value,  
-                phone: document.getElementById('custPhone').value,  
-                email: document.getElementById('custEmail').value,  
-                type: orderType,  
-                address: document.getElementById('custAddress').value,  
-                notes: document.getElementById('custNotes').value  
-            },  
-            items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price, subtotal: i.qty * i.price })),  
-            total: parseFloat(document.getElementById('grandTotal').innerText.replace('₱','')),  
-            status: 'received'  
-        };  
+    function handlePaymentMethod() {
 
-        const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');  
-        orders.push(order);  
-        localStorage.setItem('ihawan_orders', JSON.stringify(orders));  
-          
-        showConfirmation(id);  
-        cart = [];  
-        updateCart();  
-        init(); // Refresh menu UI  
-    }  
+    const method =
+        document.getElementById('paymentMethod').value;
+
+    const gcashBox =
+        document.getElementById('gcashBox');
+
+    if(method === 'gcash') {
+
+        gcashBox.style.display = 'block';
+
+        document.getElementById('gcashTotal').innerText =
+            document.getElementById('grandTotal').innerText;
+
+    } else {
+
+        gcashBox.style.display = 'none';
+    }
+}
+
+function showReferenceInput() {
+
+    document.getElementById('referenceBox').style.display =
+        'block';
+}
+
+    function submitOrder(e) {
+
+    e.preventDefault();
+
+    const paymentMethod =
+        document.getElementById('paymentMethod').value;
+
+    const referenceNumber =
+        document.getElementById('referenceNumber')?.value || '';
+
+    // VALIDATION
+    if(paymentMethod === '') {
+
+        alert("Please select payment method.");
+        return;
+    }
+
+    if(paymentMethod === 'gcash' && referenceNumber.trim() === '') {
+
+        alert("Please enter GCash reference number.");
+        return;
+    }
+
+    const id =
+        "IHW-" + Date.now().toString().slice(-6);
+
+    const order = {
+
+        id,
+
+        timestamp: Date.now(),
+
+        customer: {
+
+            name: document.getElementById('custName').value,
+
+            phone: document.getElementById('custPhone').value,
+
+            email: document.getElementById('custEmail').value,
+
+            type: orderType,
+
+            address: document.getElementById('custAddress').value,
+
+            notes: document.getElementById('custNotes').value
+        },
+
+        payment: {
+
+            method: paymentMethod,
+
+            reference: referenceNumber
+        },
+
+        items: cart.map(i => ({
+            name: i.name,
+            qty: i.qty,
+            price: i.price,
+            subtotal: i.qty * i.price
+        })),
+
+        total: parseFloat(
+            document.getElementById('grandTotal')
+            .innerText.replace('₱','')
+        ),
+
+        status: 'received'
+    };
+
+    const orders =
+        JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+
+    orders.push(order);
+
+    localStorage.setItem(
+        'ihawan_orders',
+        JSON.stringify(orders)
+    );
+
+    showConfirmation(id);
+
+    cart = [];
+
+    updateCart();
+
+    init();
+    }
 
     function showConfirmation(id) {  
         activeOrder = id;  
