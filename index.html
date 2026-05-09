@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>'Ihawan Filipino Grill | Fire-Grilled. Authentically Filipino.</title>  
     <style>  
+        html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');  :root {  
         --fire: #F5A800;  
         --ember: #E05A00;  
@@ -58,7 +62,7 @@
     .bestseller-badge { position: absolute; top: 15px; right: 15px; background: var(--fire); color: var(--char); font-family: 'Bebas Neue'; font-size: 0.7rem; padding: 4px 8px; border-radius: 2px; }  
 
     /* Cart */  
-    .cart-sticky { position: sticky; top: 100px; background: var(--smoke); padding: 25px; border-radius: 8px; border: 1px solid var(--gold); align-self: start; }  
+    .cart-sticky { position: sticky; top: 100px; background: var(--smoke); padding: 25px; border-radius: 8px; border: 1px solid var(--fire); align-self: start; }  
     .cart-title { font-size: 2rem; margin-bottom: 20px; border-bottom: 1px solid var(--muted); padding-bottom: 10px; }  
     .cart-items { max-height: 400px; overflow-y: auto; margin-bottom: 20px; }  
     .cart-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; }  
@@ -99,7 +103,11 @@
     /* Mobile Adjustments */  
     @media (max-width: 768px) {
 
-    /* MENU LAYOUT */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
     #menu {
         grid-template-columns: 1fr;
         padding: 70px 12px 120px;
@@ -109,79 +117,101 @@
 
     /* 2 COLUMN MENU */
     .item-grid {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
 
-    /* SMALLER CARDS */
     .menu-card {
-        padding: 14px;
-        width: 100%;
+        padding: 12px;
         min-width: 0;
     }
 
-    /* FOOD EMOJI */
     .food-emoji {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-bottom: 8px;
     }
 
-    /* TITLE */
     .item-name {
-        font-size: 1rem;
+        font-size: 0.95rem;
         line-height: 1.2;
     }
 
-    /* DESCRIPTION */
     .item-desc {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+        margin-bottom: 8px;
         min-height: auto;
-        margin-bottom: 10px;
     }
 
-    /* PRICE */
     .item-price {
         font-size: 1rem;
-        margin-bottom: 10px;
     }
 
-    /* BUTTON */
     .btn {
+        font-size: 0.75rem;
         padding: 10px;
-        font-size: 0.8rem;
     }
 
-    /* CATEGORY TABS */
+    /* SWIPE CATEGORY TABS */
     .category-tabs {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    gap: 10px;
-    padding-bottom: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        display: flex;
+        gap: 10px;
+        padding-bottom: 10px;
 
-    scrollbar-width: none;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
 
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
     }
 
     .category-tabs::-webkit-scrollbar {
         display: none;
+    }
 
-    /* TAB BUTTON */
     .tab-btn {
-        min-width: 100px;
-        flex-shrink: 0;
-        font-size: 0.8rem;
+        flex: 0 0 auto;
+        min-width: 110px;
+        font-size: 0.75rem;
         padding: 10px;
     }
 
-    /* TAB ICON */
     .tab-icon {
         width: 28px;
         height: 28px;
+    }
+
+    /* FIX NAV */
+    nav {
+        padding: 12px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    /* HERO */
+    #hero {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .hero-logo {
+        max-width: 90%;
+    }
+
+    #hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
     }
 
     /* CART */
@@ -207,38 +237,7 @@
         align-items: center;
     }
 
-    /* HERO FIX */
-    #hero {
-        padding: 20px;
-        text-align: center;
-    }
-
-    .hero-logo {
-        max-width: 90%;
-    }
-
-    #hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero-sub {
-        font-size: 1rem;
-    }
-
-    /* NAVIGATION */
-    .nav-links {
-        display: none;
-    }
-
-    nav {
-        padding: 12px;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-    }
-
-    /* RESERVATION SECTION */
+    /* RESERVATION */
     #reservations > div {
         grid-template-columns: 1fr !important;
         gap: 40px !important;
@@ -249,9 +248,7 @@
         width: 95%;
         padding: 20px;
     }
-
-    }
-        
+}
 
     .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }  
     .reveal.active { opacity: 1; transform: translateY(0); }  
