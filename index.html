@@ -117,6 +117,66 @@
         0% { transform: translateY(0px); }  
         50% { transform: translateY(-6px); }  
         100% { transform: translateY(0px); }  }
+
+        /* BBQ Popup */
+.bbq-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.bbq-popup-box {
+    background: var(--smoke);
+    border: 2px solid var(--fire);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    padding: 25px;
+    animation: popupShow 0.3s ease;
+}
+
+.bbq-popup-box h2 {
+    margin-bottom: 20px;
+    color: var(--fire);
+    text-align: center;
+}
+
+.bbq-option {
+    background: var(--char);
+    border: 1px solid var(--fire);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.bbq-option h3 {
+    margin-bottom: 10px;
+}
+
+.popup-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.popup-btns button {
+    flex: 1;
+}
+
+@keyframes popupShow {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 </style>
 
 </head>  
@@ -318,29 +378,62 @@
     }  
 
     // MENU LOGIC  
-    function filterMenu(cat, btn) {  
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));  
-        btn.classList.add('active');  
-        const grid = document.getElementById('menuGrid');  
-        grid.innerHTML = '';  
-          
-        menuData.filter(i => i.cat === cat).forEach(item => {  
-            const cartItem = cart.find(ci => ci.id === item.id);  
-            const card = document.createElement('div');  
-            card.className = 'menu-card';  
-            card.innerHTML = `  
-                ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}  
-                <span class="food-emoji">${item.emoji}</span>  
-                <h3 class="item-name">${item.name}</h3>  
-                <p class="item-desc">${item.desc}</p>  
-                <span class="item-price">₱${item.price.toFixed(2)}</span>  
-                <div id="ctrl-${item.id}">  
-                    ${cartItem ? renderQty(item.id, cartItem.qty) : `<button class="btn btn-fire label" style="width:100%" onclick="addToCart(${item.id})">+ Add to Order</button>`}  
-                </div>  
-            `;  
-            grid.appendChild(card);  
-        });  
-    }  
+    function filterMenu(cat, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const grid = document.getElementById('menuGrid');
+    grid.innerHTML = '';
+
+    menuData.filter(i => i.cat === cat).forEach(item => {
+
+        const cartItem = cart.find(ci => ci.id === item.id);
+
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+
+        // SPECIAL FUNCTION FOR CHICKEN BBQ
+        let controls = '';
+
+        if(item.name === 'Chicken BBQ Skewers') {
+
+            controls = `
+                <button class="btn btn-fire label"
+                    style="width:100%"
+                    onclick="openBBQPopup()">
+                    Choose Order 🔥
+                </button>
+            `;
+
+        } else {
+
+            controls = `
+                <div id="ctrl-${item.id}">
+                    ${
+                        cartItem
+                        ? renderQty(item.id, cartItem.qty)
+                        : `<button class="btn btn-fire label"
+                            style="width:100%"
+                            onclick="addToCart(${item.id})">
+                            + Add to Order
+                        </button>`
+                    }
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
+            <span class="food-emoji">${item.emoji}</span>
+            <h3 class="item-name">${item.name}</h3>
+            <p class="item-desc">${item.desc}</p>
+            <span class="item-price">₱${item.price.toFixed(2)}</span>
+            ${controls}
+        `;
+
+        grid.appendChild(card);
+    });
+                }
 
     function renderQty(id, qty) {  
         return `<div class="qty-controls">  
@@ -369,6 +462,50 @@
         }  
         updateCart();  
     }  
+    // OPEN POPUP
+function openBBQPopup() {
+    document.getElementById('bbqPopup').style.display = 'flex';
+}
+
+// CLOSE POPUP
+function closeBBQPopup() {
+    document.getElementById('bbqPopup').style.display = 'none';
+}
+
+// ADD BBQ SETS
+function addBBQSet(type) {
+
+    let item;
+
+    if(type === 101) {
+
+        item = {
+            id: 101,
+            name: 'Chicken BBQ Skewers Set 1',
+            price: 89,
+            qty: 1
+        };
+
+    } else {
+
+        item = {
+            id: 102,
+            name: 'Chicken BBQ Skewers Set 2',
+            price: 149,
+            qty: 1
+        };
+    }
+
+    const existing = cart.find(i => i.id === item.id);
+
+    if(existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(item);
+    }
+
+    updateCart();
+}
 
     function updateCart() {  
         const list = document.getElementById('cartItems');  
@@ -506,6 +643,43 @@
 
     init();  
 </script>
+<!-- Chicken BBQ Popup -->
+<div class="bbq-popup" id="bbqPopup">
+    <div class="bbq-popup-box">
 
+        <h2>Choose Your BBQ Set 🔥</h2>
+
+        <div class="bbq-option">
+            <h3>Chicken BBQ Skewers Set 1</h3>
+            <p>2 Skewers + Garlic Rice</p>
+
+            <div class="popup-btns">
+                <button class="btn btn-fire label" onclick="addBBQSet(101)">
+                    + Add to Order
+                </button>
+
+                <button class="btn btn-outline label" onclick="closeBBQPopup()">
+                    Done
+                </button>
+            </div>
+        </div>
+
+        <div class="bbq-option">
+            <h3>Chicken BBQ Skewers Set 2</h3>
+            <p>4 Skewers + Garlic Rice + Drink</p>
+
+            <div class="popup-btns">
+                <button class="btn btn-fire label" onclick="addBBQSet(102)">
+                    + Add to Order
+                </button>
+
+                <button class="btn btn-outline label" onclick="closeBBQPopup()">
+                    Done
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>  
               </html>
