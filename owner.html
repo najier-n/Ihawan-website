@@ -129,7 +129,6 @@
             --ready: #22C55E;
             --preparing: #F5A800;
             --received: #94a3b8;
-            --muted: #9ca3af;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -873,23 +872,29 @@ function clearCancelledOrders() {
     document.getElementById('expenseAmount').value = '';
     renderExpenses();
 }
+        
         let expenseEditMode = false;
-        function toggleExpenseEdit() {
-            expenseEditMode = !expenseEditMode;
-                renderExpenses(); }
-        function deleteExpense(index) {
+
+function toggleExpenseEdit() {
+
+    expenseEditMode = !expenseEditMode;
+
+    renderExpenses();
+}
+
+function deleteExpense(index) {
 
     const confirmDelete = confirm(
         "Delete this expense?"
     );
 
-    if (!confirmDelete) return;
+    if(!confirmDelete) return;
 
     let expenses = JSON.parse(
         localStorage.getItem('ihawan_expenses') || '[]'
     );
 
-    // TODAY ONLY
+    // TODAY ONLY FILTER
     const today = new Date();
 
     const todayExpenses = expenses.filter(e => {
@@ -916,13 +921,11 @@ function clearCancelledOrders() {
     );
 
     renderExpenses();
-    renderRevenueCalendar();
 }
 
 function renderExpenses() {
 
-    const container =
-        document.getElementById('expenseList');
+    const container = document.getElementById('expenseList');
 
     const allExpenses = JSON.parse(
         localStorage.getItem('ihawan_expenses') || '[]'
@@ -947,25 +950,27 @@ function renderExpenses() {
         container.innerHTML = `
             <div style="
                 display:flex;
-                justify-content:flex-end;
+                justify-content:space-between;
+                align-items:center;
                 margin-bottom:10px;
             ">
-                <button
-                    onclick="toggleExpenseEdit()"
-                    style="
-                        font-size:11px;
-                        padding:4px 8px;
-                        background:#333;
-                        color:white;
-                        border:none;
-                        cursor:pointer;
-                        border-radius:4px;
-                    ">
+
+                <p>No expenses yet.</p>
+
+                <button onclick="toggleExpenseEdit()"
+                style="
+                    font-size:11px;
+                    padding:4px 8px;
+                    background:#333;
+                    color:white;
+                    border:none;
+                    cursor:pointer;
+                    border-radius:4px;
+                ">
                     ${expenseEditMode ? 'Done' : 'Edit'}
                 </button>
-            </div>
 
-            <p>No expenses yet.</p>
+            </div>
         `;
 
         return;
@@ -979,17 +984,16 @@ function renderExpenses() {
             margin-bottom:10px;
         ">
 
-            <button
-                onclick="toggleExpenseEdit()"
-                style="
-                    font-size:11px;
-                    padding:4px 8px;
-                    background:#333;
-                    color:white;
-                    border:none;
-                    cursor:pointer;
-                    border-radius:4px;
-                ">
+            <button onclick="toggleExpenseEdit()"
+            style="
+                font-size:11px;
+                padding:4px 8px;
+                background:#333;
+                color:white;
+                border:none;
+                cursor:pointer;
+                border-radius:4px;
+            ">
                 ${expenseEditMode ? 'Done' : 'Edit'}
             </button>
 
@@ -1016,7 +1020,11 @@ function renderExpenses() {
                     </div>
                 </div>
 
-                <div>
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                ">
 
                     ${
                         expenseEditMode
@@ -1024,13 +1032,13 @@ function renderExpenses() {
                         <button
                             onclick="deleteExpense(${i})"
                             style="
-                                font-size:11px;
-                                padding:4px 8px;
+                                font-size:10px;
+                                padding:4px 6px;
                                 background:#ef4444;
                                 color:white;
                                 border:none;
-                                cursor:pointer;
                                 border-radius:4px;
+                                cursor:pointer;
                             ">
                             Delete
                         </button>
