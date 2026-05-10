@@ -1239,35 +1239,12 @@ const netProfit = completedSales - totalExpenses;
         <h1>🔥 'IHAWAN SALES REPORT</h1>
 
         <div class="top">
-
-            <strong>Date:</strong>
-            ${new Date().toLocaleString()}
-
-            <br><br>
-
-            <strong>Total Orders:</strong>
-            ${totalOrders}
-
-            <br>
-
-            <strong>Total Sales:</strong>
-₱${totalSales.toFixed(2)}
-
-<br>
-
-<strong>Completed Order Sales:</strong>
-₱${completedSales.toFixed(2)}
-
-<br>
-
-<strong>Total Expenses:</strong>
-₱${totalExpenses.toFixed(2)}
-
-<br>
-
-<strong>Net Profit:</strong>
-₱${netProfit.toFixed(2)}
-
+        <strong>Date:</strong> ${new Date().toLocaleString()} <br><br>
+        <strong>Total Orders:</strong> ${totalOrders} <br>
+        <strong>Total Sales:</strong> ₱${totalSales.toFixed(2)} <br>
+        <strong>Completed Order Sales:</strong> ₱${completedSales.toFixed(2)} <br>
+        <strong>Total Expenses:</strong> ₱${totalExpenses.toFixed(2)} <br>
+        <strong>Net Profit:</strong> ₱${netProfit.toFixed(2)}
         </div>
 
         <table>
@@ -1281,24 +1258,14 @@ const netProfit = completedSales - totalExpenses;
             </tr>
 
             ${completedOrders.map(order => `
-
-                <tr>
-
-                    <td>${order.id}</td>
-
-                    <td>${order.customer.name}</td>
-
-                    <td>${order.status}</td>
-
-                    <td>
-                        ${order.payment?.method || 'cash'}
-                    </td>
-
-                    <td>
-                        ₱${order.total.toFixed(2)}
-                    </td>
-
-                </tr>
+            <tr>
+            
+            <td>${order.id}</td>
+            <td>${order.customer.name}</td>
+            <td>${order.status}</td>
+            <td>${order.payment?.method || 'cash'}</td>
+            <td>₱${order.total.toFixed(2)}</td>
+            </tr>
 
             `).join('')}
 
