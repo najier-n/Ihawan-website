@@ -875,7 +875,7 @@ function clearCancelledOrders() {
         
         function renderExpenses() {
             const container = document.getElementById('expenseList');
-            const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+            const allExpenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
             const today = new Date();
 
 const expenses = allExpenses.filter(e => {
