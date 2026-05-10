@@ -393,8 +393,26 @@ style="margin-top:20px;"></div>
             document.getElementById('statNew').innerText = orders.filter(o => o.status === 'received').length;
             document.getElementById('statPrep').innerText = orders.filter(o => o.status === 'preparing').length;
             document.getElementById('statReady').innerText = orders.filter(o => o.status === 'ready').length;
-            const rev = orders.reduce((sum, o) => sum + o.total, 0);
-            document.getElementById('statRevenue').innerText = '₱' + rev.toFixed(2);
+            // TODAY COMPLETED SALES ONLY
+const today = new Date();
+
+const rev = orders
+.filter(o => {
+
+    const d = new Date(o.timestamp);
+
+    return (
+        o.status === 'completed' &&
+        d.getDate() === today.getDate() &&
+        d.getMonth() === today.getMonth() &&
+        d.getFullYear() === today.getFullYear()
+    );
+
+})
+.reduce((sum, o) => sum + o.total, 0);
+
+document.getElementById('statRevenue').innerText =
+    '₱' + rev.toFixed(2);
 
             if(currentTab === 'reservations') return renderReservations();
 
