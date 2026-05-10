@@ -1149,13 +1149,27 @@ function renderExpenses() {
 }
         function printSalesReport() {
 
+            const monthNames = [
+    "January","February","March","April",
+    "May","June","July","August",
+    "September","October","November","December"
+];
+
     const orders = JSON.parse(
         localStorage.getItem('ihawan_orders') || '[]'
     );
 
-    const completedOrders = orders.filter(
-        o => o.status !== 'cancelled'
+    const completedOrders = orders.filter(o => {
+
+    const d = new Date(o.timestamp);
+
+    return (
+        o.status !== 'cancelled' &&
+        d.getMonth() === currentMonth &&
+        d.getFullYear() === currentYear
     );
+
+});
 
     const totalSales = completedOrders.reduce(
     (sum, o) => sum + o.total,
@@ -1236,7 +1250,9 @@ const netProfit = completedSales - totalExpenses;
 
     <body>
 
-        <h1>🔥 'IHAWAN SALES REPORT</h1>
+        <h1>
+🔥 ${monthNames[currentMonth]} ${currentYear} Sales Report
+</h1>
 
         <div class="top">
         <strong>Date:</strong> ${new Date().toLocaleString()} <br><br>
@@ -1250,6 +1266,7 @@ const netProfit = completedSales - totalExpenses;
         <table>
 
             <tr>
+                <th>Date Ordered</th>
                 <th>Order ID</th>
                 <th>Customer</th>
                 <th>Status</th>
@@ -1259,7 +1276,7 @@ const netProfit = completedSales - totalExpenses;
 
             ${completedOrders.map(order => `
             <tr>
-            
+            <td>${new Date(order.timestamp).toLocaleString()}</td>
             <td>${order.id}</td>
             <td>${order.customer.name}</td>
             <td>${order.status}</td>
