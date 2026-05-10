@@ -253,6 +253,10 @@
 
         <h2 id="calendarTitle">Revenue Calendar</h2>
 
+        <button class="rev-btn" onclick="printSalesReport()">
+🖨 Print Sales Report
+</button>
+
         <button class="rev-btn" onclick="changeMonth(1)">Next ▶</button>
     </div>
 
@@ -260,6 +264,10 @@
         <div><strong>Today:</strong> <span id="todayRevenue">₱0</span></div>
         <div><strong>Weekly:</strong> <span id="weeklyRevenue">₱0</span></div>
         <div><strong>Monthly:</strong> <span id="monthlyRevenue">₱0</span></div>
+        <div>
+<strong>Profit:</strong>
+<span id="profitAmount">₱0</span>
+</div>
     </div>
 
     <div class="calendar-grid" id="calendarGrid"></div>
@@ -273,6 +281,31 @@
         <h3 style="margin-bottom:15px;">Orders History</h3>
         <div id="historyOrders"></div>
     </div>
+                <div class="chart-box">
+
+<h3>🔥 Expense Tracker</h3>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;">
+
+<input type="text"
+id="expenseName"
+placeholder="Expense name">
+
+<input type="number"
+id="expenseAmount"
+placeholder="Amount">
+
+<button class="rev-btn"
+onclick="addExpense()">
+Add Expense
+</button>
+
+</div>
+
+<div id="expenseList"
+style="margin-top:20px;"></div>
+
+                </div>
             </div>
 
         <div class="mini-clear-wrap">
@@ -592,6 +625,7 @@ function toggleRevenuePanel() {
 
     if(panel.classList.contains('active')) {
         renderRevenueCalendar();
+        renderExpenses();
     }
 }
 
@@ -662,6 +696,20 @@ function renderRevenueCalendar() {
         const revenue = dayOrders.reduce((sum, o) => sum + o.total, 0);
 
         monthlyTotal += revenue;
+
+        const expenses = JSON.parse(
+    localStorage.getItem('ihawan_expenses') || '[]'
+);
+
+const totalExpenses = expenses.reduce(
+    (sum, e) => sum + e.amount,
+    0
+);
+
+const profit = monthlyTotal - totalExpenses;
+
+document.getElementById('profitAmount')
+.innerText = `₱${profit.toFixed(2)}`;
 
         if(isSameWeek(today, dateObj)) {
             weeklyTotal += revenue;
@@ -847,6 +895,78 @@ function clearCancelledOrders() {
 
     alert("Cancelled orders cleared.");
 }
+        function addExpense() {
+
+    const name = document.getElementById('expenseName').value;
+    const amount = parseFloat(
+        document.getElementById('expenseAmount').value
+    );
+
+    if(!name || !amount) {
+        alert("Fill all expense fields.");
+        return;
+    }
+
+    const expenses = JSON.parse(
+        localStorage.getItem('ihawan_expenses') || '[]'
+    );
+
+    expenses.push({
+        name,
+        amount,
+        date: Date.now()
+    });
+
+    localStorage.setItem(
+        'ihawan_expenses',
+        JSON.stringify(expenses)
+    );
+
+    document.getElementById('expenseName').value = '';
+    document.getElementById('expenseAmount').value = '';
+
+    renderExpenses();
+}
+
+function renderExpenses() {
+
+    const container =
+        document.getElementById('expenseList');
+
+    const expenses = JSON.parse(
+        localStorage.getItem('ihawan_expenses') || '[]'
+    );
+
+    if(expenses.length === 0) {
+        container.innerHTML =
+            '<p>No expenses yet.</p>';
+        return;
+    }
+
+    container.innerHTML = expenses.reverse().map(
+        (e, i) => `
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            padding:10px;
+            border-bottom:1px solid #333;
+        ">
+
+            <div>
+                ${e.name}
+            </div>
+
+            <div>
+                ₱${e.amount.toFixed(2)}
+            </div>
+
+        </div>
+
+    `
+    ).join('');
+}
+        
         function printReceipt(order) {
 
     const receiptWindow = window.open('', '', 'width=400,height=700');
@@ -1026,6 +1146,140 @@ function clearCancelledOrders() {
     `);
 
     receiptWindow.document.close();
+}
+        function printSalesReport() {
+
+    const orders = JSON.parse(
+        localStorage.getItem('ihawan_orders') || '[]'
+    );
+
+    const completedOrders = orders.filter(
+        o => o.status !== 'cancelled'
+    );
+
+    const totalSales = completedOrders.reduce(
+        (sum, o) => sum + o.total,
+        0
+    );
+
+    const totalOrders = completedOrders.length;
+
+    const reportWindow = window.open(
+        '',
+        '',
+        'width=900,height=700'
+    );
+
+    reportWindow.document.write(`
+
+    <html>
+
+    <head>
+
+        <title>Sales Report</title>
+
+        <style>
+
+            body{
+                font-family:Arial;
+                padding:30px;
+                color:#000;
+            }
+
+            h1{
+                margin-bottom:5px;
+            }
+
+            table{
+                width:100%;
+                border-collapse:collapse;
+                margin-top:20px;
+            }
+
+            th, td{
+                border:1px solid #ccc;
+                padding:10px;
+                text-align:left;
+            }
+
+            th{
+                background:#eee;
+            }
+
+            .top{
+                margin-bottom:20px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>🔥 'IHAWAN SALES REPORT</h1>
+
+        <div class="top">
+
+            <strong>Date:</strong>
+            ${new Date().toLocaleString()}
+
+            <br><br>
+
+            <strong>Total Orders:</strong>
+            ${totalOrders}
+
+            <br>
+
+            <strong>Total Sales:</strong>
+            ₱${totalSales.toFixed(2)}
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Total</th>
+            </tr>
+
+            ${completedOrders.map(order => `
+
+                <tr>
+
+                    <td>${order.id}</td>
+
+                    <td>${order.customer.name}</td>
+
+                    <td>${order.status}</td>
+
+                    <td>
+                        ${order.payment?.method || 'cash'}
+                    </td>
+
+                    <td>
+                        ₱${order.total.toFixed(2)}
+                    </td>
+
+                </tr>
+
+            `).join('')}
+
+        </table>
+
+        <script>
+            window.onload = () => window.print();
+        <\/script>
+
+    </body>
+
+    </html>
+
+    `);
+
+    reportWindow.document.close();
 }
 
         init();
