@@ -909,7 +909,7 @@ function clearCancelledOrders() {
         <div style=" display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333; ">
         <div> ${e.name} </div>
         <div> ₱${e.amount.toFixed(2)} </div>
-        <div> ₱${totalExpenses.toFixed(2)} </div>
+        
         </div>
     ` ).join('');
 }
@@ -952,41 +952,15 @@ function clearCancelledOrders() {
     </head>
 
     <body>
-
-        <h2>'IHAWAN FILIPINO GRILL</h2>
-
-        <div class="center">
-            🔥 Official Receipt 🔥
-        </div>
-
-        <div class="line"></div>
-
-        <div>
-            <strong>Order ID:</strong>
-            ${order.id}
-        </div>
-
-        <div>
-            <strong>Date:</strong>
-            ${new Date(order.timestamp).toLocaleString()}
-        </div>
-
-        <div>
-            <strong>Customer:</strong>
-            ${order.customer.name}
-        </div>
-
-        <div>
-            <strong>Type:</strong>
-            ${order.customer.type}
-        </div>
-
-        ${
-            order.customer.tableNumber
-            ? `
-            <div>
-                <strong>Table:</strong>
-                ${order.customer.tableNumber}
+    <h2>'IHAWAN FILIPINO GRILL</h2>
+    <div class="center"> 🔥 Official Receipt 🔥 </div>
+    <div class="line"></div>
+    <div> <strong>Order ID:</strong> ${order.id} </div>
+    <div> <strong>Date:</strong> ${new Date(order.timestamp).toLocaleString()} </div>
+    <div> <strong>Customer:</strong> ${order.customer.name} </div>
+    <div> <strong>Type:</strong> ${order.customer.type} </div>
+    ${ order.customer.tableNumber ? `
+    <div> <strong>Table:</strong> ${order.customer.tableNumber}
             </div>
             `
             : ''
@@ -1055,6 +1029,7 @@ function clearCancelledOrders() {
     `);
     receiptWindow.document.close();
 }
+
         
         function printSalesReport() {
             const monthNames = [
@@ -1119,7 +1094,16 @@ function clearCancelledOrders() {
             <td>${new Date(order.timestamp).toLocaleString()}</td>
             <td>${order.id}</td>
             <td>${order.customer.name}</td>
-            <td>${order.status}</td>
+            <td>
+            <span style=" padding:4px 10px; border-radius:4px; color:white; font-weight:bold; background:
+            ${order.status === 'completed' ? '#22c55e'
+              : order.status === 'cancelled' ? '#ef4444'
+              : order.status === 'preparing' ? '#f59e0b'
+              : order.status === 'received' ? '#3b82f6'
+              : '#666' }; ">
+            ${order.status.toUpperCase()}
+            </span>
+            </td>
             <td>${order.payment?.method || 'cash'}</td>
             <td>₱${order.total.toFixed(2)}</td>
             </tr>
