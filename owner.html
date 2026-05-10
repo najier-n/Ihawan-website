@@ -1067,10 +1067,7 @@ function renderExpenses() {
         ${
             order.customer.address
             ? `
-            <div>
-                <strong>Address:</strong>
-                ${order.customer.address}
-            </div>
+            <div> <strong>Address:</strong> ${order.customer.address} </div>
             `
             : ''
         }
@@ -1080,26 +1077,18 @@ function renderExpenses() {
         ${order.items.map(item => `
 
             <div class="row">
-                <div>
-                    ${item.qty}x ${item.name}
-                </div>
-
-                <div>
-                    ₱${item.subtotal.toFixed(2)}
-                </div>
+                <div> ${item.qty}x ${item.name} </div>
+                <div> ₱${item.subtotal.toFixed(2)} </div>
             </div>
 
         `).join('')}
 
         <div class="line"></div>
-
         <div class="row total">
             <div>TOTAL</div>
             <div>₱${order.total.toFixed(2)}</div>
         </div>
-
         <div class="line"></div>
-
         <div>
             <strong>Payment:</strong>
             ${order.payment?.method?.toUpperCase() || 'CASH'}
@@ -1126,145 +1115,68 @@ function renderExpenses() {
             `
             : ''
         }
-
         <div class="line"></div>
-
-        <div class="center">
-            Thank you for dining with us 🔥
-        </div>
+        <div class="center"> Thank you for dining with us 🔥 </div>
 
         <script>
-            window.onload = function(){
-                window.print();
-            }
+            window.onload = function(){ window.print(); }
         <\/script>
 
     </body>
-
     </html>
-
     `);
-
     receiptWindow.document.close();
 }
+        
         function printSalesReport() {
-
             const monthNames = [
     "January","February","March","April",
     "May","June","July","August",
     "September","October","November","December"
 ];
-
-    const orders = JSON.parse(
-        localStorage.getItem('ihawan_orders') || '[]'
-    );
-
-    const completedOrders = orders.filter(o => {
-
-    const d = new Date(o.timestamp);
-
-    return (
-        o.status !== 'cancelled' &&
-        d.getMonth() === currentMonth &&
-        d.getFullYear() === currentYear
-    );
-
+            const orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
+            const completedOrders = orders.filter(o => {
+                const d = new Date(o.timestamp);
+                return ( o.status !== 'cancelled' && d.getMonth() === currentMonth && d.getFullYear() === currentYear );
 });
-
-    const totalSales = completedOrders.reduce(
-    (sum, o) => sum + o.total,
-    0
-);
-
-const completedOnly = completedOrders.filter(
-    o => o.status === 'completed'
-);
-
-const completedSales = completedOnly.reduce(
-    (sum, o) => sum + o.total,
-    0
-);
-
-const expenses = JSON.parse(
-    localStorage.getItem('ihawan_expenses') || '[]'
-);
-
-const totalExpenses = expenses.reduce(
-    (sum, e) => sum + e.amount,
-    0
-);
-
-const netProfit = completedSales - totalExpenses;
-
-    const totalOrders = completedOrders.length;
-
-    const reportWindow = window.open(
-        '',
-        '',
-        'width=900,height=700'
-    );
+            const totalSales = completedOrders.reduce( (sum, o) => sum + o.total, 0 );
+            const completedOnly = completedOrders.filter( o => o.status === 'completed' );
+            const completedSales = completedOnly.reduce( (sum, o) => sum + o.total, 0 );
+            const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+            const totalExpenses = expenses.reduce( (sum, e) => sum + e.amount, 0 );
+            const netProfit = completedSales - totalExpenses;
+            const totalOrders = completedOrders.length;
+            const reportWindow = window.open( '', '', 'width=900,height=700' );
 
     reportWindow.document.write(`
 
     <html>
-
     <head>
+    <title>Sales Report</title>
+    <style>
+    body{ font-family:Arial; padding:30px; color:#000; }
+    h1{ margin-bottom:5px; }
+    table{ width:100%; border-collapse:collapse; margin-top:20px; }
 
-        <title>Sales Report</title>
-
-        <style>
-
-            body{
-                font-family:Arial;
-                padding:30px;
-                color:#000;
-            }
-
-            h1{
-                margin-bottom:5px;
-            }
-
-            table{
-                width:100%;
-                border-collapse:collapse;
-                margin-top:20px;
-            }
-
-            th, td{
-                border:1px solid #ccc;
-                padding:10px;
-                text-align:left;
-            }
-
-            th{
-                background:#eee;
-            }
-
-            .top{
-                margin-bottom:20px;
-            }
-
-        </style>
-
+            th, td{ border:1px solid #ccc; padding:10px; text-align:left; }
+            th{ background:#eee; }
+            .top{ margin-bottom:20px; }
+    </style>
     </head>
-
+    
     <body>
-
-        <h1>
-🔥 ${monthNames[currentMonth]} ${currentYear} Sales Report
-</h1>
+    <h1> 🔥 ${monthNames[currentMonth]} ${currentYear} Sales Report </h1>
 
         <div class="top">
         <strong>Date:</strong> ${new Date().toLocaleString()} <br><br>
         <strong>Total Orders:</strong> ${totalOrders} <br>
-        <strong>Total Sales:</strong> ₱${totalSales.toFixed(2)} <br>
-        <strong>Completed Order Sales:</strong> ₱${completedSales.toFixed(2)} <br>
+        <strong>Monthly Sales:</strong> ₱${totalSales.toFixed(2)} <br>
+        <strong>Today Completed Order:</strong> ₱${completedSales.toFixed(2)} <br>
         <strong>Total Expenses:</strong> ₱${totalExpenses.toFixed(2)} <br>
         <strong>Net Profit:</strong> ₱${netProfit.toFixed(2)}
         </div>
 
         <table>
-
             <tr>
                 <th>Date Ordered</th>
                 <th>Order ID</th>
@@ -1285,7 +1197,6 @@ const netProfit = completedSales - totalExpenses;
             </tr>
 
             `).join('')}
-
         </table>
 
         <script>
@@ -1293,11 +1204,8 @@ const netProfit = completedSales - totalExpenses;
         <\/script>
 
     </body>
-
     </html>
-
     `);
-
     reportWindow.document.close();
 }
 
