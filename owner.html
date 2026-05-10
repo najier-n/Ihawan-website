@@ -866,140 +866,68 @@ function isSameWeek(d1, d2) {
 
 function clearCancelledOrders() {
 
-    const confirmOne = confirm(
-        "Clear ALL cancelled orders?"
-    );
+    const confirmOne = confirm( "Clear ALL cancelled orders?" );
 
     if(!confirmOne) return;
-
-    const confirmTwo = confirm(
-        "This cannot be undone. Continue?"
-    );
+    const confirmTwo = confirm( "This cannot be undone. Continue?" );
 
     if(!confirmTwo) return;
+    let orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
 
-    let orders = JSON.parse(
-        localStorage.getItem('ihawan_orders') || '[]'
-    );
-
-    orders = orders.filter(
-        o => o.status !== 'cancelled'
-    );
-
-    localStorage.setItem(
-        'ihawan_orders',
-        JSON.stringify(orders)
-    );
-
+    orders = orders.filter( o => o.status !== 'cancelled' );
+    localStorage.setItem( 'ihawan_orders', JSON.stringify(orders));
     renderOrders();
 
     alert("Cancelled orders cleared.");
 }
+        
         function addExpense() {
 
     const name = document.getElementById('expenseName').value;
-    const amount = parseFloat(
-        document.getElementById('expenseAmount').value
-    );
+    const amount = parseFloat( document.getElementById('expenseAmount').value );
 
-    if(!name || !amount) {
-        alert("Fill all expense fields.");
-        return;
-    }
+    if(!name || !amount) { alert("Fill all expense fields.");
+        return; }
 
-    const expenses = JSON.parse(
-        localStorage.getItem('ihawan_expenses') || '[]'
-    );
-
-    expenses.push({
-        name,
-        amount,
-        date: Date.now()
-    });
-
-    localStorage.setItem(
-        'ihawan_expenses',
-        JSON.stringify(expenses)
-    );
-
+    const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+    expenses.push({ name, amount, date: Date.now() });
+    localStorage.setItem( 'ihawan_expenses', JSON.stringify(expenses) );
     document.getElementById('expenseName').value = '';
     document.getElementById('expenseAmount').value = '';
-
     renderExpenses();
 }
+        
+        function renderExpenses() {
+            const container = document.getElementById('expenseList');
+            const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+        if(expenses.length === 0) { container.innerHTML = '<p>No expenses yet.</p>';
+        return; }
 
-function renderExpenses() {
-
-    const container =
-        document.getElementById('expenseList');
-
-    const expenses = JSON.parse(
-        localStorage.getItem('ihawan_expenses') || '[]'
-    );
-
-    if(expenses.length === 0) {
-        container.innerHTML =
-            '<p>No expenses yet.</p>';
-        return;
-    }
-
-    container.innerHTML = expenses.reverse().map(
+            container.innerHTML = expenses.reverse().map(
         (e, i) => `
 
-        <div style="
-            display:flex;
-            justify-content:space-between;
-            padding:10px;
-            border-bottom:1px solid #333;
-        ">
-
-            <div>
-                ${e.name}
-            </div>
-
-            <div>
-                ₱${e.amount.toFixed(2)}
-            </div>
-
+        <div style=" display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #333; ">
+        <div> ${e.name} </div>
+        <div> ₱${e.amount.toFixed(2)} </div>
+        <div> ₱${totalExpenses.toFixed(2)} </div>
         </div>
-
-    `
-    ).join('');
+    ` ).join('');
 }
         
         function printReceipt(order) {
-
-    const receiptWindow = window.open('', '', 'width=400,height=700');
-
-    receiptWindow.document.write(`
+            const receiptWindow = window.open('', '', 'width=400,height=700');
+            receiptWindow.document.write(`
 
     <html>
-
     <head>
-
         <title>Receipt ${order.id}</title>
-
         <style>
-
-            body{
-                font-family: monospace;
-                padding:20px;
-                width:300px;
-                color:#000;
-            }
-
-            h2{
-                text-align:center;
-                margin-bottom:5px;
-            }
-
-            .center{
-                text-align:center;
-            }
-
+            body{ font-family: monospace; padding:20px; width:300px;color:#000; }
+            h2{ text-align:center; margin-bottom:5px; }
+            .center{ text-align:center; }
             .line{
                 border-top:1px dashed #000;
-                margin:10px 0;
+                 margin:10px 0;
             }
 
             .row{
