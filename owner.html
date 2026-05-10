@@ -876,6 +876,19 @@ function clearCancelledOrders() {
         function renderExpenses() {
             const container = document.getElementById('expenseList');
             const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+            const today = new Date();
+
+const expenses = allExpenses.filter(e => {
+
+    const d = new Date(e.date);
+
+    return (
+        d.getDate() === today.getDate() &&
+        d.getMonth() === today.getMonth() &&
+        d.getFullYear() === today.getFullYear()
+    );
+
+});
         if(expenses.length === 0) { container.innerHTML = '<p>No expenses yet.</p>';
         return; }
 
