@@ -1158,24 +1158,29 @@ function renderExpenses() {
     );
 
     const totalSales = completedOrders.reduce(
-        (sum, o) => sum + o.total,
-        0
-    );
-            const completedOnly = completedOrders.filter(
-    o => o.status === 'completed'
-);
-            const completedSales = completedOnly.reduce(
     (sum, o) => sum + o.total,
     0
 );
-            const expenses = JSON.parse(
+
+const completedOnly = completedOrders.filter(
+    o => o.status === 'completed'
+);
+
+const completedSales = completedOnly.reduce(
+    (sum, o) => sum + o.total,
+    0
+);
+
+const expenses = JSON.parse(
     localStorage.getItem('ihawan_expenses') || '[]'
 );
-            const totalExpenses = expenses.reduce(
+
+const totalExpenses = expenses.reduce(
     (sum, e) => sum + e.amount,
     0
 );
-            const netProfit = completedSales - totalExpenses;
+
+const netProfit = completedSales - totalExpenses;
 
 const totalOrders = completedOrders.length;
 
@@ -1264,6 +1269,7 @@ const totalOrders = completedOrders.length;
 
 <strong>Net Profit:</strong>
 ₱${netProfit.toFixed(2)}
+
         </div>
 
         <table>
