@@ -5,6 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | 'Ihawan Filipino Grill</title>
     <style>
+        /* Revenue Panel */
+.revenue-panel {
+    background: var(--smoke);
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid #333;
+    display: none;
+}
+
+.revenue-panel.active {
+    display: block;
+}
+
+.revenue-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rev-btn {
+    background: var(--fire);
+    border: none;
+    color: var(--char);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: 'Bebas Neue';
+    letter-spacing: 1px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.calendar-day {
+    background: #24180d;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #333;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.calendar-day:hover {
+    border-color: var(--fire);
+    transform: translateY(-2px);
+}
+
+.calendar-day strong {
+    color: var(--fire);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.day-revenue {
+    font-size: 0.9rem;
+    color: #22c55e;
+}
+
+.order-history {
+    margin-top: 30px;
+}
+
+.history-order {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.history-order:last-child {
+    border-bottom: none;
+}
+
+.chart-box {
+    margin-top: 30px;
+    background: #24180d;
+    padding: 20px;
+    border: 1px solid #333;
+}
+
+.bar-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 220px;
+    margin-top: 20px;
+}
+
+.bar {
+    flex: 1;
+    background: linear-gradient(to top, var(--ember), var(--fire));
+    position: relative;
+    border-radius: 4px 4px 0 0;
+}
+
+.bar span {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+}
+
+.bar-value {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: white;
+}
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700&family=Playfair+Display:wght@700;900&display=swap');
 
         :root {
@@ -93,11 +206,10 @@
             <div class="stat-card"><div class="stat-val" id="statNew">0</div><div class="stat-label">New Orders</div></div>
             <div class="stat-card"><div class="stat-val" id="statPrep">0</div><div class="stat-label">Preparing</div></div>
             <div class="stat-card"><div class="stat-val" id="statReady">0</div><div class="stat-label">Ready</div></div>
-            <div class="stat-card" onclick="openRevenueModal()" style="cursor:pointer;">
+            <div class="stat-card" onclick="toggleRevenuePanel()" style="cursor:pointer;">
     <div class="stat-val" id="statRevenue">₱0</div>
     <div class="stat-label">Today's Revenue</div>
             </div>
-        </div>
 
         <div class="tabs">
             <div class="tab active" onclick="setTab('all', this)">All Orders</div>
@@ -106,125 +218,43 @@
             <div class="tab" onclick="setTab('ready', this)">Ready</div>
             <div class="tab" onclick="setTab('reservations', this)">Reservations</div>
         </div>
+            
+            <div id="revenuePanel" class="revenue-panel">
+
+    <div class="revenue-top">
+        <button class="rev-btn" onclick="changeMonth(-1)">◀ Previous</button>
+
+        <h2 id="calendarTitle">Revenue Calendar</h2>
+
+        <button class="rev-btn" onclick="changeMonth(1)">Next ▶</button>
+    </div>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+        <div><strong>Today:</strong> <span id="todayRevenue">₱0</span></div>
+        <div><strong>Weekly:</strong> <span id="weeklyRevenue">₱0</span></div>
+        <div><strong>Monthly:</strong> <span id="monthlyRevenue">₱0</span></div>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <div class="chart-box">
+        <h3>Revenue Graph</h3>
+        <div class="bar-wrap" id="revenueChart"></div>
+    </div>
+
+    <div class="order-history">
+        <h3 style="margin-bottom:15px;">Orders History</h3>
+        <div id="historyOrders"></div>
+    </div>
+
+            </div>
 
         <div id="orderGrid" class="order-list"></div>
     </div>
-<!-- Revenue History Modal -->
-<div id="revenueModal" style="
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.7);
-    z-index:9999;
-    align-items:center;
-    justify-content:center;
-">
 
-    <div style="
-        background:var(--smoke);
-        width:90%;
-        max-width:500px;
-        padding:30px;
-        border:1px solid var(--fire);
-        position:relative;
-    ">
-
-        <button onclick="closeRevenueModal()" style="
-            position:absolute;
-            top:10px;
-            right:10px;
-            background:none;
-            border:none;
-            color:white;
-            font-size:1.5rem;
-            cursor:pointer;
-        ">✕</button>
-
-        <h2 style="color:var(--fire); margin-bottom:25px;">
-            Revenue History
-        </h2>
-
-        <div style="display:grid; gap:15px;">
-
-            <div class="stat-card">
-                <div class="stat-val" id="yesterdayRevenue">₱0</div>
-                <div class="stat-label">Yesterday</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-val" id="weeklyRevenue">₱0</div>
-                <div class="stat-label">Weekly Earnings</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-val" id="monthlyRevenue">₱0</div>
-                <div class="stat-label">Monthly Earnings</div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
     <script>
         let currentTab = 'all';
         let knownOrderIds = new Set();
-
-        function openRevenueModal() {
-
-    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-
-    const now = new Date();
-
-    let yesterday = 0;
-    let weekly = 0;
-    let monthly = 0;
-
-    orders.forEach(order => {
-
-        if(order.status === 'cancelled') return;
-
-        const orderDate = new Date(order.timestamp);
-
-        const diffDays = Math.floor(
-            (now - orderDate) / (1000 * 60 * 60 * 24)
-        );
-
-        // Yesterday
-        if(diffDays === 1) {
-            yesterday += order.total;
-        }
-
-        // Weekly
-        if(diffDays <= 7) {
-            weekly += order.total;
-        }
-
-        // Monthly
-        if(
-            orderDate.getMonth() === now.getMonth() &&
-            orderDate.getFullYear() === now.getFullYear()
-        ) {
-            monthly += order.total;
-        }
-
-    });
-
-    document.getElementById('yesterdayRevenue').innerText =
-        '₱' + yesterday.toFixed(2);
-
-    document.getElementById('weeklyRevenue').innerText =
-        '₱' + weekly.toFixed(2);
-
-    document.getElementById('monthlyRevenue').innerText =
-        '₱' + monthly.toFixed(2);
-
-    document.getElementById('revenueModal').style.display = 'flex';
-}
-
-function closeRevenueModal() {
-    document.getElementById('revenueModal').style.display = 'none';
-}
 
         function init() {
             if(sessionStorage.getItem('ihawan_auth') === 'true') {
@@ -289,9 +319,7 @@ function closeRevenueModal() {
             document.getElementById('statNew').innerText = orders.filter(o => o.status === 'received').length;
             document.getElementById('statPrep').innerText = orders.filter(o => o.status === 'preparing').length;
             document.getElementById('statReady').innerText = orders.filter(o => o.status === 'ready').length;
-            const rev = orders
-    .filter(o => o.status !== 'cancelled')
-    .reduce((sum, o) => sum + o.total, 0);
+            const rev = orders.reduce((sum, o) => sum + o.total, 0);
             document.getElementById('statRevenue').innerText = '₱' + rev.toFixed(2);
 
             if(currentTab === 'reservations') return renderReservations();
@@ -458,6 +486,208 @@ localStorage.setItem('ihawan_orders', JSON.stringify(orders));
                 osc.stop(ctx.currentTime + 0.2);
             } catch(e) {}
         }
+
+        let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+function toggleRevenuePanel() {
+    const panel = document.getElementById('revenuePanel');
+    panel.classList.toggle('active');
+
+    if(panel.classList.contains('active')) {
+        renderRevenueCalendar();
+    }
+}
+
+function changeMonth(dir) {
+    currentMonth += dir;
+
+    if(currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+
+    if(currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+
+    renderRevenueCalendar();
+}
+
+function renderRevenueCalendar() {
+
+    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+
+    const grid = document.getElementById('calendarGrid');
+    const chart = document.getElementById('revenueChart');
+
+    grid.innerHTML = '';
+    chart.innerHTML = '';
+
+    const monthNames = [
+        "January","February","March","April",
+        "May","June","July","August",
+        "September","October","November","December"
+    ];
+
+    document.getElementById('calendarTitle').innerText =
+        `${monthNames[currentMonth]} ${currentYear}`;
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    for(let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        grid.appendChild(empty);
+    }
+
+    let monthlyTotal = 0;
+    let weeklyTotal = 0;
+    let todayTotal = 0;
+
+    const today = new Date();
+
+    for(let day = 1; day <= totalDays; day++) {
+
+        const dateObj = new Date(currentYear, currentMonth, day);
+
+        const dayOrders = orders.filter(o => {
+
+            const d = new Date(o.timestamp);
+
+            return d.getDate() === day &&
+                   d.getMonth() === currentMonth &&
+                   d.getFullYear() === currentYear &&
+                   o.status !== 'cancelled';
+
+        });
+
+        const revenue = dayOrders.reduce((sum, o) => sum + o.total, 0);
+
+        monthlyTotal += revenue;
+
+        if(isSameWeek(today, dateObj)) {
+            weeklyTotal += revenue;
+        }
+
+        if(
+            day === today.getDate() &&
+            currentMonth === today.getMonth() &&
+            currentYear === today.getFullYear()
+        ) {
+            todayTotal = revenue;
+        }
+
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day';
+
+        cell.innerHTML = `
+            <strong>${day}</strong>
+            <div class="day-revenue">₱${revenue.toFixed(2)}</div>
+            <div style="font-size:0.75rem; opacity:0.7; margin-top:5px;">
+                ${dayOrders.length} orders
+            </div>
+        `;
+
+        cell.onclick = () => showDayOrders(dayOrders, day);
+
+        grid.appendChild(cell);
+
+        // GRAPH
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+
+        const height = Math.max(revenue / 10, 5);
+
+        bar.style.height = `${height}px`;
+
+        bar.innerHTML = `
+            <div class="bar-value">₱${Math.round(revenue)}</div>
+            <span>${day}</span>
+        `;
+
+        chart.appendChild(bar);
+    }
+
+    document.getElementById('todayRevenue').innerText =
+        `₱${todayTotal.toFixed(2)}`;
+
+    document.getElementById('weeklyRevenue').innerText =
+        `₱${weeklyTotal.toFixed(2)}`;
+
+    document.getElementById('monthlyRevenue').innerText =
+        `₱${monthlyTotal.toFixed(2)}`;
+}
+
+function showDayOrders(dayOrders, day) {
+
+    const container = document.getElementById('historyOrders');
+
+    if(dayOrders.length === 0) {
+        container.innerHTML = `
+            <p style="opacity:0.7;">
+                No orders for day ${day}
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = '';
+
+    dayOrders.reverse().forEach(order => {
+
+        container.innerHTML += `
+            <div class="history-order">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:10px;
+                ">
+
+                    <strong style="color:var(--fire)">
+                        ${order.id}
+                    </strong>
+
+                    <strong>
+                        ₱${order.total.toFixed(2)}
+                    </strong>
+
+                </div>
+
+                <div>
+                    ${order.customer.name}
+                </div>
+
+                <div style="
+                    opacity:0.7;
+                    font-size:0.8rem;
+                    margin-top:5px;
+                ">
+                    ${new Date(order.timestamp).toLocaleString()}
+                </div>
+
+                <div style="margin-top:10px;">
+                    ${order.items.map(i =>
+                        `<div>${i.qty}x ${i.name}</div>`
+                    ).join('')}
+                </div>
+
+            </div>
+        `;
+    });
+}
+
+function isSameWeek(d1, d2) {
+
+    const oneJan = new Date(d1.getFullYear(), 0, 1);
+
+    const week1 = Math.ceil((((d1 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
+    const week2 = Math.ceil((((d2 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
+
+    return week1 === week2;
+}
 
         init();
     </script>
