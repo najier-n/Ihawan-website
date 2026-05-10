@@ -454,7 +454,24 @@ ${order.customer.type === 'dine-in'
 
         function renderActions(order) {
             if(order.status === 'received') {
-                return `<button class="btn btn-fire label" onclick="updateStatus('${order.id}', 'preparing')">🔥 Start Preparing</button>`;
+                let printBtn = `
+<button class="btn label"
+style="
+    background:#2563eb;
+    color:white;
+"
+onclick='printReceipt(${JSON.stringify(order)})'>
+🖨 Print Receipt
+</button>
+`;
+                return `
+${printBtn}
+
+<button class="btn btn-fire label"
+onclick="updateStatus('${order.id}', 'preparing')">
+🔥 Start Preparing
+</button>
+`;
             }
             if(order.status === 'preparing') {
                 return `<button class="btn btn-ready label" onclick="updateStatus('${order.id}', 'ready')">✅ Mark as Ready</button>
@@ -790,6 +807,186 @@ function clearCancelledOrders() {
     renderOrders();
 
     alert("Cancelled orders cleared.");
+}
+        function printReceipt(order) {
+
+    const receiptWindow = window.open('', '', 'width=400,height=700');
+
+    receiptWindow.document.write(`
+
+    <html>
+
+    <head>
+
+        <title>Receipt ${order.id}</title>
+
+        <style>
+
+            body{
+                font-family: monospace;
+                padding:20px;
+                width:300px;
+                color:#000;
+            }
+
+            h2{
+                text-align:center;
+                margin-bottom:5px;
+            }
+
+            .center{
+                text-align:center;
+            }
+
+            .line{
+                border-top:1px dashed #000;
+                margin:10px 0;
+            }
+
+            .row{
+                display:flex;
+                justify-content:space-between;
+                margin-bottom:5px;
+            }
+
+            .total{
+                font-size:18px;
+                font-weight:bold;
+            }
+
+            @media print{
+                body{
+                    width:100%;
+                }
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h2>'IHAWAN FILIPINO GRILL</h2>
+
+        <div class="center">
+            🔥 Official Receipt 🔥
+        </div>
+
+        <div class="line"></div>
+
+        <div>
+            <strong>Order ID:</strong>
+            ${order.id}
+        </div>
+
+        <div>
+            <strong>Date:</strong>
+            ${new Date(order.timestamp).toLocaleString()}
+        </div>
+
+        <div>
+            <strong>Customer:</strong>
+            ${order.customer.name}
+        </div>
+
+        <div>
+            <strong>Type:</strong>
+            ${order.customer.type}
+        </div>
+
+        ${
+            order.customer.tableNumber
+            ? `
+            <div>
+                <strong>Table:</strong>
+                ${order.customer.tableNumber}
+            </div>
+            `
+            : ''
+        }
+
+        ${
+            order.customer.address
+            ? `
+            <div>
+                <strong>Address:</strong>
+                ${order.customer.address}
+            </div>
+            `
+            : ''
+        }
+
+        <div class="line"></div>
+
+        ${order.items.map(item => `
+
+            <div class="row">
+                <div>
+                    ${item.qty}x ${item.name}
+                </div>
+
+                <div>
+                    ₱${item.subtotal.toFixed(2)}
+                </div>
+            </div>
+
+        `).join('')}
+
+        <div class="line"></div>
+
+        <div class="row total">
+            <div>TOTAL</div>
+            <div>₱${order.total.toFixed(2)}</div>
+        </div>
+
+        <div class="line"></div>
+
+        <div>
+            <strong>Payment:</strong>
+            ${order.payment?.method?.toUpperCase() || 'CASH'}
+        </div>
+
+        ${
+            order.payment?.reference
+            ? `
+            <div>
+                <strong>Reference:</strong>
+                ${order.payment.reference}
+            </div>
+            `
+            : ''
+        }
+
+        ${
+            order.customer.notes
+            ? `
+            <div style="margin-top:10px;">
+                <strong>Notes:</strong><br>
+                ${order.customer.notes}
+            </div>
+            `
+            : ''
+        }
+
+        <div class="line"></div>
+
+        <div class="center">
+            Thank you for dining with us 🔥
+        </div>
+
+        <script>
+            window.onload = function(){
+                window.print();
+            }
+        <\/script>
+
+    </body>
+
+    </html>
+
+    `);
+
+    receiptWindow.document.close();
 }
 
         init();
