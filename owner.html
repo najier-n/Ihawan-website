@@ -412,44 +412,20 @@ style="margin-top:20px;"></div>
                     <span class="order-id">${order.id}</span>
                     <div class="badge badge-${order.status}">${order.status.toUpperCase()}</div>
                     <div style="margin-bottom:15px">
-
-    <strong>
-    ${order.customer.name}
-</strong>
-
-(${order.customer.type})
-
-${order.customer.type === 'dine-in'
-    && order.customer.tableNumber
-    ? `<br>
-       <span style="
-            color:var(--fire);
-            font-size:0.85rem;
-       ">
-            🍽 Table:
-            <strong>
-                ${order.customer.tableNumber}
-            </strong>
-       </span>`
-    : ''
-}
-
-<br>
-
-    <span style="
-        font-size:0.8rem;
-        opacity:0.7;
-    ">
-
-        ${order.customer.phone}
-        |
-        Placed ${elapsed}m ago
-
-    </span>
-
-    <div style="
-        margin-top:10px;
-        padding:10px;
+                    <strong> ${order.customer.name} </strong>
+                    (${order.customer.type})
+                    ${order.customer.type === 'dine-in'
+                      && order.customer.tableNumber ? `<br>
+                      <span style=" color:var(--fire); font-size:0.85rem; ">
+                      🍽 Table:
+                    <strong> ${order.customer.tableNumber} </strong>
+                    </span>`
+                    : '' }
+                    <br>
+                    <span style=" font-size:0.8rem; opacity:0.7; ">
+                    ${order.customer.phone} | Placed ${elapsed}m ago
+                    </span>
+                    <div style=" margin-top:10px; padding:10px;
         background:rgba(245,168,0,0.08);
         border-left:3px solid var(--fire);
         font-size:0.85rem;
@@ -470,7 +446,7 @@ ${order.customer.type === 'dine-in'
             : ''
         }
 
-    </div>
+     </div>
 
 </div>
                     ${order.customer.type === 'delivery' ? `<div style="font-size:0.8rem; margin-bottom:15px">📍 ${order.customer.address}</div>` : ''}
@@ -1113,6 +1089,40 @@ function clearCancelledOrders() {
 
         <script>
             window.onload = () => window.print();
+            <h2 style="margin-top:40px;">
+    🔥 Expense Report
+</h2>
+
+<table>
+
+    <tr>
+        <th>Expense Name</th>
+        <th>Date</th>
+        <th>Amount</th>
+    </tr>
+
+    ${expenses.map(expense => `
+
+        <tr>
+
+            <td>
+                ${expense.name}
+            </td>
+
+            <td>
+                ${new Date(expense.date)
+                    .toLocaleString()}
+            </td>
+
+            <td>
+                ₱${expense.amount.toFixed(2)}
+            </td>
+
+        </tr>
+
+    `).join('')}
+
+</table>
         <\/script>
 
     </body>
