@@ -177,6 +177,32 @@
         .btn-ready { background: var(--ready); color: white; }
         .btn-done { background: #333; color: white; }
 
+        .mini-clear-wrap{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.mini-clear-btn{
+    background:#2a2a2a;
+    color:#aaa;
+    border:1px solid #444;
+    padding:5px 10px;
+    font-size:0.7rem;
+    cursor:pointer;
+    border-radius:4px;
+    transition:0.3s;
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:1px;
+}
+
+.mini-clear-btn:hover{
+    border-color:#ef4444;
+    color:#fff;
+}
+
         input { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--char); border: 1px solid var(--fire); color: white; }
     </style>
 </head>
@@ -247,8 +273,21 @@
         <h3 style="margin-bottom:15px;">Orders History</h3>
         <div id="historyOrders"></div>
     </div>
-
             </div>
+
+        <div class="mini-clear-wrap">
+
+    <button class="mini-clear-btn"
+        onclick="clearCompletedOrders()">
+        Clear Completed
+    </button>
+
+    <button class="mini-clear-btn"
+        onclick="clearCancelledOrders()">
+        Clear Cancelled
+    </button>
+
+        </div>
 
         <div id="orderGrid" class="order-list"></div>
     </div>
@@ -688,6 +727,69 @@ function isSameWeek(d1, d2) {
     const week2 = Math.ceil((((d2 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
 
     return week1 === week2;
+}
+        function clearCompletedOrders() {
+
+    const confirmOne = confirm(
+        "Clear ALL completed orders?"
+    );
+
+    if(!confirmOne) return;
+
+    const confirmTwo = confirm(
+        "This cannot be undone. Continue?"
+    );
+
+    if(!confirmTwo) return;
+
+    let orders = JSON.parse(
+        localStorage.getItem('ihawan_orders') || '[]'
+    );
+
+    orders = orders.filter(
+        o => o.status !== 'completed'
+    );
+
+    localStorage.setItem(
+        'ihawan_orders',
+        JSON.stringify(orders)
+    );
+
+    renderOrders();
+
+    alert("Completed orders cleared.");
+}
+
+function clearCancelledOrders() {
+
+    const confirmOne = confirm(
+        "Clear ALL cancelled orders?"
+    );
+
+    if(!confirmOne) return;
+
+    const confirmTwo = confirm(
+        "This cannot be undone. Continue?"
+    );
+
+    if(!confirmTwo) return;
+
+    let orders = JSON.parse(
+        localStorage.getItem('ihawan_orders') || '[]'
+    );
+
+    orders = orders.filter(
+        o => o.status !== 'cancelled'
+    );
+
+    localStorage.setItem(
+        'ihawan_orders',
+        JSON.stringify(orders)
+    );
+
+    renderOrders();
+
+    alert("Cancelled orders cleared.");
 }
 
         init();
