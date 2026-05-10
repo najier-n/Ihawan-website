@@ -878,61 +878,173 @@ function clearCancelledOrders() {
             expenseEditMode = !expenseEditMode;
                 renderExpenses(); }
         function deleteExpense(index) {
-            const confirmDelete = confirm( "Delete this expense?" );
-            if (!confirmDelete) return;
-            let expenses = JSON.parse(localStorage.getItem('ihawan_expenses') || '[]' );
-        //TODAY ONLY FILTER
-            const today = new Date();
-            const todayExpenses = expenses.filter(e => {
-                const d = new Date(e.date);
-                return (
-        d.getDate() === today.getDate() &&
-        d.getMonth() === today.getMonth() &&
-        d.getFullYear() === today.getFullYear()
-    ); });
-            const expensetoDelete = TodayExpenses[index];
-             expenses = expenses.filter(e => e.date ! ==expensetoDelete.date );
-            localStorage.getItem('ihawan_expenses');
-            renderExpenses();
-        }
-                 
-        function renderExpenses() {
-            const container = document.getElementById('expenseList');
-            const allExpenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
-            const today = new Date();
-            const expenses = allExpenses.filter(e => {
-                const d = new Date(e.date);
-                return (
-                    d.getDate() === today.getDate() &&
-                    d.getMonth() === today.getMonth() &&
-                    d.getFullYear() === today.getFullYear() );
-            });
-        if(expenses.length === 0) {
-            container.innerHTML = '<p>No expenses yet.</p>';
-            <button onclick="toggleExpenseEdit()" style="font-size:11px; padding: 4px 8px; background: #333; color:white; border:none; cursor:pointer; border-radius:4px; ">
-                ${expenseEditMode ? 'Done' : 'Edit'} </button>
-            <\div> ';
-        return; }
-            container.innerHTML =
-                <div style=" display:flex; justify-content:flex-end; margin-bottom: 10px ">
-                <button onclick="toggleExpenseEdit()" style="font-size:11px; padding: 4px 8px; background: #333; color:white; border:none; cursor:pointer; border-radius:4px; ">
-                ${expenseEditMode ? 'Done' : 'Edit'} </button>
-            <\div>
-                ${expenses.reverse().map( (e, i) => 
-                <div style=" display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #333; ">
-                <div> ${e.name} </div>
-                <div style=" font-size:12px; opacity:0.6">
-                <div><div>₱${e.amount.toFixed(2)} </div></div>
-                <div style=" display:flex; align-items:center; gap:10px; ">
-                ${ expenseEditMode ? 
-                <button onclick="toggleExpenseEdit()" style="font-size:11px; padding: 4px 8px; background: #333; color:white; border:none; cursor:pointer; border-radius:4px; ">
-                Delete </button>
-                  `
-            : ''
-        }
+
+    const confirmDelete = confirm(
+        "Delete this expense?"
+    );
+
+    if (!confirmDelete) return;
+
+    let expenses = JSON.parse(
+        localStorage.getItem('ihawan_expenses') || '[]'
+    );
+
+    // TODAY ONLY
+    const today = new Date();
+
+    const todayExpenses = expenses.filter(e => {
+
+        const d = new Date(e.date);
+
+        return (
+            d.getDate() === today.getDate() &&
+            d.getMonth() === today.getMonth() &&
+            d.getFullYear() === today.getFullYear()
+        );
+
+    });
+
+    const expenseToDelete = todayExpenses[index];
+
+    expenses = expenses.filter(
+        e => e.date !== expenseToDelete.date
+    );
+
+    localStorage.setItem(
+        'ihawan_expenses',
+        JSON.stringify(expenses)
+    );
+
+    renderExpenses();
+    renderRevenueCalendar();
+}
+
+function renderExpenses() {
+
+    const container =
+        document.getElementById('expenseList');
+
+    const allExpenses = JSON.parse(
+        localStorage.getItem('ihawan_expenses') || '[]'
+    );
+
+    const today = new Date();
+
+    const expenses = allExpenses.filter(e => {
+
+        const d = new Date(e.date);
+
+        return (
+            d.getDate() === today.getDate() &&
+            d.getMonth() === today.getMonth() &&
+            d.getFullYear() === today.getFullYear()
+        );
+
+    });
+
+    if(expenses.length === 0) {
+
+        container.innerHTML = `
+            <div style="
+                display:flex;
+                justify-content:flex-end;
+                margin-bottom:10px;
+            ">
+                <button
+                    onclick="toggleExpenseEdit()"
+                    style="
+                        font-size:11px;
+                        padding:4px 8px;
+                        background:#333;
+                        color:white;
+                        border:none;
+                        cursor:pointer;
+                        border-radius:4px;
+                    ">
+                    ${expenseEditMode ? 'Done' : 'Edit'}
+                </button>
             </div>
+
+            <p>No expenses yet.</p>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = `
+
+        <div style="
+            display:flex;
+            justify-content:flex-end;
+            margin-bottom:10px;
+        ">
+
+            <button
+                onclick="toggleExpenseEdit()"
+                style="
+                    font-size:11px;
+                    padding:4px 8px;
+                    background:#333;
+                    color:white;
+                    border:none;
+                    cursor:pointer;
+                    border-radius:4px;
+                ">
+                ${expenseEditMode ? 'Done' : 'Edit'}
+            </button>
+
         </div>
-    ` ).join('')};
+
+        ${expenses.reverse().map((e, i) => `
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:10px;
+                border-bottom:1px solid #333;
+            ">
+
+                <div>
+                    <div>${e.name}</div>
+
+                    <div style="
+                        font-size:12px;
+                        opacity:0.6;
+                    ">
+                        ₱${e.amount.toFixed(2)}
+                    </div>
+                </div>
+
+                <div>
+
+                    ${
+                        expenseEditMode
+                        ? `
+                        <button
+                            onclick="deleteExpense(${i})"
+                            style="
+                                font-size:11px;
+                                padding:4px 8px;
+                                background:#ef4444;
+                                color:white;
+                                border:none;
+                                cursor:pointer;
+                                border-radius:4px;
+                            ">
+                            Delete
+                        </button>
+                        `
+                        : ''
+                    }
+
+                </div>
+
+            </div>
+
+        `).join('')}
+
+    `;
 }
         
         function printReceipt(order) {
