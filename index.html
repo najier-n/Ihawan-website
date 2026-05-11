@@ -654,7 +654,7 @@ nav {
     <p style="color: var(--muted); margin-bottom: 20px;">Follow the smoke on Instagram · Facebook · TikTok</p>  
     <p style="font-size: 0.8rem; color: var(--muted);">© 2026 'Ihawan Filipino Grill · Made with 🔥</p>  
 </footer>  
-
+let MENU = [];
 <script>  
     // DATA  
     const DEFAULT_MENU = [  
@@ -696,6 +696,7 @@ nav {
     });  
 
     function init() {
+        MENU = getMenuData();   // load once
 
     document.getElementById('cart').style.display = 'none';
 
@@ -729,7 +730,7 @@ nav {
     const grid = document.getElementById('menuGrid');
     grid.innerHTML = '';
 
-    getMenuData().filter(i => i.cat === cat).forEach(item => {
+    MENU.filter(i => i.cat === cat).forEach(item => {
 
         const cartItem = cart.find(ci => ci.id === item.id);
 
@@ -850,7 +851,7 @@ nav {
 
     } else {
 
-        const item = getMenuData().find(i => i.id === id);
+        const item = MENU.find(i => i.id === id);
 
 if (!item) return;
 
