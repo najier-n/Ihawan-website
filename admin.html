@@ -183,64 +183,29 @@
     <div id="toastContainer"></div>
 
     <script>
-        const DEFAULT_MENU = [
-
-    {
-        id: 1,
-        cat: 'Grill Specials',
-        name: 'Chicken BBQ Skewers',
-        price: 19,
-        desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.',
-        emoji: '🍢',
-        best: true,
-        available: true
-    },
-
-    {
-        id: 2,
-        cat: 'Grill Specials',
-        name: 'Inihaw na Manok',
-        price: 59,
-        desc: 'Butterflied whole chicken basted with lemongrass butter. Perfectly charred.',
-        emoji: '🍗',
-        best: false,
-        available: true
-    },
-
-    {
-        id: 3,
-        cat: 'Grill Specials',
-        name: 'Beef sa Grill',
-        price: 299,
-        desc: 'Thick-cut beef belly, slow-grilled with garlic vinegar glaze.',
-        emoji: '🥩',
-        best: false,
-        available: true
-    },
-
-    {
-        id: 4,
-        cat: 'Grill Specials',
-        name: 'Isaw (Grilled Intestine)',
-        price: 12,
-        desc: 'Classic Filipino street skewer, seasoned and char-grilled.',
-        emoji: '🍢',
-        best: false,
-        available: true
-    },
-
-    {
-        id: 5,
-        cat: 'Grill Specials',
-        name: 'Grilled Fish',
-        price: 89,
-        desc: 'Stuffed milkfish with tomato, onion & ginger. Wrapped in foil.',
-        emoji: '🐟',
-        best: false,
-        available: true
-    }
-
-];
+        const DEFAULT_MENU = [  
+        { id: 1, cat: 'Grill Specials', name: 'Chicken BBQ Skewers', price: 19, desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.', emoji: '🍢', best: true },  
+        { id: 2, cat: 'Grill Specials', name: 'Inihaw na Manok', price: 59, desc: 'Butterflied whole chicken basted with lemongrass butter. Perfectly charred.', emoji: '🍗' },  
+        { id: 3, cat: 'Grill Specials', name: 'Beef sa Grill', price: 299, desc: 'Thick-cut beef belly, slow-grilled with garlic vinegar glaze.', emoji: '🥩' },  
+        { id: 4, cat: 'Grill Specials', name: 'Isaw (Grilled Intestine)', price: 12, desc: 'Classic Filipino street skewer, seasoned and char-grilled.', emoji: '🍢' },  
+        { id: 5, cat: 'Grill Specials', name: 'Grilled Fish', price: 89, desc: 'Stuffed milkfish with tomato, onion & ginger. Wrapped in foil.', emoji: '🐟' },  
+        { id: 6, cat: 'Rice Meals', name: 'Sinangag', price: 79, desc: 'Wok-fried day-old rice tossed in roasted garlic and butter.', emoji: '🍚' },  
+        { id: 7, cat: 'Rice Meals', name: 'BBQ Combo Rice Box', price: 129, desc: '2 chicken skewers, garlic rice, pickled papaya & egg.', emoji: '🍱', best: true },  
+        { id: 8, cat: 'Rice Meals', name: 'Tapsilog', price: 69, desc: 'Beef tapa, sinangag, and sunny-side-up egg.', emoji: '🍳' },  
+        { id: 9, cat: 'Soups & Sides', name: 'Sinigang na Manok', price: 89, desc: 'Sour tamarind pork soup with radish, kangkong & eggplant.', emoji: '🍲' },  
+        { id: 10, cat: 'Soups & Sides', name: 'Kare-Kare', price: 89, desc: 'Oxtail stew in rich peanut sauce, served with bagoong.', emoji: '🥜' },  
+        { id: 11, cat: 'Soups & Sides', name: 'Achara', price: 39, desc: 'Classic sweet-sour pickled papaya condiment.', emoji: '🥗' },  
+        { id: 12, cat: 'Drinks', name: 'Calamansi Juice', price: 19, desc: 'Fresh-squeezed Filipino lime, lightly sweetened.', emoji: '🥤' },  
+        { id: 13, cat: 'Drinks', name: 'Sago\'t Gulaman', price: 19, desc: 'Brown sugar drink with tapioca pearls and jelly.', emoji: '🍹' },  
+        { id: 14, cat: 'Drinks', name: 'San Miguel Beer', price: 79, desc: 'Ice-cold Filipino lager.', emoji: '🍺', best: true },  
+        { id: 15, cat: 'Desserts', name: 'Halo-Halo', price: 29, desc: 'Shaved ice, mixed sweets, ube ice cream & leche flan.', emoji: '🧊' },  
+        { id: 16, cat: 'Desserts', name: 'Leche Flan', price: 109, desc: 'Silky caramel egg custard. Dense, rich, golden.', emoji: '🍮' },  
+        { id: 17, cat: 'Desserts', name: 'Turon', price: 12, desc: 'Banana & jackfruit spring rolls, fried golden.', emoji: '🍌' }, 
+        { id: 101, cat: 'Hidden', name: 'Chicken BBQ Skewers Set 1', price: 89, desc: '2 Skewers + Garlic Rice', emoji: '🍢' },
+        { id: 102, cat: 'Hidden', name: 'Chicken BBQ Skewers Set 2', price: 149, desc: '4 Skewers + Garlic Rice + Drink', emoji: '🍢' },
+        { id: 201, cat: 'Hidden', name: 'Isaw Set 1', price: 49, desc: '3 Sticks + Vinegar Dip', emoji: '🔥' },
+        { id: 202, cat: 'Hidden', name: 'Isaw Set 2', price: 99, desc: '6 Sticks + Garlic Rice + Drink', emoji: '🔥' }
+    ];  
 
         function handleLogin() {
             const u = document.getElementById('username').value;
