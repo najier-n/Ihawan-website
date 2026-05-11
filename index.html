@@ -729,7 +729,7 @@ nav {
     const grid = document.getElementById('menuGrid');
     grid.innerHTML = '';
 
-    menuData.filter(i => i.cat === cat).forEach(item => {
+    getMenuData(i => i.cat === cat).forEach(item => {
 
         const cartItem = cart.find(ci => ci.id === item.id);
 
@@ -788,6 +788,48 @@ nav {
         grid.appendChild(card);
     });
                 }
+    function getMenuData() {
+
+    const saved =
+        JSON.parse(localStorage.getItem('ihawan_menu'));
+
+    if(saved && saved.length) {
+
+        return saved
+            .filter(item => item.available)
+            .map(item => ({
+
+                id: item.id,
+
+                cat:
+                    item.category === 'grill'
+                    ? 'Grill Specials'
+
+                    : item.category === 'rice'
+                    ? 'Rice Meals'
+
+                    : item.category === 'soups'
+                    ? 'Soups & Sides'
+
+                    : item.category === 'drinks'
+                    ? 'Drinks'
+
+                    : 'Desserts',
+
+                name: item.name,
+
+                price: item.price,
+
+                desc: item.description,
+
+                emoji: item.emoji,
+
+                best: item.bestseller
+            }));
+    }
+
+    return DEFAULT_MENU;
+    }
 
     function renderQty(id, qty) {  
         return `<div class="qty-controls">  
@@ -808,7 +850,7 @@ nav {
 
     } else {
 
-        const item = menuData.find(i => i.id === id);
+        const item = getMenuData(i => i.id === id);
 
         cart.push({
             ...item,
