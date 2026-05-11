@@ -416,8 +416,30 @@ document.getElementById('statRevenue').innerText =
 
             if(currentTab === 'reservations') return renderReservations();
 
-            const filtered = orders.filter(o => currentTab === 'all' || o.status === currentTab);
+            const today = new Date();
 
+const filtered = orders.filter(o => {
+
+    const d = new Date(o.timestamp);
+
+    const isToday =
+        d.getDate() === today.getDate() &&
+        d.getMonth() === today.getMonth() &&
+        d.getFullYear() === today.getFullYear();
+
+    // HIDE old completed/cancelled orders
+    if (
+        (o.status === 'completed' || o.status === 'cancelled')
+        && !isToday
+    ) {
+        return false;
+    }
+
+    // NORMAL TAB FILTER
+    return currentTab === 'all'
+        ? true
+        : o.status === currentTab;
+});
             if(filtered.length === 0) {
                 grid.innerHTML = '<p class="label" style="grid-column: 1/-1; text-align: center; padding: 50px;">No orders here. 🔥 Waiting for the next one.</p>';
                 return;
