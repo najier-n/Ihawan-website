@@ -371,8 +371,7 @@ style="margin-top:20px;"></div>
 
     renderOrdersFromFirebase(orders);
 });
-            renderOrders();
-            setInterval(renderOrders, 5000);
+            
         }
 
         function setTab(tab, btn) {
@@ -919,7 +918,10 @@ function clearCancelledOrders() {
     const confirmTwo = confirm( "This cannot be undone. Continue?" );
 
     if(!confirmTwo) return;
-    let orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
+    let orders = db.ref('orders').on('value', snapshot => {
+    const orders = Object.values(snapshot.val() || {});
+    renderOrdersFromFirebase(orders);
+});
 
     orders = orders.filter( o => o.status !== 'cancelled' );
     localStorage.setItem( 'ihawan_orders', JSON.stringify(orders));
@@ -1249,7 +1251,12 @@ function renderExpenses() {
     "May","June","July","August",
     "September","October","November","December"
 ];
-            const orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
+            db.ref('orders').once('value', snapshot => {
+    const ordersObj = snapshot.val() || {};
+    const orders = Object.values(ordersObj);
+
+    renderOrdersFromFirebase(orders);
+});
             const completedOrders = orders.filter(o => {
                 const d = new Date(o.timestamp);
                 return ( o.status !== 'cancelled' && d.getMonth() === currentMonth && d.getFullYear() === currentYear );
@@ -1365,8 +1372,10 @@ function renderExpenses() {
     </html>
     `);
     reportWindow.document.close();
-}
-<script type="module">
+        }
+        init();
+    </script>
+    <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   // TODO: Add SDKs for Firebase products that you want to use
@@ -1385,7 +1394,5 @@ function renderExpenses() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 </script>
-        init();
-    </script>
 </body>
 </html>
