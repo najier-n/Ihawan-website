@@ -654,10 +654,10 @@ nav {
     <p style="color: var(--muted); margin-bottom: 20px;">Follow the smoke on Instagram · Facebook · TikTok</p>  
     <p style="font-size: 0.8rem; color: var(--muted);">© 2026 'Ihawan Filipino Grill · Made with 🔥</p>  
 </footer>  
-let MENU = [];
+
 <script>  
     // DATA  
-    const DEFAULT_MENU = [  
+    const menuData = [  
         { id: 1, cat: 'Grill Specials', name: 'Chicken BBQ Skewers', price: 19, desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.', emoji: '🍢', best: true },  
         { id: 2, cat: 'Grill Specials', name: 'Inihaw na Manok', price: 59, desc: 'Butterflied whole chicken basted with lemongrass butter. Perfectly charred.', emoji: '🍗' },  
         { id: 3, cat: 'Grill Specials', name: 'Beef sa Grill', price: 299, desc: 'Thick-cut beef belly, slow-grilled with garlic vinegar glaze.', emoji: '🥩' },  
@@ -696,7 +696,6 @@ let MENU = [];
     });  
 
     function init() {
-        MENU = getMenuData();   // load once
 
     document.getElementById('cart').style.display = 'none';
 
@@ -730,7 +729,7 @@ let MENU = [];
     const grid = document.getElementById('menuGrid');
     grid.innerHTML = '';
 
-    MENU.filter(i => i.cat === cat).forEach(item => {
+    menuData.filter(i => i.cat === cat).forEach(item => {
 
         const cartItem = cart.find(ci => ci.id === item.id);
 
@@ -789,48 +788,6 @@ let MENU = [];
         grid.appendChild(card);
     });
                 }
-    function getMenuData() {
-
-    const saved =
-        JSON.parse(localStorage.getItem('ihawan_menu'));
-
-    if(saved && saved.length) {
-
-        return saved
-            .filter(item => item.available)
-            .map(item => ({
-
-                id: item.id,
-
-                cat:
-                    item.category === 'grill'
-                    ? 'Grill Specials'
-
-                    : item.category === 'rice'
-                    ? 'Rice Meals'
-
-                    : item.category === 'soups'
-                    ? 'Soups & Sides'
-
-                    : item.category === 'drinks'
-                    ? 'Drinks'
-
-                    : 'Desserts',
-
-                name: item.name,
-
-                price: item.price,
-
-                desc: item.description,
-
-                emoji: item.emoji,
-
-                best: item.bestseller
-            }));
-    }
-
-    return DEFAULT_MENU;
-    }
 
     function renderQty(id, qty) {  
         return `<div class="qty-controls">  
@@ -851,9 +808,7 @@ let MENU = [];
 
     } else {
 
-        const item = MENU.find(i => i.id === id);
-
-if (!item) return;
+        const item = menuData.find(i => i.id === id);
 
         cart.push({
             ...item,
