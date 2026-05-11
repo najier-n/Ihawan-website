@@ -440,6 +440,7 @@ const filtered = orders.filter(o => {
         ? true
         : o.status === currentTab;
 });
+
             if(filtered.length === 0) {
                 grid.innerHTML = '<p class="label" style="grid-column: 1/-1; text-align: center; padding: 50px;">No orders here. 🔥 Waiting for the next one.</p>';
                 return;
