@@ -3,123 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | 'Ihawan Filipino Grill</title>
+    <title>Dashboard | ihawan Filipino Grill</title>
     <style>
         /* Revenue Panel */
-.revenue-panel {
-    background: var(--smoke);
-    margin-bottom: 30px;
-    padding: 25px;
-    border: 1px solid #333;
-    display: none;
-}
-
-.revenue-panel.active {
-    display: block;
-}
-
-.revenue-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.rev-btn {
-    background: var(--fire);
-    border: none;
-    color: var(--char);
-    padding: 10px 15px;
-    cursor: pointer;
-    font-family: 'Bebas Neue';
-    letter-spacing: 1px;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.calendar-day {
-    background: #24180d;
-    min-height: 100px;
-    padding: 10px;
-    border: 1px solid #333;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.calendar-day:hover {
-    border-color: var(--fire);
-    transform: translateY(-2px);
-}
-
-.calendar-day strong {
-    color: var(--fire);
-    display: block;
-    margin-bottom: 10px;
-}
-
-.day-revenue {
-    font-size: 0.9rem;
-    color: #22c55e;
-}
-
-.order-history {
-    margin-top: 30px;
-}
-
-.history-order {
-    padding: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.history-order:last-child {
-    border-bottom: none;
-}
-
-.chart-box {
-    margin-top: 30px;
-    background: #24180d;
-    padding: 20px;
-    border: 1px solid #333;
-}
-
-.bar-wrap {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    height: 220px;
-    margin-top: 20px;
-}
-
-.bar {
-    flex: 1;
-    background: linear-gradient(to top, var(--ember), var(--fire));
-    position: relative;
-    border-radius: 4px 4px 0 0;
-}
-
-.bar span {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-}
-
-.bar-value {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    color: white;
-}
+        .revenue-panel { background: var(--smoke); margin-bottom: 30px; padding: 25px; border: 1px solid #333; display: none; }
+        .revenue-panel.active { display: block; }
+        .revenue-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .rev-btn { background: var(--fire); border: none; color: var(--char); padding: 10px 15px; cursor: pointer; font-family: 'Bebas Neue'; letter-spacing: 1px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px; }
+        .calendar-day { background: #24180d; min-height: 100px; padding: 10px; border: 1px solid #333; cursor: pointer; transition: 0.3s; }
+        .calendar-day:hover { border-color: var(--fire); transform: translateY(-2px); }
+        .calendar-day strong { color: var(--fire); display: block; margin-bottom: 10px; }
+        .day-revenue { font-size: 0.9rem; color: #22c55e; }
+        .order-history { margin-top: 30px; }
+        .history-order { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .history-order:last-child { border-bottom: none; }
+        .chart-box { margin-top: 30px; background: #24180d; padding: 20px; border: 1px solid #333; }
+        .bar-wrap { display: flex; align-items: flex-end; gap: 8px; height: 220px; margin-top: 20px; }
+        .bar { flex: 1; background: linear-gradient(to top, var(--ember), var(--fire)); position: relative; border-radius: 4px 4px 0 0; }
+        .bar span { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; }
+        .bar-value { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: white; }
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700&family=Playfair+Display:wght@700;900&display=swap');
-
         :root {
             --fire: #F5A800;
             --ember: #E05A00;
@@ -131,12 +35,10 @@
             --received: #94a3b8;
             --muted: #9ca3af;
         }
-
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background: var(--char); color: var(--cream); font-family: 'Lato', sans-serif; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         .label, .btn { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; }
-
         /* Login */
         #loginOverlay { position: fixed; inset: 0; background: var(--char); z-index: 5000; display: flex; align-items: center; justify-content: center; }
         .login-box { width: 400px; background: var(--smoke); padding: 40px; border: 1px solid var(--fire); text-align: center; }
@@ -144,7 +46,6 @@
         .error { color: #ef4444; font-size: 0.8rem; margin-top: 10px; display: none; }
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
-
         /* Dashboard */
         #dashboard { display: none; padding: 30px; max-width: 1400px; margin: 0 auto; }
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid var(--smoke); padding-bottom: 20px; }
@@ -152,63 +53,33 @@
         .stat-card { background: var(--smoke); padding: 25px; border-left: 4px solid var(--fire); }
         .stat-val { font-size: 2.5rem; color: var(--fire); font-family: 'Bebas Neue'; }
         .stat-label { font-size: 0.9rem; color: var(--muted); text-transform: uppercase; }
-
         /* Tabs */
         .tabs { display: flex; gap: 20px; margin-bottom: 30px; }
         .tab { padding: 10px 20px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; }
         .tab.active { color: var(--fire); border-color: var(--fire); }
-
         /* Orders */
         .order-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; }
         .order-card { background: var(--smoke); padding: 25px; border: 1px solid #333; position: relative; }
         .order-card.new { border-color: var(--fire); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(245, 168, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 168, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 168, 0, 0); } }
-        
         .order-id { font-family: 'Bebas Neue'; color: var(--fire); font-size: 1.2rem; margin-bottom: 15px; display: block; }
         .badge { display: inline-block; padding: 4px 10px; font-size: 0.7rem; font-family: 'Bebas Neue'; border-radius: 2px; margin-bottom: 10px; }
         .badge-received { background: rgba(148, 163, 184, 0.1); color: var(--received); }
         .badge-preparing { background: rgba(245, 168, 0, 0.1); color: var(--fire); }
         .badge-ready { background: rgba(34, 197, 94, 0.1); color: var(--ready); }
-
         .item-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
         .notes-box { background: rgba(245, 168, 0, 0.05); padding: 10px; border-left: 2px solid var(--fire); font-size: 0.85rem; margin-top: 15px; font-style: italic; }
-
         .btn { padding: 12px; cursor: pointer; border: none; font-size: 1rem; width: 100%; transition: 0.3s; margin-top: 20px; }
         .btn-fire { background: var(--fire); color: var(--char); }
         .btn-ready { background: var(--ready); color: white; }
         .btn-done { background: #333; color: white; }
-
-        .mini-clear-wrap{
-    display:flex;
-    gap:10px;
-    justify-content:flex-end;
-    margin-bottom:15px;
-    flex-wrap:wrap;
-}
-
-.mini-clear-btn{
-    background:#2a2a2a;
-    color:#aaa;
-    border:1px solid #444;
-    padding:5px 10px;
-    font-size:0.7rem;
-    cursor:pointer;
-    border-radius:4px;
-    transition:0.3s;
-    font-family:'Bebas Neue', sans-serif;
-    letter-spacing:1px;
-}
-
-.mini-clear-btn:hover{
-    border-color:#ef4444;
-    color:#fff;
-}
-
+        .mini-clear-wrap{ display:flex; gap:10px; justify-content:flex-end; margin-bottom:15px; flex-wrap:wrap; }
+        .mini-clear-btn{ background:#2a2a2a; color:#aaa; border:1px solid #444; padding:5px 10px; font-size:0.7rem; cursor:pointer; border-radius:4px; transition:0.3s; font-family:'Bebas Neue', sans-serif; letter-spacing:1px; }
+        .mini-clear-btn:hover{ border-color:#ef4444; color:#fff; }
         input { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--char); border: 1px solid var(--fire); color: white; }
     </style>
 </head>
 <body>
-
     <div id="loginOverlay">
         <div class="login-box" id="loginBox">
             <h1 class="h-font">'Ihawan</h1>
@@ -219,7 +90,6 @@
             <div id="loginError" class="error">Invalid credentials.</div>
         </div>
     </div>
-
     <div id="dashboard">
         <header>
             <div>
@@ -228,17 +98,15 @@
             </div>
             <button class="btn label" style="width: auto; padding: 10px 20px; background: #333; color: white;" onclick="logout()">Sign Out</button>
         </header>
-
         <div class="stats-row">
             <div class="stat-card"><div class="stat-val" id="statNew">0</div><div class="stat-label">New Orders</div></div>
             <div class="stat-card"><div class="stat-val" id="statPrep">0</div><div class="stat-label">Preparing</div></div>
             <div class="stat-card"><div class="stat-val" id="statReady">0</div><div class="stat-label">Ready</div></div>
             <div class="stat-card" onclick="toggleRevenuePanel()" style="cursor:pointer;">
-    <div class="stat-val" id="statRevenue">₱0</div>
-    <div class="stat-label">Today's Revenue</div>
+                <div class="stat-val" id="statRevenue">₱0</div>
+                <div class="stat-label">Today's Revenue</div>
             </div>
-            </div>
-
+        </div>
         <div class="tabs">
             <div class="tab active" onclick="setTab('all', this)">All Orders</div>
             <div class="tab" onclick="setTab('received', this)">New</div>
@@ -246,100 +114,55 @@
             <div class="tab" onclick="setTab('ready', this)">Ready</div>
             <div class="tab" onclick="setTab('reservations', this)">Reservations</div>
         </div>
-            
-            <div id="revenuePanel" class="revenue-panel">
-
-    <div class="revenue-top">
-        <button class="rev-btn" onclick="changeMonth(-1)">◀ Previous</button>
-
-        <h2 id="calendarTitle">Revenue Calendar</h2>
-
-        <button class="rev-btn" onclick="printSalesReport()">
-🖨 Print Sales Report
-</button>
-
-        <button class="rev-btn" onclick="changeMonth(1)">Next ▶</button>
-    </div>
-
-    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
-        <div><strong>Today:</strong> <span id="todayRevenue">₱0</span></div>
-        <div><strong>Weekly:</strong> <span id="weeklyRevenue">₱0</span></div>
-        <div><strong>Monthly:</strong> <span id="monthlyRevenue">₱0</span></div>
-        <div>
-<strong>Profit:</strong>
-<span id="profitAmount">₱0</span>
-</div>
-    </div>
-
-    <div class="calendar-grid" id="calendarGrid"></div>
-
-    <div class="chart-box">
-        <h3>Revenue Graph</h3>
-        <div class="bar-wrap" id="revenueChart"></div>
-    </div>
-
-    <div class="order-history">
-        <h3 style="margin-bottom:15px;">Orders History</h3>
-        <div id="historyOrders"></div>
-    </div>
-                <div class="chart-box">
-
-<h3>🔥 Expense Tracker</h3>
-
-<div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;">
-
-<input type="text"
-id="expenseName"
-placeholder="Expense name">
-
-<input type="number"
-id="expenseAmount"
-placeholder="Amount">
-
-<button class="rev-btn"
-onclick="addExpense()">
-Add Expense
-</button>
-
-</div>
-
-<div id="expenseList"
-style="margin-top:20px;"></div>
-
-                </div>
+        <div id="revenuePanel" class="revenue-panel">
+            <div class="revenue-top">
+                <button class="rev-btn" onclick="changeMonth(-1)">◀ Previous</button>
+                <h2 id="calendarTitle">Revenue Calendar</h2>
+                <button class="rev-btn" onclick="printSalesReport()"> 🖨 Print Sales Report </button>
+                <button class="rev-btn" onclick="changeMonth(1)">Next ▶</button>
             </div>
-
-        <div class="mini-clear-wrap">
-
-    <button class="mini-clear-btn"
-        onclick="clearCompletedOrders()">
-        Clear Completed
-    </button>
-
-    <button class="mini-clear-btn"
-        onclick="clearCancelledOrders()">
-        Clear Cancelled
-    </button>
-
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+                <div><strong>Today:</strong> <span id="todayRevenue">₱0</span></div>
+                <div><strong>Weekly:</strong> <span id="weeklyRevenue">₱0</span></div>
+                <div><strong>Monthly:</strong> <span id="monthlyRevenue">₱0</span></div>
+                <div> <strong>Profit:</strong> <span id="profitAmount">₱0</span> </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="chart-box">
+                <h3>Revenue Graph</h3>
+                <div class="bar-wrap" id="revenueChart"></div>
+            </div>
+            <div class="order-history">
+                <h3 style="margin-bottom:15px;">Orders History</h3>
+                <div id="historyOrders"></div>
+            </div>
+                <div class="chart-box">
+                    <h3>🔥 Expense Tracker</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;">
+                        <input type="text" id="expenseName" placeholder="Expense name">
+                        <input type="number" id="expenseAmount" placeholder="Amount">
+                        <button class="rev-btn" onclick="addExpense()"> Add Expense </button>
+                    </div>
+                    <div id="expenseList" style="margin-top:20px;"> </div>
+                </div>
         </div>
-
+        <div class="mini-clear-wrap">
+            <button class="mini-clear-btn" onclick="clearCompletedOrders()"> Clear Completed </button>
+            <button class="mini-clear-btn" onclick="clearCancelledOrders()"> Clear Cancelled </button>
+        </div>
         <div id="orderGrid" class="order-list"></div>
     </div>
-
     <script>
         let currentTab = 'all';
         let knownOrderIds = new Set();
-
         function init() {
             if(sessionStorage.getItem('ihawan_auth') === 'true') {
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
                 startDashboard();
             }
-            updateClock();
-            setInterval(updateClock, 1000);
+            updateClock(); setInterval(updateClock, 1000);
         }
-
         function updateClock() {
             const now = new Date();
             document.getElementById('liveClock').innerText = now.toLocaleDateString() + ' | ' + now.toLocaleTimeString();
@@ -349,24 +172,18 @@ style="margin-top:20px;"></div>
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
             if(u === 'ihawan_owner' && p === 'grill2026!') {
-                sessionStorage.setItem('ihawan_auth', 'true');
-                location.reload();
+                sessionStorage.setItem('ihawan_auth', 'true'); location.reload();
             } else {
-                const box = document.getElementById('loginBox');
-                box.classList.add('shake');
+                const box = document.getElementById('loginBox'); box.classList.add('shake');
                 document.getElementById('loginError').style.display = 'block';
                 setTimeout(() => box.classList.remove('shake'), 400);
             }
         }
-
         function logout() {
-            sessionStorage.removeItem('ihawan_auth');
-            location.reload();
+            sessionStorage.removeItem('ihawan_auth'); location.reload();
         }
-
         function startDashboard() {
-            renderOrders();
-            setInterval(renderOrders, 5000);
+            renderOrders(); setInterval(renderOrders, 5000);
         }
 
         function setTab(tab, btn) {
@@ -377,75 +194,50 @@ style="margin-top:20px;"></div>
         }
 
         function renderOrders() {
-            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]').reverse();
+            const orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]').reverse();
             const grid = document.getElementById('orderGrid');
             grid.innerHTML = '';
-
             // Handle Notifications
             orders.forEach(o => {
                 if(o.status === 'received' && !knownOrderIds.has(o.id)) {
-                    notify();
-                    knownOrderIds.add(o.id);
+                    notify(); knownOrderIds.add(o.id);
                 }
             });
-
             // Update Stats
             document.getElementById('statNew').innerText = orders.filter(o => o.status === 'received').length;
             document.getElementById('statPrep').innerText = orders.filter(o => o.status === 'preparing').length;
             document.getElementById('statReady').innerText = orders.filter(o => o.status === 'ready').length;
             // TODAY COMPLETED SALES ONLY
-const today = new Date();
-
-const rev = orders
-.filter(o => {
-
-    const d = new Date(o.timestamp);
-
-    return (
-        o.status === 'completed' &&
-        d.getDate() === today.getDate() &&
-        d.getMonth() === today.getMonth() &&
-        d.getFullYear() === today.getFullYear()
-    );
-
-})
-.reduce((sum, o) => sum + o.total, 0);
-
-document.getElementById('statRevenue').innerText =
-    '₱' + rev.toFixed(2);
-
-            if(currentTab === 'reservations') return renderReservations();
-
-            
-
-const filtered = orders.filter(o => {
-
-    const d = new Date(o.timestamp);
-
-    const isToday =
-        d.getDate() === today.getDate() &&
-        d.getMonth() === today.getMonth() &&
-        d.getFullYear() === today.getFullYear();
-
-    // HIDE old completed/cancelled orders
-    if (
-        (o.status === 'completed' || o.status === 'cancelled')
-        && !isToday
-    ) {
-        return false;
-    }
-
-    // NORMAL TAB FILTER
-    return currentTab === 'all'
-        ? true
-        : o.status === currentTab;
-});
-
+            const today = new Date();
+            const rev = orders
+                .filter(o => {
+                    const d = new Date(o.timestamp);
+                    return (
+                        o.status === 'completed' &&
+                        d.getDate() === today.getDate() &&
+                        d.getMonth() === today.getMonth() &&
+                        d.getFullYear() === today.getFullYear() );
+                })
+                .reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('statRevenue').innerText = '₱' + rev.toFixed(2);
+            if(currentTab === 'reservations')
+                return renderReservations();
+            const filtered = orders.filter(o => {
+                const d = new Date(o.timestamp);
+                const isToday =
+                    d.getDate() === today.getDate() &&
+                    d.getMonth() === today.getMonth() &&
+                    d.getFullYear() === today.getFullYear();
+                // HIDE old completed/cancelled orders
+                if ( (o.status === 'completed' || o.status === 'cancelled') && !isToday ) {
+                    return false; }
+                // NORMAL TAB FILTER
+                    return currentTab === 'all' ? true : o.status === currentTab;
+            });
             if(filtered.length === 0) {
                 grid.innerHTML = '<p class="label" style="grid-column: 1/-1; text-align: center; padding: 50px;">No orders here. 🔥 Waiting for the next one.</p>';
-                return;
-            }
-
+                return; }
             filtered.forEach(order => {
                 const elapsed = Math.floor((Date.now() - order.timestamp) / 60000);
                 const card = document.createElement('div');
@@ -457,43 +249,33 @@ const filtered = orders.filter(o => {
                     <strong> ${order.customer.name} </strong>
                     (${order.customer.type})
                     ${order.customer.type === 'dine-in'
-                      && order.customer.tableNumber ? `<br>
+                      && order.customer.tableNumber ? `
+                      <br>
                       <span style=" color:var(--fire); font-size:0.85rem; ">
                       🍽 Table:
-                    <strong> ${order.customer.tableNumber} </strong>
-                    </span>`
+                      <strong> ${order.customer.tableNumber} </strong>
+                      </span>`
                     : '' }
                     <br>
                     <span style=" font-size:0.8rem; opacity:0.7; ">
                     ${order.customer.phone} | Placed ${elapsed}m ago
                     </span>
-                    <div style=" margin-top:10px; padding:10px;
-        background:rgba(245,168,0,0.08);
-        border-left:3px solid var(--fire);
-        font-size:0.85rem;
-    ">
-
-        💳 Payment:
-        <strong>
-            ${order.payment?.method?.toUpperCase() || 'CASH'}
-        </strong>
-
-        ${
-            order.payment?.method === 'gcash'
-            ? `<br><br>
-               📌 Reference:
-               <strong>
-                   ${order.payment.reference}
-               </strong>`
-            : ''
-        }
-
-     </div>
-
-</div>
-                    ${order.customer.type === 'delivery' ? `<div style="font-size:0.8rem; margin-bottom:15px">📍 ${order.customer.address}</div>` : ''}
+                    <div style=" margin-top:10px; padding:10px; background:rgba(245,168,0,0.08); border-left:3px solid var(--fire); font-size:0.85rem; ">
+                    💳 Payment:
+                    <strong> ${order.payment?.method?.toUpperCase() || 'CASH'} </strong>
+                    ${
+                        order.payment?.method === 'gcash' ? `<br>
+                        <br> 📌 Reference:
+                        <strong> ${order.payment.reference} </strong>`
+                        : ''
+                    }
+                    </div>
+                    </div>
+                    ${order.customer.type === 'delivery' ? `<div style="font-size:0.8rem; margin-bottom:15px">📍 ${order.customer.address}</div>
+                    ` : ''}
                     <div class="items-list">
-                        ${order.items.map(i => `<div class="item-row"><span>${i.qty}x ${i.name}</span><span>₱${i.subtotal.toFixed(2)}</span></div>`).join('')}
+                        ${order.items.map(i => `<div class="item-row"><span>${i.qty}x ${i.name}</span><span>₱${i.subtotal.toFixed(2)}</span></div>
+                        `).join('')}
                     </div>
                     <div style="text-align:right; margin-top:10px; font-weight:bold; color:var(--fire)">Total: ₱${order.total.toFixed(2)}</div>
                     ${order.customer.notes ? `<div class="notes-box">" ${order.customer.notes} "</div>` : ''}
@@ -502,79 +284,56 @@ const filtered = orders.filter(o => {
                 grid.appendChild(card);
             });
         }
-
         function renderActions(order) {
-
-    let printBtn = `
-    <button class="btn label"
-    style="
-        background:#2563eb;
-        color:white;
-    "
-    onclick='printReceipt(${JSON.stringify(order)})'>
-        🖨 Print Receipt
-    </button>
-    `;
-
-    if(order.status === 'received') {
-
-        return `
-
-        ${printBtn}
-
-        <button class="btn btn-fire label"
-        onclick="updateStatus('${order.id}', 'preparing')">
-            🔥 Start Preparing
-        </button>
+            let printBtn = `
+            <button class="btn label" style=" background:#2563eb; color:white; "
+            onclick='printReceipt(${JSON.stringify(order)})'>
+            🖨 Print Receipt
+            </button>
+            `;
+            if(order.status === 'received') {
+                return `
+                ${printBtn}
+                <button class="btn btn-fire label"
+                onclick="updateStatus('${order.id}', 'preparing')">
+                🔥 Start Preparing
+                </button>
 
         <button class="btn label"
         style="background:#ef4444; color:white;"
         onclick="cancelOrder('${order.id}')">
             ❌ Cancel Order
         </button>
-
         `;
-    }
-
-    if(order.status === 'preparing') {
-
-        return `
-
-        ${printBtn}
-
-        <button class="btn btn-ready label"
-        onclick="updateStatus('${order.id}', 'ready')">
-            ✅ Mark as Ready
-        </button>
-
-        <button class="btn label"
-        style="background:#ef4444; color:white;"
-        onclick="cancelOrder('${order.id}')">
-            ❌ Cancel Order
-        </button>
-
-        `;
-    }
-
-    if(order.status === 'ready') {
-
-        return `
-
-        ${printBtn}
-
-        <button class="btn btn-done label"
-        onclick="updateStatus('${order.id}', 'completed')">
-            ✔ Mark Completed
-        </button>
-
-        `;
-    }
-
-    return '';
+            }
+            if(order.status === 'preparing') {
+                return `
+                ${printBtn}
+                <button class="btn btn-ready label"
+                onclick="updateStatus('${order.id}', 'ready')">
+                ✅ Mark as Ready
+                </button>
+                <button class="btn label" style="background:#ef4444; color:white;"
+                onclick="cancelOrder('${order.id}')">
+                ❌ Cancel Order
+                </button>
+                `;
+            }
+            if(order.status === 'ready') {
+                return `
+                ${printBtn}
+                <button class="btn btn-done label"
+                onclick="updateStatus('${order.id}', 'completed')">
+                ✔ Mark Completed
+                </button>
+                `;
+            }
+            return '';
         }
 
         function updateStatus(id, newStatus) {
-            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+            const orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]');
             const idx = orders.findIndex(o => o.id === id);
             if(idx !== -1) {
                 orders[idx].status = newStatus;
@@ -583,21 +342,22 @@ const filtered = orders.filter(o => {
             }
         }
 
-            function cancelOrder(id) {
-    if(!confirm("Are you sure you want to cancel this order?")) return;
-
-    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-    const idx = orders.findIndex(o => o.id === id);
-       if(idx !== -1) {
-    orders[idx].status = 'cancelled';
-}
-localStorage.setItem('ihawan_orders', JSON.stringify(orders));
-    renderOrders();
+        function cancelOrder(id) {
+            if(!confirm("Are you sure you want to cancel this order?")) return;
+            const orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]');
+            const idx = orders.findIndex(o => o.id === id);
+            if(idx !== -1) {
+                    orders[idx].status = 'cancelled';
             }
+            localStorage.setItem('ihawan_orders', JSON.stringify(orders));
+            renderOrders();
+        }
 
         function renderReservations() {
             const grid = document.getElementById('orderGrid');
-            const res = JSON.parse(localStorage.getItem('ihawan_reservations') || '[]');
+            const res = JSON.parse(
+                localStorage.getItem('ihawan_reservations') || '[]');
             if(res.length === 0) { grid.innerHTML = '<p style="grid-column:1/-1; text-align:center">No reservations.</p>'; return; }
             
             res.reverse().forEach((r, i) => {
@@ -613,7 +373,8 @@ localStorage.setItem('ihawan_orders', JSON.stringify(orders));
         }
 
         function deleteRes(idx) {
-            const res = JSON.parse(localStorage.getItem('ihawan_reservations') || '[]');
+            const res = JSON.parse(
+                localStorage.getItem('ihawan_reservations') || '[]');
             res.splice(idx, 1);
             localStorage.setItem('ihawan_reservations', JSON.stringify(res));
             renderOrders();
@@ -631,544 +392,311 @@ localStorage.setItem('ihawan_orders', JSON.stringify(orders));
                 gain.gain.setValueAtTime(0.1, ctx.currentTime);
                 osc.start();
                 osc.stop(ctx.currentTime + 0.2);
-            } catch(e) {}
+            }
+            catch(e) {}
         }
-
+        
         let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
-
-function toggleRevenuePanel() {
-    const panel = document.getElementById('revenuePanel');
-    panel.classList.toggle('active');
-
-    if(panel.classList.contains('active')) {
-        renderRevenueCalendar();
-        renderExpenses();
-    }
-}
-
-function changeMonth(dir) {
-    currentMonth += dir;
-
-    if(currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-
-    if(currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-
-    renderRevenueCalendar();
-}
-
-function renderRevenueCalendar() {
-
-    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-
-    const grid = document.getElementById('calendarGrid');
-    const chart = document.getElementById('revenueChart');
-
-    grid.innerHTML = '';
-    chart.innerHTML = '';
-
-    const monthNames = [
-        "January","February","March","April",
-        "May","June","July","August",
-        "September","October","November","December"
-    ];
-
-    document.getElementById('calendarTitle').innerText =
-        `${monthNames[currentMonth]} ${currentYear}`;
-
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    for(let i = 0; i < firstDay; i++) {
-        const empty = document.createElement('div');
-        grid.appendChild(empty);
-    }
-
-    let monthlyTotal = 0;
-    let weeklyTotal = 0;
-    let todayTotal = 0;
-
-    const today = new Date();
-
-    for(let day = 1; day <= totalDays; day++) {
-
-        const dateObj = new Date(currentYear, currentMonth, day);
-
-        const dayOrders = orders.filter(o => {
-
-            const d = new Date(o.timestamp);
-
-            return d.getDate() === day &&
-                   d.getMonth() === currentMonth &&
-                   d.getFullYear() === currentYear &&
-                   o.status !== 'cancelled';
-
-        });
-
-        const revenue = dayOrders.reduce((sum, o) => sum + o.total, 0);
-
-        monthlyTotal += revenue;
-
-        const expenses = JSON.parse(
-    localStorage.getItem('ihawan_expenses') || '[]'
-);
-
-const totalExpenses = expenses.reduce(
-    (sum, e) => sum + e.amount,
-    0
-);
-
-const profit = monthlyTotal - totalExpenses;
-
-document.getElementById('profitAmount')
-.innerText = `₱${profit.toFixed(2)}`;
-
-        if(isSameWeek(today, dateObj)) {
-            weeklyTotal += revenue;
+        let currentYear = new Date().getFullYear();
+        
+        function toggleRevenuePanel() {
+            const panel = document.getElementById('revenuePanel'); panel.classList.toggle('active');
+            if(panel.classList.contains('active')) {
+                renderRevenueCalendar();
+                renderExpenses(); }
         }
-
-        if(
-            day === today.getDate() &&
-            currentMonth === today.getMonth() &&
-            currentYear === today.getFullYear()
-        ) {
-            todayTotal = revenue;
+        
+        function changeMonth(dir) {
+            currentMonth += dir;
+            if(currentMonth < 0) {
+                currentMonth = 11; currentYear--; }
+            if(currentMonth > 11) {
+                currentMonth = 0; currentYear++; }
+            renderRevenueCalendar();
         }
-
-        const cell = document.createElement('div');
-        cell.className = 'calendar-day';
-
-        cell.innerHTML = `
-            <strong>${day}</strong>
-            <div class="day-revenue">₱${revenue.toFixed(2)}</div>
-            <div style="font-size:0.75rem; opacity:0.7; margin-top:5px;">
+        
+        function renderRevenueCalendar() {
+            const orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]');
+            const grid = document.getElementById('calendarGrid');
+            const chart = document.getElementById('revenueChart');
+            grid.innerHTML = '';
+            chart.innerHTML = '';
+            const monthNames = [
+                "January","February","March","April", "May","June","July","August", "September","October","November","December"
+            ];
+            document.getElementById('calendarTitle').innerText =
+                `${monthNames[currentMonth]} ${currentYear}`;
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+            for(let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                grid.appendChild(empty);
+            }
+            let monthlyTotal = 0;
+            let weeklyTotal = 0;
+            let todayTotal = 0;
+            const today = new Date();
+            for(let day = 1; day <= totalDays; day++) {
+                const dateObj = new Date(currentYear, currentMonth, day);
+                const dayOrders = orders.filter(o => {
+                    const d = new Date(o.timestamp);
+                    return d.getDate() === day &&
+                        d.getMonth() === currentMonth &&
+                        d.getFullYear() === currentYear &&
+                        o.status !== 'cancelled';
+                });
+                const revenue = dayOrders.reduce((sum, o) => sum + o.total, 0);
+                monthlyTotal += revenue;
+                const expenses = JSON.parse(
+                    localStorage.getItem('ihawan_expenses') || '[]' );
+                const totalExpenses = expenses.reduce(
+                    (sum, e) => sum + e.amount, 0 );
+                const profit = monthlyTotal - totalExpenses;
+                document.getElementById('profitAmount') .innerText = `₱${profit.toFixed(2)}`;
+                if(isSameWeek(today, dateObj)) {
+                    weeklyTotal += revenue; }
+                if(
+                    day === today.getDate() &&
+                    currentMonth === today.getMonth() &&
+                    currentYear === today.getFullYear()
+                ) { todayTotal = revenue; }
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day'; cell.innerHTML = `
+                <strong>${day}</strong>
+                <div class="day-revenue">₱${revenue.toFixed(2)}</div>
+                <div style="font-size:0.75rem; opacity:0.7; margin-top:5px;">
                 ${dayOrders.length} orders
-            </div>
-        `;
-
-        cell.onclick = () => showDayOrders(dayOrders, day);
-
-        grid.appendChild(cell);
-
-        // GRAPH
-        const bar = document.createElement('div');
-        bar.className = 'bar';
-
-        const height = Math.max(revenue / 10, 5);
-
-        bar.style.height = `${height}px`;
-
-        bar.innerHTML = `
-            <div class="bar-value">₱${Math.round(revenue)}</div>
-            <span>${day}</span>
-        `;
-
-        chart.appendChild(bar);
-    }
-
-    document.getElementById('todayRevenue').innerText =
-        `₱${todayTotal.toFixed(2)}`;
-
-    document.getElementById('weeklyRevenue').innerText =
-        `₱${weeklyTotal.toFixed(2)}`;
-
-    document.getElementById('monthlyRevenue').innerText =
-        `₱${monthlyTotal.toFixed(2)}`;
-}
-
-function showDayOrders(dayOrders, day) {
-
-    const container = document.getElementById('historyOrders');
-
-    if(dayOrders.length === 0) {
-        container.innerHTML = `
-            <p style="opacity:0.7;">
-                No orders for day ${day}
-            </p>
-        `;
-        return;
-    }
-
-    container.innerHTML = '';
-
-    dayOrders.reverse().forEach(order => {
-
-        container.innerHTML += `
-            <div class="history-order">
-
-                <div style="
-                    display:flex;
-                    justify-content:space-between;
-                    margin-bottom:10px;
-                ">
-
-                    <strong style="color:var(--fire)">
-                        ${order.id}
-                    </strong>
-
-                    <strong>
-                        ₱${order.total.toFixed(2)}
-                    </strong>
-
                 </div>
-
-                <div>
-                    ${order.customer.name}
+                `;
+                cell.onclick = () => showDayOrders(dayOrders, day);
+                grid.appendChild(cell);
+                
+                // GRAPH
+                const bar = document.createElement('div'); bar.className = 'bar';
+                const height = Math.max(revenue / 10, 5); bar.style.height = `${height}px`; bar.innerHTML = `
+                <div class="bar-value">₱${Math.round(revenue)}</div>
+                <span>${day}</span>
+                `;
+                chart.appendChild(bar);
+            }
+            document.getElementById('todayRevenue').innerText = `₱${todayTotal.toFixed(2)}`;
+            document.getElementById('weeklyRevenue').innerText = `₱${weeklyTotal.toFixed(2)}`;
+            document.getElementById('monthlyRevenue').innerText = `₱${monthlyTotal.toFixed(2)}`;
+        }
+        
+        function showDayOrders(dayOrders, day) {
+            const container = document.getElementById('historyOrders');
+            if(dayOrders.length === 0) {
+                container.innerHTML = `
+                <p style="opacity:0.7;">
+                No orders for day ${day} </p>
+                `;
+                return;
+            }
+            container.innerHTML = '';
+            dayOrders.reverse().forEach(order => {
+                container.innerHTML += `
+                <div class="history-order">
+                <div style=" display:flex; justify-content:space-between; margin-bottom:10px; ">
+                <strong style="color:var(--fire)"> ${order.id} </strong>
+                <strong> ₱${order.total.toFixed(2)} </strong>
                 </div>
-
-                <div style="
-                    opacity:0.7;
-                    font-size:0.8rem;
-                    margin-top:5px;
-                ">
-                    ${new Date(order.timestamp).toLocaleString()}
+                <div> ${order.customer.name} </div>
+                <div style=" opacity:0.7; font-size:0.8rem; margin-top:5px; ">
+                ${new Date(order.timestamp).toLocaleString()}
                 </div>
-
                 <div style="margin-top:10px;">
-                    ${order.items.map(i =>
-                        `<div>${i.qty}x ${i.name}</div>`
-                    ).join('')}
+                ${order.items.map(i =>
+                `<div>${i.qty}x ${i.name}</div>` ).join('')}
                 </div>
-
-            </div>
-        `;
-    });
-}
-
-function isSameWeek(d1, d2) {
-
-    const oneJan = new Date(d1.getFullYear(), 0, 1);
-
-    const week1 = Math.ceil((((d1 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
-    const week2 = Math.ceil((((d2 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
-
-    return week1 === week2;
-}
+                </div>
+                `;
+            });
+        }
+        
+        function isSameWeek(d1, d2) {
+            const oneJan = new Date(d1.getFullYear(), 0, 1);
+            const week1 = Math.ceil((((d1 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
+            const week2 = Math.ceil((((d2 - oneJan) / 86400000) + oneJan.getDay()+1)/7);
+            return week1 === week2;
+        }
+        
         function clearCompletedOrders() {
-
-    const confirmOne = confirm(
-        "Clear ALL completed orders?"
-    );
-
-    if(!confirmOne) return;
-
-    const confirmTwo = confirm(
-        "This cannot be undone. Continue?"
-    );
-
-    if(!confirmTwo) return;
-
-    let orders = db.ref('orders').on('value', snapshot => {
-    const orders = Object.values(snapshot.val() || {});
-    renderOrdersFromFirebase(orders);
-});
-
-    orders = orders.filter(
-        o => o.status !== 'completed'
-    );
-
-    localStorage.setItem(
-        'ihawan_orders',
-        JSON.stringify(orders)
-    );
-
-    renderOrders();
-
-    alert("Completed orders cleared.");
-}
-
-function clearCancelledOrders() {
-
-    const confirmOne = confirm( "Clear ALL cancelled orders?" );
-
-    if(!confirmOne) return;
-    const confirmTwo = confirm( "This cannot be undone. Continue?" );
-
-    if(!confirmTwo) return;
-    let orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
-
-    orders = orders.filter( o => o.status !== 'cancelled' );
-    localStorage.setItem( 'ihawan_orders', JSON.stringify(orders));
-    renderOrders();
-
-    alert("Cancelled orders cleared.");
-}
+            const confirmOne = confirm( "Clear ALL completed orders?" );
+            if(!confirmOne)
+                return;
+            const confirmTwo = confirm( "This cannot be undone. Continue?" );
+            if(!confirmTwo)
+                return;
+            let orders = db.ref('orders').on('value', snapshot => {
+                const orders = Object.values(snapshot.val() || {});
+                renderOrdersFromFirebase(orders);
+            });
+            orders = orders.filter( o => o.status !== 'completed' );
+            localStorage.setItem( 'ihawan_orders', JSON.stringify(orders) );
+            renderOrders();
+            alert("Completed orders cleared.");
+        }
+        
+        function clearCancelledOrders() {
+            const confirmOne = confirm( "Clear ALL cancelled orders?" );
+            if(!confirmOne)
+                return;
+            const confirmTwo = confirm( "This cannot be undone. Continue?" );
+            if(!confirmTwo)
+                return;
+            let orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]' );
+            orders = orders.filter( o => o.status !== 'cancelled' );
+            localStorage.setItem( 'ihawan_orders', JSON.stringify(orders));
+            renderOrders();
+            alert("Cancelled orders cleared.");
+        }
         
         function addExpense() {
-
-    const name = document.getElementById('expenseName').value;
-    const amount = parseFloat( document.getElementById('expenseAmount').value );
-
-    if(!name || !amount) { alert("Fill all expense fields.");
-        return; }
-
-    const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
-    expenses.push({ name, amount, date: Date.now() });
-    localStorage.setItem( 'ihawan_expenses', JSON.stringify(expenses) );
-    document.getElementById('expenseName').value = '';
-    document.getElementById('expenseAmount').value = '';
-    renderExpenses();
-}
+            const name = document.getElementById('expenseName').value;
+            const amount = parseFloat( document.getElementById('expenseAmount').value );
+            if(!name || !amount) {
+                alert("Fill all expense fields.");
+                return; }
+            const expenses = JSON.parse(
+                localStorage.getItem('ihawan_expenses') || '[]' );
+            expenses.push({ name, amount, date: Date.now() });
+            localStorage.setItem( 'ihawan_expenses', JSON.stringify(expenses) );
+            document.getElementById('expenseName').value = '';
+            document.getElementById('expenseAmount').value = '';
+            renderExpenses();
+        }
         
         let expenseEditMode = false;
-
-function toggleExpenseEdit() {
-
-    expenseEditMode = !expenseEditMode;
-
-    renderExpenses();
-}
-
-function deleteExpense(index) {
-
-    const confirmDelete = confirm(
-        "Delete this expense?"
-    );
-
-    if(!confirmDelete) return;
-
-    let expenses = JSON.parse(
-        localStorage.getItem('ihawan_expenses') || '[]'
-    );
-
-    // TODAY ONLY FILTER
-    const today = new Date();
-
-    const todayExpenses = expenses.filter(e => {
-
-        const d = new Date(e.date);
-
-        return (
-            d.getDate() === today.getDate() &&
-            d.getMonth() === today.getMonth() &&
-            d.getFullYear() === today.getFullYear()
-        );
-
-    });
-
-    const expenseToDelete = todayExpenses[index];
-
-    expenses = expenses.filter(
-        e => e.date !== expenseToDelete.date
-    );
-
-    localStorage.setItem(
-        'ihawan_expenses',
-        JSON.stringify(expenses)
-    );
-
-    renderExpenses();
-}
-
-function renderExpenses() {
-
-    const container = document.getElementById('expenseList');
-
-    const allExpenses = JSON.parse(
-        localStorage.getItem('ihawan_expenses') || '[]'
-    );
-
-    const today = new Date();
-
-    const expenses = allExpenses.filter(e => {
-
-        const d = new Date(e.date);
-
-        return (
-            d.getDate() === today.getDate() &&
-            d.getMonth() === today.getMonth() &&
-            d.getFullYear() === today.getFullYear()
-        );
-
-    });
-
-    if(expenses.length === 0) {
-
-        container.innerHTML = `
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                margin-bottom:10px;
-            ">
-
+        
+        function toggleExpenseEdit() {
+            expenseEditMode = !expenseEditMode;
+            renderExpenses();
+        }
+        
+        function deleteExpense(index) {
+            const confirmDelete = confirm( "Delete this expense?" );
+            if(!confirmDelete)
+                return;
+            let expenses = JSON.parse(
+                localStorage.getItem('ihawan_expenses') || '[]' );
+            // TODAY ONLY FILTER
+            const today = new Date();
+            const todayExpenses = expenses.filter(e => {
+                const d = new Date(e.date);
+                return (
+                    d.getDate() === today.getDate() &&
+                    d.getMonth() === today.getMonth() &&
+                    d.getFullYear() === today.getFullYear()
+                );
+            });
+            const expenseToDelete = todayExpenses[index]; expenses = expenses.filter( e => e.date !== expenseToDelete.date );
+            localStorage.setItem( 'ihawan_expenses', JSON.stringify(expenses) );
+            renderExpenses();
+        }
+        
+        function renderExpenses() {
+            const container = document.getElementById('expenseList');
+            const allExpenses = JSON.parse(
+                localStorage.getItem('ihawan_expenses') || '[]' );
+            const today = new Date();
+            const expenses = allExpenses.filter(e => {
+                const d = new Date(e.date);
+                return (
+                    d.getDate() === today.getDate() &&
+                    d.getMonth() === today.getMonth() &&
+                    d.getFullYear() === today.getFullYear() );
+            });
+            if(expenses.length === 0) {
+                container.innerHTML = `
+                <div style=" display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; ">
                 <p>No expenses yet.</p>
-
                 <button onclick="toggleExpenseEdit()"
-                style="
-                    font-size:11px;
-                    padding:4px 8px;
-                    background:#333;
-                    color:white;
-                    border:none;
-                    cursor:pointer;
-                    border-radius:4px;
-                ">
-                    ${expenseEditMode ? 'Done' : 'Edit'}
-                </button>
-
-            </div>
-        `;
-
-        return;
-    }
-
-    container.innerHTML = `
-
-        <div style="
-            display:flex;
-            justify-content:flex-end;
-            margin-bottom:10px;
-        ">
-
-            <button onclick="toggleExpenseEdit()"
-            style="
-                font-size:11px;
-                padding:4px 8px;
-                background:#333;
-                color:white;
-                border:none;
-                cursor:pointer;
-                border-radius:4px;
-            ">
+                style=" font-size:11px; padding:4px 8px; background:#333; color:white; border:none; cursor:pointer; border-radius:4px; ">
                 ${expenseEditMode ? 'Done' : 'Edit'}
+                </button>
+                </div> `;
+                return;
+            }
+            container.innerHTML = `
+            <div style=" display:flex; justify-content:flex-end; margin-bottom:10px; ">
+            <button onclick="toggleExpenseEdit()"
+            style=" font-size:11px; padding:4px 8px; background:#333; color:white; border:none; cursor:pointer; border-radius:4px; ">
+            ${expenseEditMode ? 'Done' : 'Edit'}
             </button>
-
-        </div>
-
-        ${expenses.reverse().map((e, i) => `
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                padding:10px;
-                border-bottom:1px solid #333;
-            ">
-
-                <div>
-                    <div>${e.name}</div>
-
-                    <div style="
-                        font-size:12px;
-                        opacity:0.6;
-                    ">
-                        ₱${e.amount.toFixed(2)}
-                    </div>
-                </div>
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    gap:10px;
-                ">
-
-                    ${
-                        expenseEditMode
-                        ? `
-                        <button
-                            onclick="deleteExpense(${i})"
-                            style="
-                                font-size:10px;
-                                padding:4px 6px;
-                                background:#ef4444;
-                                color:white;
-                                border:none;
-                                border-radius:4px;
-                                cursor:pointer;
-                            ">
-                            Delete
-                        </button>
-                        `
-                        : ''
-                    }
-
-                </div>
-
             </div>
-
-        `).join('')}
-
-    `;
-}
+            ${expenses.reverse().map((e, i) => `
+            <div style=" display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #333; ">
+            <div>
+            <div>${e.name}</div>
+            <div style=" font-size:12px; opacity:0.6; ">
+            ₱${e.amount.toFixed(2)}
+            </div>
+            </div>
+            <div style=" display:flex; align-items:center; gap:10px; ">
+            ${ expenseEditMode ? `
+            <button onclick="deleteExpense(${i})"
+            style=" font-size:10px; padding:4px 6px; background:#ef4444; color:white; border:none; border-radius:4px; cursor:pointer; ">
+            Delete </button>
+            `
+            : ''
+            }
+            </div>
+            </div> `).join('')}
+            `;
+        }
         
         function printReceipt(order) {
             const receiptWindow = window.open('', '', 'width=400,height=700');
             receiptWindow.document.write(`
-
-    <html>
-    <head>
-        <title>Receipt ${order.id}</title>
-        <style>
+            <html>
+            <head>
+            <title>Receipt ${order.id}</title>
+            <style>
             body{ font-family: monospace; padding:20px; width:300px;color:#000; }
             h2{ text-align:center; margin-bottom:5px; }
             .center{ text-align:center; }
-            .line{
-                border-top:1px dashed #000;
-                 margin:10px 0;
-            }
-
-            .row{
-                display:flex;
-                justify-content:space-between;
-                margin-bottom:5px;
-            }
-
-            .total{
-                font-size:18px;
-                font-weight:bold;
-            }
-
+            .line{ border-top:1px dashed #000; margin:10px 0; }
+            .row{ display:flex; justify-content:space-between; margin-bottom:5px; }
+            .total{ font-size:18px; font-weight:bold; }
             @media print{
-                body{
-                    width:100%;
-                }
+            body{ width:100%; }
             }
-
-        </style>
-
-    </head>
-
-    <body>
-    <h2>'IHAWAN FILIPINO GRILL</h2>
-    <div class="center"> 🔥 Official Receipt 🔥 </div>
-    <div class="line"></div>
-    <div> <strong>Order ID:</strong> ${order.id} </div>
-    <div> <strong>Date:</strong> ${new Date(order.timestamp).toLocaleString()} </div>
-    <div> <strong>Customer:</strong> ${order.customer.name} </div>
-    <div> <strong>Type:</strong> ${order.customer.type} </div>
-    ${ order.customer.tableNumber ? `
-    <div> <strong>Table:</strong> ${order.customer.tableNumber}
-            </div>
+            </style>
+            </head>
+            
+            <body>
+            <h2>'IHAWAN FILIPINO GRILL</h2>
+            <div class="center"> 🔥 Official Receipt 🔥 </div>
+            <div class="line"></div>
+            <div> <strong>Order ID:</strong>
+            ${order.id} </div>
+            <div> <strong>Date:</strong>
+            ${new Date(order.timestamp).toLocaleString()} </div>
+            <div> <strong>Customer:</strong>
+            ${order.customer.name} </div>
+            <div> <strong>Type:</strong>
+            ${order.customer.type} </div>
+            ${ order.customer.tableNumber ? `
+            <div> <strong>Table:</strong>
+            ${order.customer.tableNumber} </div>
             `
             : ''
-        }
-
-        ${
-            order.customer.address
-            ? `
+            }
+            ${ order.customer.address ? `
             <div> <strong>Address:</strong> ${order.customer.address} </div>
             `
             : ''
-        }
-
-        <div class="line"></div>
-
-        ${order.items.map(item => `
-
+            }
+            <div class="line"></div>
+            ${order.items.map(item => `
             <div class="row">
                 <div> ${item.qty}x ${item.name} </div>
                 <div> ₱${item.subtotal.toFixed(2)} </div>
             </div>
-
-        `).join('')}
-
+            `).join('')}
         <div class="line"></div>
         <div class="row total">
             <div>TOTAL</div>
@@ -1179,21 +707,15 @@ function renderExpenses() {
             <strong>Payment:</strong>
             ${order.payment?.method?.toUpperCase() || 'CASH'}
         </div>
-
-        ${
-            order.payment?.reference
-            ? `
-            <div>
-                <strong>Reference:</strong>
-                ${order.payment.reference}
-            </div>
-            `
-            : ''
+        ${ order.payment?.reference ? `
+        <div>
+        <strong>Reference:</strong>
+        ${order.payment.reference}
+        </div>
+        `
+        : ''
         }
-
-        ${
-            order.customer.notes
-            ? `
+        ${ order.customer.notes ? `
             <div style="margin-top:10px;">
                 <strong>Notes:</strong><br>
                 ${order.customer.notes}
@@ -1203,67 +725,65 @@ function renderExpenses() {
         }
         <div class="line"></div>
         <div class="center"> Thank you for dining with us 🔥 </div>
-
         <script>
             window.onload = function(){ window.print(); }
         <\/script>
-
-    </body>
-    </html>
-    `);
-    receiptWindow.document.close();
-}
-
+        </body>
+        </html>
+        `);
+            receiptWindow.document.close();
+        }
         
         function printSalesReport() {
             const monthNames = [
-    "January","February","March","April",
-    "May","June","July","August",
-    "September","October","November","December"
-];
-            const orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
+                "January","February","March","April", "May","June","July","August", "September","October","November","December"
+            ];
+            const orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]' );
             const completedOrders = orders.filter(o => {
                 const d = new Date(o.timestamp);
                 return ( o.status !== 'cancelled' && d.getMonth() === currentMonth && d.getFullYear() === currentYear );
-});
+            });
             const totalSales = completedOrders.reduce( (sum, o) => sum + o.total, 0 );
             const completedOnly = completedOrders.filter( o => o.status === 'completed' );
             const completedSales = completedOnly.reduce( (sum, o) => sum + o.total, 0 );
-            const expenses = JSON.parse( localStorage.getItem('ihawan_expenses') || '[]' );
+            const expenses = JSON.parse(
+                localStorage.getItem('ihawan_expenses') || '[]' );
             const totalExpenses = expenses.reduce( (sum, e) => sum + e.amount, 0 );
             const netProfit = completedSales - totalExpenses;
             const totalOrders = completedOrders.length;
             const reportWindow = window.open( '', '', 'width=900,height=700' );
-
-    reportWindow.document.write(`
-
-    <html>
-    <head>
-    <title>Sales Report</title>
-    <style>
-    body{ font-family:Arial; padding:30px; color:#000; }
-    h1{ margin-bottom:5px; }
-    table{ width:100%; border-collapse:collapse; margin-top:20px; }
-
+            reportWindow.document.write(`
+            <html>
+            <head>
+            <title>Sales Report</title>
+            <style>
+            body{ font-family:Arial; padding:30px; color:#000; }
+            h1{ margin-bottom:5px; }
+            table{ width:100%; border-collapse:collapse; margin-top:20px; }
             th, td{ border:1px solid #ccc; padding:10px; text-align:left; }
             th{ background:#eee; }
             .top{ margin-bottom:20px; }
-    </style>
-    </head>
-    
-    <body>
-    <h1> 🔥 ${monthNames[currentMonth]} ${currentYear} Sales Report </h1>
-
-        <div class="top">
-        <strong>Date:</strong> ${new Date().toLocaleString()} <br><br>
-        <strong>Total Orders:</strong> ${totalOrders} <br>
-        <strong>Monthly Sales:</strong> ₱${totalSales.toFixed(2)} <br>
-        <strong>Today Completed Order:</strong> ₱${completedSales.toFixed(2)} <br>
-        <strong>Total Expenses:</strong> ₱${totalExpenses.toFixed(2)} <br>
-        <strong>Net Profit:</strong> ₱${netProfit.toFixed(2)}
-        </div>
-
-        <table>
+            </style>
+            </head>
+            <body>
+            <h1> 🔥 ${monthNames[currentMonth]} ${currentYear} Sales Report </h1>
+            <div class="top">
+            <strong>Date:</strong>
+            ${new Date().toLocaleString()} <br><br>
+            <strong>Total Orders:</strong>
+            ${totalOrders} <bbr
+            <strong>Monthly Sales:</strong>
+            ₱${totalSales.toFixed(2)} <br>
+            <strong>Today Completed Order:</strong>
+            ₱${completedSales.toFixed(2)} <br>
+            <strong>Total Expenses:</strong>
+            ₱${totalExpenses.toFixed(2)} <br>
+            <strong>Net Profit:</strong>
+            ₱${netProfit.toFixed(2)}
+            </div>
+            
+            <table>
             <tr>
                 <th>Date Ordered</th>
                 <th>Order ID</th>
@@ -1272,7 +792,6 @@ function renderExpenses() {
                 <th>Payment</th>
                 <th>Total</th>
             </tr>
-
             ${completedOrders.map(order => `
             <tr>
             <td>${new Date(order.timestamp).toLocaleString()}</td>
@@ -1291,53 +810,35 @@ function renderExpenses() {
             <td>${order.payment?.method || 'cash'}</td>
             <td>₱${order.total.toFixed(2)}</td>
             </tr>
-
             `).join('')}
-        </table>
+            </table>
 
-            <h2 style="margin-top:40px;">
-    🔥 Expense Report
-</h2>
-
-<table>
-
-    <tr>
-        <th>Expense Name</th>
-        <th>Date</th>
-        <th>Amount</th>
-    </tr>
-
-    ${expenses.map(expense => `
-
-        <tr>
-
-            <td>
-                ${expense.name}
-            </td>
-
-            <td>
-                ${new Date(expense.date)
-                    .toLocaleString()}
-            </td>
-
-            <td>
-                ₱${expense.amount.toFixed(2)}
-            </td>
-
-        </tr>
-
-    `).join('')}
-
-</table>
-        <script>
-            window.onload = () => window.print();
-        <\/script>
-
-    </body>
-    </html>
-    `);
-    reportWindow.document.close();
-}
+            <h2 style="margin-top:40px;"> 🔥 Expense Report </h2>
+            
+            <table>
+            <tr>
+            <th>Expense Name</th>
+            <th>Date</th>
+            <th>Amount</th>
+            </tr>
+            
+            ${expenses.map(expense => `
+            
+            <tr>
+            <td> ${expense.name} </td>
+            <td> ${new Date(expense.date)
+                 .toLocaleString()} </td>
+            <td> ₱${expense.amount.toFixed(2)} </td>
+            </tr>
+            
+            `).join('')}
+            </table>
+            <script> window.onload = () => window.print(); <\/script>
+            </body>
+            </html>
+            `);
+            reportWindow.document.close();
+        }
 
         init();
     </script>
