@@ -365,13 +365,8 @@ style="margin-top:20px;"></div>
         }
 
         function startDashboard() {
-            db.ref('orders').on('value', snapshot => {
-    const data = snapshot.val() || {};
-    const orders = Object.values(data);
-
-    renderOrdersFromFirebase(orders);
-});
-            
+            renderOrders();
+            setInterval(renderOrders, 5000);
         }
 
         function setTab(tab, btn) {
@@ -381,13 +376,8 @@ style="margin-top:20px;"></div>
             renderOrders();
         }
 
-        renderOrdersFromFirebase(orders) {
-            db.ref('orders').once('value', snapshot => {
-    const ordersObj = snapshot.val() || {};
-    const orders = Object.values(ordersObj);
-    
-    renderOrdersFromFirebase(orders);
-});
+        function renderOrders() {
+            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]').reverse();
             const grid = document.getElementById('orderGrid');
             grid.innerHTML = '';
 
@@ -584,12 +574,7 @@ const filtered = orders.filter(o => {
         }
 
         function updateStatus(id, newStatus) {
-            db.ref('orders').once('value', snapshot => {
-    const ordersObj = snapshot.val() || {};
-    const orders = Object.values(ordersObj);
-    
-    renderOrdersFromFirebase(orders);
-});
+            const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
             const idx = orders.findIndex(o => o.id === id);
             if(idx !== -1) {
                 orders[idx].status = newStatus;
@@ -597,19 +582,11 @@ const filtered = orders.filter(o => {
                 renderOrders();
             }
         }
-        function saveOrder(order) {
-    db.ref('orders/' + order.id).set(order);
-}
 
             function cancelOrder(id) {
     if(!confirm("Are you sure you want to cancel this order?")) return;
 
-    db.ref('orders').once('value', snapshot => {
-    const ordersObj = snapshot.val() || {};
-    const orders = Object.values(ordersObj);
-    
-    renderOrdersFromFirebase(orders);
-});
+    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
     const idx = orders.findIndex(o => o.id === id);
        if(idx !== -1) {
     orders[idx].status = 'cancelled';
@@ -688,12 +665,7 @@ function changeMonth(dir) {
 
 function renderRevenueCalendar() {
 
-    db.ref('orders').once('value', snapshot => {
-    const ordersObj = snapshot.val() || {};
-    const orders = Object.values(ordersObj);
-    
-    renderOrdersFromFirebase(orders);
-});
+    const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
 
     const grid = document.getElementById('calendarGrid');
     const chart = document.getElementById('revenueChart');
@@ -892,9 +864,10 @@ function isSameWeek(d1, d2) {
 
     if(!confirmTwo) return;
 
-    let orders = JSON.parse(
-        localStorage.getItem('ihawan_orders') || '[]'
-    );
+    let orders = db.ref('orders').on('value', snapshot => {
+    const orders = Object.values(snapshot.val() || {});
+    renderOrdersFromFirebase(orders);
+});
 
     orders = orders.filter(
         o => o.status !== 'completed'
@@ -918,10 +891,7 @@ function clearCancelledOrders() {
     const confirmTwo = confirm( "This cannot be undone. Continue?" );
 
     if(!confirmTwo) return;
-    let orders = db.ref('orders').on('value', snapshot => {
-    const orders = Object.values(snapshot.val() || {});
-    renderOrdersFromFirebase(orders);
-});
+    let orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
 
     orders = orders.filter( o => o.status !== 'cancelled' );
     localStorage.setItem( 'ihawan_orders', JSON.stringify(orders));
@@ -1251,12 +1221,7 @@ function renderExpenses() {
     "May","June","July","August",
     "September","October","November","December"
 ];
-            db.ref('orders').once('value', snapshot => {
-    const ordersObj = snapshot.val() || {};
-    const orders = Object.values(ordersObj);
-
-    renderOrdersFromFirebase(orders);
-});
+            const orders = JSON.parse( localStorage.getItem('ihawan_orders') || '[]' );
             const completedOrders = orders.filter(o => {
                 const d = new Date(o.timestamp);
                 return ( o.status !== 'cancelled' && d.getMonth() === currentMonth && d.getFullYear() === currentYear );
@@ -1372,27 +1337,9 @@ function renderExpenses() {
     </html>
     `);
     reportWindow.document.close();
-        }
+}
+
         init();
     </script>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyASdZW2OrgbDzbpKoh5Rdi_GaXKFXdmahA",
-    authDomain: "ihawan-system.firebaseapp.com",
-    projectId: "ihawan-system",
-    storageBucket: "ihawan-system.firebasestorage.app",
-    messagingSenderId: "160193868384",
-    appId: "1:160193868384:web:185a100b05e165c1d00905"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
 </body>
 </html>
