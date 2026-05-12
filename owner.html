@@ -529,10 +529,8 @@
             const confirmTwo = confirm( "This cannot be undone. Continue?" );
             if(!confirmTwo)
                 return;
-            let orders = db.ref('orders').on('value', snapshot => {
-                const orders = Object.values(snapshot.val() || {});
-                renderOrdersFromFirebase(orders);
-            });
+            let orders = JSON.parse(
+                localStorage.getItem('ihawan_orders') || '[]' );
             orders = orders.filter( o => o.status !== 'completed' );
             localStorage.setItem( 'ihawan_orders', JSON.stringify(orders) );
             renderOrders();
@@ -754,6 +752,7 @@
             const totalOrders = completedOrders.length;
             const reportWindow = window.open( '', '', 'width=900,height=700' );
             reportWindow.document.write(`
+            
             <html>
             <head>
             <title>Sales Report</title>
@@ -772,7 +771,7 @@
             <strong>Date:</strong>
             ${new Date().toLocaleString()} <br><br>
             <strong>Total Orders:</strong>
-            ${totalOrders} <bbr
+            ${totalOrders} <br>
             <strong>Monthly Sales:</strong>
             ₱${totalSales.toFixed(2)} <br>
             <strong>Today Completed Order:</strong>
