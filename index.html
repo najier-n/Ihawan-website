@@ -14,13 +14,11 @@
         --muted: rgba(253,243,227,0.55);  
         --black: #0D0803;  
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);  
-    }  
-
+        }
     * { margin: 0; padding: 0; box-sizing: border-box; }  
     body { background: var(--char); color: var(--cream); font-family: 'Lato', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }  
     h1, h2, h3, .h-font { font-family: 'Playfair Display', serif; }  
     .label, .btn, .nav-link { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.15em; }  
-
     /* Navigation */  
     nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); backdrop-filter: blur(10px); }  
     nav.scrolled { background: rgba(13, 8, 3, 0.95); padding: 12px 5%; border-bottom: 1px solid var(--fire); }  
@@ -28,7 +26,6 @@
     .nav-links { display: flex; gap: 2rem; }  
     .nav-links a { color: var(--cream); text-decoration: none; transition: 0.3s; }  
     .nav-links a:hover { color: var(--fire); }  
-
     /* Hero Section */  
     #hero { height: 100vh; background: radial-gradient(circle, #3d2612 0%, #1a1108 100%); display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 20px; }  
     .hero-content { z-index: 5; max-width: 900px; }  
@@ -36,18 +33,15 @@
     #hero h1 { font-size: clamp(3rem, 10vw, 7rem); margin-bottom: 0.5rem; line-height: 1; }  
     .hero-sub { font-size: 1.5rem; font-style: italic; margin-bottom: 2rem; opacity: 0.8; }  
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }  
-      
     /* Particles */  
     .ember { position: absolute; background: var(--fire); border-radius: 50%; pointer-events: none; opacity: 0.6; filter: blur(1px); animation: floatUp var(--d) linear infinite; }  
     @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 50% { opacity: 0.7; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }  
-
     /* Order Section */  
     #menu { padding: 80px 5%; display: grid; grid-template-columns: 1fr 350px; gap: 40px; }  
     .menu-container { width: 100%; }  
     .category-tabs { position: sticky; top: 80px; z-index: 100; background: var(--char); display: flex; gap: 10px; overflow-x: auto; padding: 15px 0; border-bottom: 1px solid var(--smoke); margin-bottom: 30px; }  
     .tab-btn { background: none; border: 1px solid var(--smoke); color: var(--muted); padding: 8px 18px; cursor: pointer; transition: 0.3s; white-space: nowrap; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; }  
     .tab-btn.active { background: var(--fire); color: var(--char); border-color: var(--fire); }  
-
     .item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }  
     .menu-card { background: var(--smoke); padding: 25px; border-radius: 4px; border: 1px solid transparent; transition: var(--transition); position: relative; }  
     .menu-card:hover { border-color: var(--fire); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }  
@@ -56,7 +50,6 @@
     .item-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 15px; min-height: 2.7em; }  
     .item-price { color: var(--fire); font-size: 1.4rem; display: block; margin-bottom: 15px; }  
     .bestseller-badge { position: absolute; top: 15px; right: 15px; background: var(--fire); color: var(--char); font-family: 'Bebas Neue'; font-size: 0.7rem; padding: 4px 8px; border-radius: 2px; }  
-
     /* Cart */  
     .cart-sticky { position: sticky; top: auto; background: var(--smoke); padding: 25px; border-radius: 8px; border: 1px solid var(--fire); align-self: start; }  
     .cart-title { font-size: 2rem; margin-bottom: 20px; border-bottom: 1px solid var(--muted); padding-bottom: 10px; }  
@@ -66,7 +59,6 @@
     .cart-totals { border-top: 1px solid var(--muted); padding-top: 15px; }  
     .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; }  
     .grand-total { font-size: 1.5rem; color: var(--fire); font-family: 'Bebas Neue'; margin-top: 10px; }  
-
     /* Buttons */  
     .btn { padding: 12px 24px; border: none; cursor: pointer; transition: var(--transition); text-decoration: none; display: inline-block; text-align: center; }  
     .btn-fire { background: var(--fire); color: var(--char); }  
@@ -75,7 +67,6 @@
     .btn-outline:hover { background: var(--cream); color: var(--char); }  
     .qty-controls { display: flex; align-items: center; gap: 15px; background: var(--char); padding: 5px 15px; border-radius: 4px; border: 1px solid var(--fire); width: fit-content; }  
     .qty-btn { background: none; border: none; color: var(--fire); font-size: 1.2rem; cursor: pointer; font-weight: bold; }  
-
     /* Modal & Status */  
     .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; padding: 40px 20px; overflow-y: auto; }  
     .modal-content { max-width: 600px; margin: 0 auto; background: var(--smoke); padding: 40px; border: 1px solid var(--fire); }  
@@ -86,254 +77,65 @@
     .step.active .step-icon { background: var(--fire); color: var(--char); box-shadow: 0 0 15px var(--fire); }  
     .step.active .step-label { color: var(--fire); font-weight: bold; }  
     .step-label { font-size: 0.7rem; font-family: 'Bebas Neue'; color: var(--muted); }  
-
     /* Forms */  
     .form-group { margin-bottom: 20px; }  
     .form-group label { display: block; font-family: 'Bebas Neue'; margin-bottom: 8px; color: var(--fire); }  
     input, select, textarea { width: 100%; padding: 12px; background: var(--char); border: 1px solid var(--smoke); color: var(--cream); font-family: 'Lato'; transition: 0.3s; }  
     input:focus { border-color: var(--fire); box-shadow: 0 0 10px rgba(245, 168, 0, 0.2); }  
-    .order-type-toggle {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.toggle-btn {
-    flex: 1;
-    padding: 14px 10px;
-    background: var(--char);
-    border: 2px solid var(--smoke);
-    color: var(--cream);
-    cursor: pointer;
-    font-family: 'Bebas Neue';
-    font-size: 0.95rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    border-radius: 12px;
-    transition: 0.3s;
-}
-
-/* ICON */
-.toggle-btn img {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-    transition: 0.3s;
-}
-
-/* HOVER */
-.toggle-btn:hover {
-    border-color: var(--fire);
-    transform: translateY(-2px);
-}
-
-/* ACTIVE / SELECTED */
-.toggle-btn.active {
-    background: linear-gradient(135deg, #F5A800, #ffcc4d);
-    color: var(--char);
-    border-color: #ffd76a;
-    box-shadow: 0 0 18px rgba(245,168,0,0.45);
-    transform: scale(1.03);
-}
-
-/* ICON EFFECT WHEN ACTIVE */
-.toggle-btn.active img {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
-}
-        
+    .order-type-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
+    .toggle-btn { flex: 1; padding: 14px 10px; background: var(--char); border: 2px solid var(--smoke); color: var(--cream); cursor: pointer; font-family: 'Bebas Neue'; font-size: 0.95rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; transition: 0.3s; }
+    /* ICON */
+    .toggle-btn img { width: 38px; height: 38px; object-fit: contain; transition: 0.3s; }
+    /* HOVER */
+    .toggle-btn:hover { border-color: var(--fire); transform: translateY(-2px); }
+    /* ACTIVE / SELECTED */
+    .toggle-btn.active { background: linear-gradient(135deg, #F5A800, #ffcc4d); color: var(--char); border-color: #ffd76a; box-shadow: 0 0 18px rgba(245,168,0,0.45); transform: scale(1.03); }
+    /* ICON EFFECT WHEN ACTIVE */
+    .toggle-btn.active img { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)); }
     /* Mobile Adjustments */  
     @media (max-width: 768px) {
-
-html, body {
-    overflow-x: hidden !important;
-    width: 100%;
-}
-
-/* MAIN LAYOUT */
-#menu {
-    display: block;
-    padding: 70px 10px 140px;
-    width: 100%;
-    overflow-x: hidden;
-}
-
-/* MENU GRID */
-.item-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 10px;
-    width: 100%;
-}
-
-/* CARDS */
-.menu-card {
-    width: 100%;
-    min-width: 0;
-    padding: 12px;
-    overflow: hidden;
-}
-
-/* TEXT */
-.food-emoji {
-    font-size: 1.8rem;
-}
-
-.item-name {
-    font-size: 0.95rem;
-    line-height: 1.2;
-}
-
-.item-desc {
-    font-size: 0.7rem;
-    min-height: auto;
-}
-
-.item-price {
-    font-size: 1rem;
-}
-
-/* BUTTONS */
-.btn {
-    width: 100%;
-    font-size: 0.75rem;
-    padding: 10px;
-}
-
-/* CATEGORY TABS */
-.category-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 10px;
-    padding-bottom: 10px;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.category-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.tab-btn {
-    flex: 0 0 auto;
-    min-width: 100px;
-    padding: 10px;
-    font-size: 0.7rem;
-}
-
-.tab-icon {
-    width: 26px;
-    height: 26px;
-}
-
-/* NAV */
-nav {
-    padding: 10px;
-}
-
-.logo {
-    font-size: 1.1rem;
-}
-
-.nav-links {
-    display: none;
-}
-
-/* HERO */
-#hero {
-    padding: 20px 10px;
-}
-
-.hero-logo {
-    max-width: 95%;
-}
-
-#hero h1 {
-    font-size: 2.2rem;
-}
-
-.hero-sub {
-    font-size: 0.9rem;
-}
-
-/* FIXED CART */
-.cart-sticky {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 15px !important;
-    left: 12px;
-    right: auto;
-
-    width: auto;
-    min-width: 220px;
-    max-width: 260px;
-
-    padding: 12px;
-
-    border-radius: 14px;
-
-    background: rgba(26,17,8,0.96);
-    backdrop-filter: blur(10px);
-
-    z-index: 999;
-
-    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-
-    display: none;
-}
-        .cart-title, .cart-items {
-    display: none;
-}
-        .mobile-cart-bar {
-    display: flex !important;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-}
-
-.mobile-cart-bar button {
-    width: 100%;
-}
-
-/* HIDE LARGE CONTENT */
-.cart-title,
-.cart-items {
-    display: none;
-}
-
-/* MOBILE BAR */
-.mobile-cart-bar {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-/* RESERVATION */
-#reservations > div {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-}
-
-/* POPUPS */
-.bbq-popup-box {
-    width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 20px;
-}
-
-}
-
+    html, body { overflow-x: hidden !important; width: 100%; }
+    /* MAIN LAYOUT */
+    #menu { display: block; padding: 70px 10px 140px; width: 100%; overflow-x: hidden; }
+    /* MENU GRID */
+    .item-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; width: 100%; }
+    /* CARDS */
+    .menu-card { width: 100%; min-width: 0; padding: 12px; overflow: hidden; }
+    /* TEXT */
+    .food-emoji { font-size: 1.8rem; }
+    .item-name { font-size: 0.95rem; line-height: 1.2; }
+    .item-desc { font-size: 0.7rem; min-height: auto; }
+    .item-price { font-size: 1rem; }
+    /* BUTTONS */
+    .btn { width: 100%; font-size: 0.75rem; padding: 10px; }
+    /* CATEGORY TABS */
+    .category-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; gap: 10px; padding-bottom: 10px; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { flex: 0 0 auto; min-width: 100px; padding: 10px; font-size: 0.7rem; }
+    .tab-icon { width: 26px; height: 26px; }
+    /* NAV */
+    nav { padding: 10px; }
+    .logo { font-size: 1.1rem; }
+    .nav-links { display: none; }
+    /* HERO */
+    #hero { padding: 20px 10px; }
+    .hero-logo { max-width: 95%; }
+    #hero h1 { font-size: 2.2rem; }
+    .hero-sub { font-size: 0.9rem; }
+    /* FIXED CART */
+    .cart-sticky { position: fixed !important; top: auto !important; bottom: 15px !important; left: 12px; right: auto; width: auto; min-width: 220px; max-width: 260px; padding: 12px; border-radius: 14px; background: rgba(26,17,8,0.96); backdrop-filter: blur(10px); z-index: 999; box-shadow: 0 8px 30px rgba(0,0,0,0.45); display: none; }
+    .cart-title, .cart-items { display: none; }
+    .mobile-cart-bar { display: flex !important; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .mobile-cart-bar button { width: 100%; }
+    /* HIDE LARGE CONTENT */
+    .cart-title, .cart-items { display: none; }
+    /* MOBILE BAR */
+    .mobile-cart-bar { display: flex !important; justify-content: space-between; align-items: center; gap: 10px; }
+    /* RESERVATION */
+    #reservations > div { grid-template-columns: 1fr !important; gap: 40px !important; }
+    /* POPUPS */
+    .bbq-popup-box { width: 95%; max-height: 90vh; overflow-y: auto; padding: 20px; }
+    }
     .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }  
     .reveal.active { opacity: 1; transform: translateY(0); }  
     .tab-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-width: 110px; padding: 12px 16px; border-radius: 14px; background: rgba(255,255,255,0.03); }  
@@ -344,85 +146,37 @@ nav {
     @keyframes logoFloat {  
         0% { transform: translateY(0px); }  
         50% { transform: translateY(-6px); }  
-        100% { transform: translateY(0px); }  }
-
-        /* BBQ Popup */
-.bbq-popup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 5000;
-}
-
-.bbq-popup-box {
-    background: var(--smoke);
-    border: 2px solid var(--fire);
-    width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
-    padding: 25px;
-    animation: popupShow 0.3s ease;
-}
-
-.bbq-popup-box h2 {
-    margin-bottom: 20px;
-    color: var(--fire);
-    text-align: center;
-}
-
-.bbq-option {
-    background: var(--char);
-    border: 1px solid var(--fire);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
-}
-
-.bbq-option h3 {
-    margin-bottom: 10px;
-}
-
-.popup-btns {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.popup-btns button {
-    flex: 1;
-}
-
+        100% { transform: translateY(0px); }
+    }
+    /* BBQ Popup */
+    .bbq-popup { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 5000; }
+    .bbq-popup-box { background: var(--smoke); border: 2px solid var(--fire); width: 90%; max-width: 500px; border-radius: 12px; padding: 25px; animation: popupShow 0.3s ease; }
+    .bbq-popup-box h2 { margin-bottom: 20px; color: var(--fire); text-align: center; }
+    .bbq-option { background: var(--char); border: 1px solid var(--fire); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .bbq-option h3 { margin-bottom: 10px; }
+    .popup-btns { display: flex; gap: 10px; margin-top: 15px; }
+    .popup-btns button { flex: 1; }
 @keyframes popupShow {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 </style>
 
 </head>  
 <body> 
     <nav id="nav">  
-    <a href="#hero" class="logo">'Ihawan Filipino Grill</a>  
+    <a href="#hero" class="logo">Ihawan Filipino Grill</a>  
     <div class="nav-links">  
         <a href="#hero">Home</a>  
         <a href="#menu">Menu</a>  
         <a href="#story">Our Story</a>  
     </div>  
     <a href="how-to-order.html" class="btn btn-fire label">How to Order</a>  
-</nav>  
-
+    </nav>
 <section id="hero">  
     <div class="hero-content">  
         <span class="hero-kicker label">✦ Authentic Filipino Grill · Est. Since Day One ✦</span>  
-        <img src="images/ihawan.png" alt="'Ihawan Filipino Grill" class="hero-logo">  
+        <img src="images/ihawan.png" alt="Ihawan Filipino Grill" class="hero-logo">  
         <p class="hero-sub">Where fire meets flavor — straight from the grill.</p>  
         <div class="hero-btns">  
             <a href="#menu" class="btn btn-fire label">Menu</a>  
@@ -430,8 +184,7 @@ nav {
         </div>  
         <p class="label" style="margin-top: 2rem; font-size: 0.8rem; color: var(--muted);">★★★★★ Rated 4.9 · 200+ Happy Customers</p>  
     </div>  
-</section>  
-
+</section>
 <section id="menu">  
     <div class="menu-container">  
         <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Our Menu</h2>  
@@ -448,8 +201,7 @@ nav {
                 <img src="images/Halo-Halo.png" class="tab-icon"> Desserts</button>  
         </div>  
         <div class="item-grid" id="menuGrid"></div>  
-    </div>  
-
+    </div>
     <aside class="cart-sticky" id="cart">  
         <div class="cart-title h-font">Your Order</div>  
         <div id="cartItems" class="cart-items"></div>  
@@ -465,8 +217,7 @@ nav {
             <button class="btn btn-fire btn-sm label" onclick="toggleMobileCart()">View Order</button>  
         </div>  
     </aside>  
-</section>  
-
+</section>
 <section id="story" class="reveal" style="padding: 100px 5%; background: var(--black);">  
     <div style="max-width: 800px; margin: 0 auto; text-align: center;">  
         <h2 class="h-font" style="font-size: 3rem; margin-bottom: 20px;">Born from the Grill, Made with Love</h2>  
@@ -479,8 +230,7 @@ nav {
             <div class="label" style="color: var(--fire)">❤️ Family-Owned</div>  
         </div>  
     </div>  
-</section>  
-
+</section>
 <section id="reservations" class="reveal" style="padding: 100px 5%;">  
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px;">  
         <div>  
@@ -506,44 +256,29 @@ nav {
             </div>  
         </div>  
     </div>  
-</section>  
-
+</section>
 <!-- Checkout Modal -->  
 <div id="checkoutModal" class="modal">  
     <div class="modal-content" id="modalContent">  
         <h2 class="h-font" style="font-size: 2.5rem; margin-bottom: 20px;">Checkout</h2>  
         <div class="order-type-toggle">
-
     <button class="toggle-btn active"
         onclick="setOrderType('dine-in', this)">
-
-        <img src="images/dinein.png"
-             class="order-icon">
-
+        <img src="images/dinein.png" class="order-icon">
         <span>Dine In</span>
-
     </button>
-
     <button class="toggle-btn"
         onclick="setOrderType('takeout', this)">
-
         <img src="images/takeout.png"
              class="order-icon">
-
         <span>Takeout</span>
-
     </button>
-
     <button class="toggle-btn"
         onclick="setOrderType('delivery', this)">
-
         <img src="images/delivery.png"
              class="order-icon">
-
         <span>Delivery</span>
-
     </button>
-
         </div>
         <form id="checkoutForm" onsubmit="submitOrder(event)">  
             <div class="form-group"><label>Full Name</label><input type="text" id="custName" required></div>  
@@ -553,91 +288,53 @@ nav {
                 <label>Street Address</label><input type="text" id="custAddress">  
             </div>  
             <!-- TABLE NUMBER -->
-<div id="tableField"
-     style="display:block;"
-     class="form-group">
-
-    <label>Table Number (Optional)</label>
-
-    <input type="text"
-           id="tableNumber"
-           placeholder="e.g. Table 5">
-
-</div>
+            <div id="tableField" style="display:block;" class="form-group">
+            <label>Table Number (Optional)</label>
+                <input type="text" id="tableNumber" placeholder="e.g. Table 5">
+            </div>
             <div class="form-group"><label>Special Instructions</label><textarea id="custNotes"></textarea></div> 
             <div id="checkoutSummary" style="margin-bottom: 20px; border-top: 1px solid var(--smoke); padding-top: 20px;"></div>
             <!-- PAYMENT METHOD -->
-<div class="form-group">
-    <label>Payment Method</label>
-
-    <select id="paymentMethod" onchange="handlePaymentMethod()" required>
-        <option value="">Select Payment</option>
-        <option value="cash">CASH</option>
-        <option value="gcash">GCash</option>
-    </select>
-</div>
-
-<!-- GCASH AREA -->
-<div id="gcashBox" style="
-    display:none;
-    background: var(--char);
-    border:1px solid var(--fire);
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:20px;
-">
-
-    <h3 style="color:var(--fire); margin-bottom:15px;">
-        Scan QR to Pay
-    </h3>
-
-    <!-- YOUR QR IMAGE -->
-    <img src="images/gcash-qr.jpg"
-         style="
-            width:100%;
-            max-width:280px;
-            display:block;
-            margin:0 auto 20px;
-            border-radius:10px;
-         ">
-
-    <div class="label"
-         style="
-            text-align:center;
-            font-size:1.2rem;
-            margin-bottom:20px;
-         ">
-         Total:
-         <span id="gcashTotal">₱0.00</span>
-    </div>
-
-    <button type="button"
-        class="btn btn-fire label"
-        style="width:100%;"
-        onclick="showReferenceInput()">
-
-        Done
-
-    </button>
-
-    <!-- REFERENCE INPUT -->
-    <div id="referenceBox" style="display:none; margin-top:20px;">
-
-        <label>Reference Number</label>
-
-        <input type="text"
-               id="referenceNumber"
-               placeholder="Enter GCash Reference Number">
-
-    </div>
-
-</div>  
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="paymentMethod" onchange="handlePaymentMethod()" required>
+                    <option value="">Select Payment</option>
+                    <option value="cash">CASH</option>
+                    <option value="gcash">GCash</option>
+                </select>
+            </div>
+            <!-- GCASH AREA -->
+            <div id="gcashBox" style=" display:none; background: var(--char); border:1px solid var(--fire); padding:20px; border-radius:10px; margin-bottom:20px; ">
+                <h3 style="color:var(--fire); margin-bottom:15px;">
+                    Scan QR to Pay
+                </h3>
+                <!-- YOUR QR IMAGE -->
+                <img src="images/gcash-qr.jpg"
+                    style=" width:100%; max-width:280px; display:block; margin:0 auto 20px; border-radius:10px ">
+                <div class="label"
+                    style=" text-align:center; font-size:1.2rem; margin-bottom:20px; ">
+                    Total:
+                    <span id="gcashTotal">₱0.00</span>
+                </div>
+                <button type="button"
+                    class="btn btn-fire label"
+                    style="width:100%;"
+                    onclick="showReferenceInput()">
+                    Done
+                </button>
+                <!-- REFERENCE INPUT -->
+                <div id="referenceBox" style="display:none; margin-top:20px;">
+                    <label>Reference Number</label>
+                    <input type="text"
+                        id="referenceNumber"
+                        placeholder= "Enter Gcash Reference Number">
+                </div>
+            </div>
             <button type="submit" class="btn btn-fire label" style="width:100%; font-size: 1.2rem;">Confirm Order 🔥</button>  
             <button type="button" class="btn btn-outline label" style="width:100%; margin-top: 10px;" onclick="closeModal()">Cancel</button>  
-        </form>  
+        </form>
     </div>  
-</div>  
-
+</div>
 <!-- Status Section -->  
 <section id="statusTrack" style="padding: 60px 5%; border-top: 1px solid var(--smoke); background: #111;">  
     <div style="max-width: 600px; margin: 0 auto; text-align: center;">  
@@ -648,14 +345,13 @@ nav {
         </div>  
     </div>  
 </section>  
-
 <footer style="padding: 40px 5%; text-align: center; background: var(--black); border-top: 1px solid var(--fire);">  
-    <div class="logo" style="margin-bottom: 20px;">'Ihawan</div>  
+    <div class="logo" style="margin-bottom: 20px;">Ihawan</div>  
     <p style="color: var(--muted); margin-bottom: 20px;">Follow the smoke on Instagram · Facebook · TikTok</p>  
-    <p style="font-size: 0.8rem; color: var(--muted);">© 2026 'Ihawan Filipino Grill · Made with 🔥</p>  
+    <p style="font-size: 0.8rem; color: var(--muted);">© 2026 Ihawan Filipino Grill · Made with 🔥</p>  
 </footer>  
 
-<script>  
+<script>
     // DATA  
     const menuData = [  
         { id: 1, cat: 'Grill Specials', name: 'Chicken BBQ Skewers', price: 19, desc: 'Overnight marinated in soy, calamansi & banana ketchup. Charcoal-grilled.', emoji: '🍢', best: true },  
@@ -683,26 +379,20 @@ nav {
 
     let cart = [];  
     let orderType = 'dine-in';  
-    let activeOrder = null;  
-
+    let activeOrder = null;
     // INITIALIZE  
     window.addEventListener('scroll', () => {  
         const nav = document.getElementById('nav');  
-        window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');  
-          
-        document.querySelectorAll('.reveal').forEach(el => {  
-            if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');  
+        window.scrollY > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
+        document.querySelectorAll('.reveal').forEach(el => {
+            if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
         });  
     });  
 
     function init() {
-
     document.getElementById('cart').style.display = 'none';
-
     filterMenu('Grill Specials', document.querySelector('.tab-btn'));
-
     createParticles();
-
     startPolling();
     }
 
@@ -723,45 +413,34 @@ nav {
 
     // MENU LOGIC  
     function filterMenu(cat, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const grid = document.getElementById('menuGrid');
-    grid.innerHTML = '';
-
-    menuData.filter(i => i.cat === cat).forEach(item => {
-
-        const cartItem = cart.find(ci => ci.id === item.id);
-
-        const card = document.createElement('div');
-        card.className = 'menu-card';
-
-        // SPECIAL FUNCTION FOR CHICKEN BBQ
-        let controls = '';
-
-        if(item.name === 'Chicken BBQ Skewers') {
-
-    controls = `
-        <button class="btn btn-fire label"
-            style="width:100%"
-            onclick="openBBQPopup()">
-            Choose Order 🔥
-        </button>
-    `;
-
-} else if(item.name === 'Isaw (Grilled Intestine)') {
-
-    controls = `
-        <button class="btn btn-fire label"
-            style="width:100%"
-            onclick="openIsawPopup()">
-            Choose Order 🔥
-        </button>
-    `;
-
-} else {
-
-            controls = `
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const grid = document.getElementById('menuGrid');
+        grid.innerHTML = '';
+        menuData.filter(i => i.cat === cat).forEach(item => {
+            const cartItem = cart.find(ci => ci.id === item.id);
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+            // SPECIAL FUNCTION FOR CHICKEN BBQ
+            let controls = '';
+            if(item.name === 'Chicken BBQ Skewers') {
+                controls = `
+                <button class="btn btn-fire label"
+                style="width:100%"
+                onclick="openBBQPopup()">
+                Choose Order 🔥
+                </button>
+                `;
+            } else if(item.name === 'Isaw (Grilled Intestine)') {
+                controls = `
+                <button class="btn btn-fire label"
+                style="width:100%"
+                onclick="openIsawPopup()">
+                Choose Order 🔥
+                </button>
+                `;
+            } else {
+                controls = `
                 <div id="ctrl-${item.id}">
                     ${
                         cartItem
@@ -773,21 +452,22 @@ nav {
                         </button>`
                     }
                 </div>
-            `;
-        }
-
-        card.innerHTML = `
-            ${item.best ? '<span class="bestseller-badge">🔥 Bestseller</span>' : ''}
-            <span class="food-emoji">${item.emoji}</span>
-            <h3 class="item-name">${item.name}</h3>
-            <p class="item-desc">${item.desc}</p>
-            <span class="item-price">₱${item.price.toFixed(2)}</span>
-            ${controls}
-        `;
-
-        grid.appendChild(card);
-    });
-                }
+                `;
+            }
+            card.innerHTML = `
+            ${item.best ? '
+              <span class="bestseller-badge">
+              🔥 Bestseller</span>
+              ' : ''}
+              <span class="food-emoji">${item.emoji}</span>
+              <h3 class="item-name">${item.name}</h3>
+              <p class="item-desc">${item.desc}</p>
+              <span class="item-price">₱${item.price.toFixed(2)}</span>
+              ${controls}
+              `;
+            grid.appendChild(card);
+        });
+    }
 
     function renderQty(id, qty) {  
         return `<div class="qty-controls">  
@@ -799,48 +479,29 @@ nav {
 
     // CART LOGIC  
     function addToCart(id) {
-
-    const existing = cart.find(i => i.id === id);
-
-    if(existing) {
-
-        existing.qty += 1;
-
-    } else {
-
+        const existing = cart.find(i => i.id === id);
+        if(existing) {
+            existing.qty += 1;
+        } else {
         const item = menuData.find(i => i.id === id);
-
-        cart.push({
-            ...item,
-            qty: 1
-        });
-    }
-
-    updateCart();
-
-    const cartItem = cart.find(i => i.id === id);
-
-    const ctrl = document.getElementById(`ctrl-${id}`);
-
-    if(ctrl) {
+            cart.push({ ...item, qty: 1 });
+        }
+        updateCart();
+        const cartItem = cart.find(i => i.id === id);
+        const ctrl = document.getElementById(`ctrl-${id}`);
+        if(ctrl) {
         ctrl.innerHTML = renderQty(id, cartItem.qty);
-    }
+        }
     }
 
     function updateQty(id, delta) {
-
-    const index = cart.findIndex(i => i.id === id);
-
-    if(index === -1) return;
-
-    cart[index].qty += delta;
-
-    const ctrl = document.getElementById(`ctrl-${id}`);
-
-    if(cart[index].qty <= 0) {
-
-        cart.splice(index, 1);
-
+        const index = cart.findIndex(i => i.id === id);
+        if(index === -1)
+            return;
+        cart[index].qty += delta;
+        const ctrl = document.getElementById(`ctrl-${id}`);
+        if(cart[index].qty <= 0) {
+            cart.splice(index, 1);
         if(ctrl) {
             ctrl.innerHTML = `
                 <button class="btn btn-fire label"
@@ -850,79 +511,58 @@ nav {
                 </button>
             `;
         }
-
-    } else {
-
+        } else {
         if(ctrl) {
             ctrl.innerHTML = renderQty(id, cart[index].qty);
         }
-    }
-
-    updateCart();
+        }
+        updateCart();
     }
 
     function updateCart() {
-
-    const list = document.getElementById('cartItems');
-
-    list.innerHTML = cart.length
+        const list = document.getElementById('cartItems');
+        list.innerHTML = cart.length
         ? ''
-        : '<div class="cart-empty">Your cart is empty.</div>';
-
-    let sub = 0;
-
-    cart.forEach(item => {
-
-        const total = item.price * item.qty;
-
-        sub += total;
-
-        list.innerHTML += `
+        : '
+            <div class="cart-empty">Your cart is empty.</div>';
+        let sub = 0;
+        cart.forEach(item => {
+            const total = item.price * item.qty;
+            sub += total;
+            list.innerHTML += `
             <div class="cart-item">
                 <span>${item.qty}x ${item.name}</span>
                 <span>₱${total.toFixed(2)}</span>
             </div>
-        `;
-    });
-
-    const tax = sub * 0.08;
-    const grand = sub + tax;
-
-    document.getElementById('subtotal').innerText =
-        `₱${sub.toFixed(2)}`;
-
-    document.getElementById('tax').innerText =
-        `₱${tax.toFixed(2)}`;
-
-    document.getElementById('grandTotal').innerText =
-        `₱${grand.toFixed(2)}`;
-
-    document.getElementById('mobileCount').innerText =
-        `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
-
-    document.getElementById('mobileTotal').innerText =
-        `₱${grand.toFixed(2)}`;
-
-    // AUTO SHOW / HIDE CART
-    const cartBox = document.getElementById('cart');
-
-    if(cart.length > 0) {
-        cartBox.style.display = 'block';
-    } else {
-        cartBox.style.display = 'none';
+            `;
+        });
+        const tax = sub * 0.08;
+        const grand = sub + tax;
+        document.getElementById('subtotal').innerText = `₱${sub.toFixed(2)}`;
+        document.getElementById('tax').innerText = `₱${tax.toFixed(2)}`;
+        document.getElementById('grandTotal').innerText = `₱${grand.toFixed(2)}`;
+        document.getElementById('mobileCount').innerText = `${cart.reduce((a,b)=>a+b.qty,0)} Items`;
+        document.getElementById('mobileTotal').innerText = `₱${grand.toFixed(2)}`;
+        // AUTO SHOW / HIDE CART
+        const cartBox = document.getElementById('cart');
+        if(cart.length > 0) {
+            cartBox.style.display = 'block';
+        } else {
+            cartBox.style.display = 'none';
+        }
     }
-    }
-
     // CHECKOUT  
     function setOrderType(type, btn) {  
         orderType = type;  
-        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));  
+        document.querySelectorAll('.toggle-btn')
+            .forEach(b => b.classList.remove('active'));  
         btn.classList.add('active');  
-        document.getElementById('deliveryField').style.display = type === 'delivery' ? 'block' : 'none';  
-        document.getElementById('tableField').style.display =
-    type === 'dine-in'
-    ? 'block'
-    : 'none';
+        document.getElementById('deliveryField')
+            .style.display = 
+            type === 'delivery' ? 'block' : 'none';  
+        document.getElementById('tableField')
+            .style.display =
+            type === 'dine-in' ? 'block' : 'none';
     }  
 
     function openCheckout() {  
@@ -931,125 +571,83 @@ nav {
         document.getElementById('checkoutSummary').innerHTML = `  
             <div class="label" style="margin-bottom:10px">Total to pay: ${document.getElementById('grandTotal').innerText}</div>  
         `;  
-    }  
+    }
 
-    function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }  
+    function closeModal() {
+        document.getElementById('checkoutModal')
+            .style.display = 'none'; }  
 
     function handlePaymentMethod() {
-
-    const method =
-        document.getElementById('paymentMethod').value;
-
-    const gcashBox =
-        document.getElementById('gcashBox');
-
-    if(method === 'gcash') {
-
-        gcashBox.style.display = 'block';
-
-        document.getElementById('gcashTotal').innerText =
+        const method =
+            document.getElementById('paymentMethod').value;
+        const gcashBox =
+            document.getElementById('gcashBox');
+        if(method === 'gcash') {
+            gcashBox.style.display = 'block';
+            document.getElementById('gcashTotal').innerText =
             document.getElementById('grandTotal').innerText;
-
-    } else {
-
-        gcashBox.style.display = 'none';
+        } else {
+            gcashBox.style.display = 'none';
+        }
     }
-}
-
-function showReferenceInput() {
-
-    document.getElementById('referenceBox').style.display =
+    
+    function showReferenceInput() {
+        document.getElementById('referenceBox').style.display =
         'block';
-}
+    }
 
     function submitOrder(e) {
-
-    e.preventDefault();
-
-    const paymentMethod =
-        document.getElementById('paymentMethod').value;
-
-    const referenceNumber =
-        document.getElementById('referenceNumber')?.value || '';
-
-    // VALIDATION
-    if(paymentMethod === '') {
-
-        alert("Please select payment method.");
-        return;
-    }
-
-    if(paymentMethod === 'gcash' && referenceNumber.trim() === '') {
-
-        alert("Please enter GCash reference number.");
-        return;
-    }
-
-    const id =
-        "IHW-" + Date.now().toString().slice(-6);
-
-    const order = {
-
-        id,
-
-        timestamp: Date.now(),
-
-        customer: {
-
-            name: document.getElementById('custName').value,
-
-            phone: document.getElementById('custPhone').value,
-
-            email: document.getElementById('custEmail').value,
-
-            type: orderType,
-
-            address: document.getElementById('custAddress').value,
-
-            notes: document.getElementById('custNotes').value, 
-            tableNumber:
-    document.getElementById('tableNumber').value
-        },
-
-        payment: {
-
-            method: paymentMethod,
-
-            reference: referenceNumber
-        },
-
-        items: cart.map(i => ({
-            name: i.name,
-            qty: i.qty,
-            price: i.price,
-            subtotal: i.qty * i.price
-        })),
-
-        total: parseFloat(
-            document.getElementById('grandTotal')
-            .innerText.replace('₱','')
-        ),
-
-        status: 'received'
-    };
-
-    const orders =
-        JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
-
-    orders.push(order);
-
-    localStorage.setItem(
-        'ihawan_orders',
-        JSON.stringify(orders)
-    );
-
-    showConfirmation(id);
-
-    cart = [];
-
-    updateCart();
-
-    init();
+        e.preventDefault();
+        const paymentMethod =
+            document.getElementById('paymentMethod').value;
+        const referenceNumber =
+            document.getElementById('referenceNumber')?.value || '';
+        // VALIDATION
+        if(paymentMethod === '') {
+            alert("Please select payment method.");
+            return;
+        }
+        if(paymentMethod === 'gcash' && referenceNumber.trim() === '') {
+            alert("Please enter GCash reference number.");
+            return;
+        }
+        const id =
+            "IHW-" + Date.now().toString().slice(-6);
+        const order = {
+            id, timestamp: Date.now(),
+            customer: {
+                name: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                email: document.getElementById('custEmail').value,
+                type: orderType,
+                address: document.getElementById('custAddress').value,
+                notes: document.getElementById('custNotes').value, 
+                tableNumber: document.getElementById('tableNumber').value
+            },
+            payment: {
+                method: paymentMethod,
+                reference: referenceNumber
+            },
+            items: cart.map(i => ({
+                name: i.name,
+                qty: i.qty,
+                price: i.price,
+                subtotal: i.qty * i.price
+            })),
+            total: parseFloat( document.getElementById('grandTotal') .innerText.replace('₱','') ),
+            status: 'received'
+        };
+        const orders =
+            JSON.parse(localStorage.getItem('ihawan_orders') || '[]');
+        orders.push(order);
+        localStorage.setItem(
+            'ihawan_orders',
+            JSON.stringify(orders)
+        );
+        showConfirmation(id);
+        cart = [];
+        updateCart();
+        init();
     }
 
     function showConfirmation(id) {  
@@ -1081,16 +679,20 @@ function showReferenceInput() {
     function updateStatusUI(id) {  
         const orders = JSON.parse(localStorage.getItem('ihawan_orders') || '[]');  
         const order = orders.find(o => o.id === id);  
-        if(!order) return;  
+        if(!order)
+            return;  
 
         if(order.status === 'preparing') {  
             document.getElementById('s-preparing')?.classList.add('active');  
-            if(document.getElementById('statusMsg')) document.getElementById('statusMsg').innerText = "Chef is grilling your order! 🔥";  
+        if(document.getElementById('statusMsg'))
+            document.getElementById('statusMsg').innerText = "Chef is grilling your order! 🔥";  
         }  
         if(order.status === 'ready') {  
             document.getElementById('s-preparing')?.classList.add('active');  
             document.getElementById('s-ready')?.classList.add('active');  
-            if(document.getElementById('statusMsg')) document.getElementById('statusMsg').innerHTML = "<span style='color:var(--fire); font-size:1.5rem'>YOUR ORDER IS READY! 🎉</span>";  
+            if(document.getElementById('statusMsg'))
+                document.getElementById('statusMsg')
+                    .innerHTML = "<span style='color:var(--fire); font-size:1.5rem'>YOUR ORDER IS READY! 🎉</span>";  
         }  
     }  
 
@@ -1113,110 +715,70 @@ function showReferenceInput() {
     }  
 
     function toggleMobileCart() {
-
-    const modal = document.getElementById('mobileOrderModal');
-
-    const itemsBox = document.getElementById('mobileOrderItems');
-
-    itemsBox.innerHTML = '';
-
-    let subtotal = 0;
-
-    cart.forEach(item => {
-
-        const total = item.price * item.qty;
-
-        subtotal += total;
-
-        itemsBox.innerHTML += `
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                margin-bottom:15px;
-                border-bottom:1px solid rgba(255,255,255,0.08);
-                padding-bottom:10px;
-            ">
-
+        const modal = document.getElementById('mobileOrderModal');
+        const itemsBox = document.getElementById('mobileOrderItems');
+        itemsBox.innerHTML = '';
+        let subtotal = 0;
+        cart.forEach(item => {
+            const total = item.price * item.qty;
+            subtotal += total;
+            itemsBox.innerHTML += `
+            <div style=" display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:10px; ">
                 <div>
-
-                    <div class="label"
-                        style="font-size:0.9rem;">
-                        ${item.name}
+                    <div class="label" style="font-size:0.9rem;">
+                    ${item.name}
                     </div>
-
-                    <div style="
-                        color:var(--muted);
-                        font-size:0.8rem;
-                    ">
+                    <div style=" color:var(--muted); font-size:0.8rem; ">
                         Qty: ${item.qty}
                     </div>
-
                 </div>
-
                 <div class="label">
                     ₱${total.toFixed(2)}
                 </div>
-
             </div>
+            `;
+        });
+        const tax = subtotal * 0.08;
+        const grand = subtotal + tax;
+        document.getElementById('reviewSubtotal').innerText =
+            `₱${subtotal.toFixed(2)}`;
+        document.getElementById('reviewTax').innerText =
+            `₱${tax.toFixed(2)}`;
+        document.getElementById('reviewTotal').innerText =
+            `₱${grand.toFixed(2)}`;
+        modal.style.display = 'block';
+    }
 
-        `;
-    });
+    function closeMobileOrder() {
+        document.getElementById('mobileOrderModal').style.display = 'none';
+    }
 
-    const tax = subtotal * 0.08;
-
-    const grand = subtotal + tax;
-
-    document.getElementById('reviewSubtotal').innerText =
-        `₱${subtotal.toFixed(2)}`;
-
-    document.getElementById('reviewTax').innerText =
-        `₱${tax.toFixed(2)}`;
-
-    document.getElementById('reviewTotal').innerText =
-        `₱${grand.toFixed(2)}`;
-
-    modal.style.display = 'block';
-}
-
-function closeMobileOrder() {
-
-    document.getElementById('mobileOrderModal').style.display =
-        'none';
-}
-
-function openBBQPopup() {
+    function openBBQPopup() {
     document.getElementById('bbqPopup').style.display = 'flex';
-}
+    }
 
-function closeBBQPopup() {
+    function closeBBQPopup() {
     document.getElementById('bbqPopup').style.display = 'none';
-}
+    }
 
-function openIsawPopup() {
+    function openIsawPopup() {
     document.getElementById('isawPopup').style.display = 'flex';
-}
+    }
 
-function closeIsawPopup() {
+    function closeIsawPopup() {
     document.getElementById('isawPopup').style.display = 'none';
-}
+    }
 
     init();  
 </script>
 <!-- Chicken BBQ Popup -->
 <div class="bbq-popup" id="bbqPopup">
     <div class="bbq-popup-box">
-
         <h2>Choose Your BBQ Set 🔥</h2>
-
         <div class="bbq-option">
-
             <h3>Chicken BBQ Skewers Set 1</h3>
-
             <p>2 Skewers + Garlic Rice</p>
-
             <span class="item-price">₱89.00</span>
-
             <div id="ctrl-101">
                 <button class="btn btn-fire label"
                     style="width:100%"
@@ -1224,17 +786,11 @@ function closeIsawPopup() {
                     + Add to Order
                 </button>
             </div>
-
         </div>
-
         <div class="bbq-option">
-
             <h3>Chicken BBQ Skewers Set 2</h3>
-
             <p>4 Skewers + Garlic Rice + Drink</p>
-
             <span class="item-price">₱149.00</span>
-
             <div id="ctrl-102">
                 <button class="btn btn-fire label"
                     style="width:100%"
@@ -1242,31 +798,22 @@ function closeIsawPopup() {
                     + Add to Order
                 </button>
             </div>
-
         </div>
-
         <button class="btn btn-outline label"
             style="width:100%; margin-top:20px;"
             onclick="closeBBQPopup()">
             Done
         </button>
-
     </div>
 </div>
     <!-- ISAW Popup -->
 <div class="bbq-popup" id="isawPopup">
     <div class="bbq-popup-box">
-
         <h2>Choose Your Isaw Set 🔥</h2>
-
         <div class="bbq-option">
-
             <h3>Isaw Set 1</h3>
-
             <p>3 Sticks + Vinegar Dip</p>
-
             <span class="item-price">₱49.00</span>
-
             <div id="ctrl-201">
                 <button class="btn btn-fire label"
                     style="width:100%"
@@ -1274,17 +821,11 @@ function closeIsawPopup() {
                     + Add to Order
                 </button>
             </div>
-
         </div>
-
         <div class="bbq-option">
-
             <h3>Isaw Set 2</h3>
-
             <p>6 Sticks + Garlic Rice + Drink</p>
-
             <span class="item-price">₱99.00</span>
-
             <div id="ctrl-202">
                 <button class="btn btn-fire label"
                     style="width:100%"
@@ -1292,63 +833,43 @@ function closeIsawPopup() {
                     + Add to Order
                 </button>
             </div>
-
         </div>
-
         <button class="btn btn-outline label"
             style="width:100%; margin-top:20px;"
             onclick="closeIsawPopup()">
             Done
         </button>
-
     </div>
 </div>
     <!-- Mobile Order Review -->
 <div class="modal" id="mobileOrderModal">
-
     <div class="modal-content">
-
         <h2 class="h-font"
             style="font-size:2rem; margin-bottom:20px;">
             Your Order 🔥
         </h2>
-
         <div id="mobileOrderItems"></div>
-
-        <div style="
-            border-top:1px solid var(--smoke);
-            margin-top:20px;
-            padding-top:20px;
-        ">
-
+        <div style=" border-top:1px solid var(--smoke); margin-top:20px; padding-top:20px; ">
             <div class="total-row">
                 <span>Subtotal</span>
                 <span id="reviewSubtotal">₱0.00</span>
             </div>
-
             <div class="total-row">
                 <span>Tax</span>
                 <span id="reviewTax">₱0.00</span>
             </div>
-
             <div class="total-row grand-total">
                 <span>Total</span>
                 <span id="reviewTotal">₱0.00</span>
             </div>
-
         </div>
-
         <button
             class="btn btn-outline label"
             style="width:100%; margin-top:25px;"
             onclick="closeMobileOrder()">
-
             Done
-
         </button>
-
     </div>
-
 </div>
-</body>  
-              </html>
+</body>
+</html>
